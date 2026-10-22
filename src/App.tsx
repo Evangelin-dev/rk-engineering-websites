@@ -58,7 +58,7 @@ export default function App() {
       {/* Top Bar Contract (1 line brand, 4-5 text links, 1 CTA) */}
       <Navbar onOpenRFQ={() => handleOpenRFQ()} />
 
-      <main className="flex-1">
+      <main className="flex-1 shrink-0">
         {/* 1. Hero Section */}
         <Hero 
           onOpenRFQ={() => handleOpenRFQ()} 

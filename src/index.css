@@ -3,10 +3,18 @@
 @layer base {
   :root {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --header-height: 5rem;
   }
   
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  @layer utilities {
+    .hero-viewport {
+      min-height: calc(100vh - var(--header-height));
+      min-height: calc(100svh - var(--header-height));
+    }
   }
 }
 
