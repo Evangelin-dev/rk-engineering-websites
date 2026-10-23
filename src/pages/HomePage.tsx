@@ -15,10 +15,60 @@ interface HomePageProps {
   onExploreProducts: () => void;
 }
 
+const PROCESS_STEPS = [
+  {
+    title: 'Requirement Review',
+    detail: 'We review the requested product, technical specifications, drawings, quantities, and expected schedule.',
+  },
+  {
+    title: 'Material and Specification Confirmation',
+    detail: 'Applicable material grades, dimensions, fabrication details, and coating requirements are identified according to approved documentation.',
+  },
+  {
+    title: 'Manufacturing and Fabrication',
+    detail: 'Products are manufactured according to the agreed scope and confirmed production requirements.',
+  },
+  {
+    title: 'Hot-Dip Galvanizing',
+    detail: 'Applicable products undergo galvanizing according to the confirmed process and coating specifications.',
+  },
+  {
+    title: 'Quality Checks',
+    detail: 'Required dimensional, coating, and other inspection activities are performed according to agreed quality requirements.',
+  },
+  {
+    title: 'Packing and Dispatch Coordination',
+    detail: 'Packing, product identification, documentation, and shipping arrangements are coordinated according to the order and destination requirements.',
+  },
+] as const;
+
+interface TimelineLine {
+  horizontal: boolean;
+  left: number;
+  top: number;
+  length: number;
+  progress: number;
+}
+
 export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts }) => {
   const pageRef = useRef<HTMLDivElement>(null);
   const productsSectionRef = useRef<HTMLElement>(null);
-  const [productsVisible, setProductsVisible] = useState(false);
+  const [productsVisible, setProductsVisible] = useState(
+    () =>
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window),
+  );
+  const [activeProcessStep, setActiveProcessStep] = useState<number | null>(null);
+  const [timelineLine, setTimelineLine] = useState<TimelineLine>({
+    horizontal: false,
+    left: 0,
+    top: 0,
+    length: 0,
+    progress: 0,
+  });
+  const processTimelineRef = useRef<HTMLDivElement>(null);
+  const processStepRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const processDotRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
   useLayoutEffect(() => {
     const page = pageRef.current;
@@ -26,22 +76,29 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
       return;
     }
 
-    const sections = page.querySelectorAll('section');
+    const sections = page.querySelectorAll<HTMLElement>('section:not(.hero-viewport)');
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.remove('opacity-0', 'translate-y-5');
+          entry.target.classList.remove('opacity-0', 'translate-y-4');
           entry.target.classList.add('opacity-100', 'translate-y-0');
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -32px 0px' },
+      { threshold: 0.08, rootMargin: '0px 0px -24px 0px' },
     );
 
     sections.forEach((section) => {
-      section.classList.add('transform', 'transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-5');
+      section.classList.add(
+        'transform',
+        'transition-[opacity,transform]',
+        'duration-700',
+        'ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'opacity-0',
+        'translate-y-4',
+      );
       observer.observe(section);
     });
 
@@ -66,6 +123,53 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
+
+  useLayoutEffect(() => {
+    const timeline = processTimelineRef.current;
+    if (!timeline) return;
+
+    const updateTimelineLine = () => {
+      const timelineBounds = timeline.getBoundingClientRect();
+      const dots = processDotRefs.current.map((dot) => dot?.getBoundingClientRect());
+      const firstDot = dots[0];
+      const lastDot = dots[PROCESS_STEPS.length - 1];
+      const activeDot = dots[activeProcessStep ?? 0];
+      if (!firstDot || !lastDot || !activeDot) return;
+
+      const horizontal = window.matchMedia('(min-width: 1024px)').matches;
+      const center = (rect: DOMRect) => ({
+        x: rect.left + rect.width / 2 - timelineBounds.left,
+        y: rect.top + rect.height / 2 - timelineBounds.top,
+      });
+      const firstCenter = center(firstDot);
+      const lastCenter = center(lastDot);
+      const activeCenter = center(activeDot);
+      const start = horizontal ? firstCenter.x : firstCenter.y;
+      const end = horizontal ? lastCenter.x : lastCenter.y;
+      const activeEnd = horizontal ? activeCenter.x : activeCenter.y;
+
+      setTimelineLine({
+        horizontal,
+        left: firstCenter.x,
+        top: firstCenter.y,
+        length: Math.abs(end - start),
+        progress: activeProcessStep === null ? 0 : Math.abs(activeEnd - start),
+      });
+    };
+
+    updateTimelineLine();
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(updateTimelineLine);
+    resizeObserver?.observe(timeline);
+    processStepRefs.current.forEach((step) => {
+      if (step) resizeObserver?.observe(step);
+    });
+    window.addEventListener('resize', updateTimelineLine);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', updateTimelineLine);
+    };
+  }, [activeProcessStep]);
 
   const productImages = [cableTrayImage, fabricationImage, galvanizingImage];
   const productImageAlts = [
@@ -150,7 +254,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
               <Link
                 key={product.id}
                 to="/products"
-                className={`group overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-white hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 ${
+                className={`group overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-white hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 motion-reduce:transform-none motion-reduce:transition-none ${
                   productsVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
                 }`}
                 style={{ transitionDelay: productsVisible ? `${index * 100}ms` : '0ms' }}
@@ -160,14 +264,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                     src={productImages[index]}
                     alt={productImageAlts[index]}
                     loading="lazy"
-                    className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none"
+                    className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
                   />
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-blue-900">{product.name}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">{product.description}</p>
                   <span className="mt-4 inline-flex items-center text-sm font-semibold text-blue-800">
-                    View products <span aria-hidden="true" className="ml-1 transition-transform group-hover:translate-x-1">&rarr;</span>
+                    View products <span aria-hidden="true" className="ml-1 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none">&rarr;</span>
                   </span>
                 </div>
               </Link>
@@ -176,35 +280,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
         </div>
       </section>
       <IndustriesSection />
-      <section className="border-b border-slate-200 bg-slate-50 py-14 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-9 max-w-3xl">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">About RK Engineering</p>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Industrial and Infrastructure Applications
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-              Our product portfolio supports a range of applications, subject to the technical suitability of each product.
-            </p>
-          </div>
-          <ul className="mb-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              'Power and electrical infrastructure',
-              'Renewable energy',
-              'Oil and gas',
-              'Telecommunications',
-              'Petrochemical and manufacturing',
-              'Commercial and industrial buildings',
-              'Infrastructure and utilities',
-              'Data centres',
-            ].map((application) => (
-              <li key={application} className="flex min-h-16 items-center rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800">
-                {application}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
       <section className="border-b border-slate-200 bg-white py-14 sm:py-18 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-9 max-w-3xl">
@@ -213,43 +288,103 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
               From Requirement Review to Dispatch Coordination
             </h2>
           </div>
-          <ol className="grid gap-0 md:grid-cols-3 lg:grid-cols-6">
-            {[
-              {
-                title: 'Requirement Review',
-                detail: 'We review the requested product, technical specifications, drawings, quantities, and expected schedule.',
-              },
-              {
-                title: 'Material and Specification Confirmation',
-                detail: 'Applicable material grades, dimensions, fabrication details, and coating requirements are identified according to approved documentation.',
-              },
-              {
-                title: 'Manufacturing and Fabrication',
-                detail: 'Products are manufactured according to the agreed scope and confirmed production requirements.',
-              },
-              {
-                title: 'Hot-Dip Galvanizing',
-                detail: 'Applicable products undergo galvanizing according to the confirmed process and coating specifications.',
-              },
-              {
-                title: 'Quality Checks',
-                detail: 'Required dimensional, coating, and other inspection activities are performed according to agreed quality requirements.',
-              },
-              {
-                title: 'Packing and Dispatch Coordination',
-                detail: 'Packing, product identification, documentation, and shipping arrangements are coordinated according to the order and destination requirements.',
-              },
-            ].map((step, index) => (
-              <li key={step.title} className="relative border-l border-slate-200 pb-7 pl-6 last:pb-0 md:border-l-0 md:border-t md:pb-0 md:pl-0 md:pr-4 md:pt-6">
-                <span className="absolute -left-[5px] top-0 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-600 text-[0px] ring-4 ring-white md:-top-[5px]" aria-hidden="true">
-                  {index + 1}
-                </span>
-                <span className="font-mono text-xs font-bold text-red-600">0{index + 1}</span>
-                <h3 className="mt-2 text-sm font-bold leading-snug text-slate-900">{step.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">{step.detail}</p>
-              </li>
-            ))}
-          </ol>
+          <div
+            ref={processTimelineRef}
+            className="relative"
+            onPointerLeave={(event) => {
+              if (event.pointerType !== 'touch') setActiveProcessStep(null);
+            }}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setActiveProcessStep(null);
+              }
+            }}
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute z-0 rounded-full bg-slate-200"
+              style={{
+                left: timelineLine.left,
+                top: timelineLine.top,
+                width: timelineLine.horizontal ? timelineLine.length : 2,
+                height: timelineLine.horizontal ? 2 : timelineLine.length,
+                transform: timelineLine.horizontal
+                  ? `translateY(-50%) scaleX(${timelineLine.length ? timelineLine.progress / timelineLine.length : 0})`
+                  : `translateX(-50%) scaleY(${timelineLine.length ? timelineLine.progress / timelineLine.length : 0})`,
+                transformOrigin: timelineLine.horizontal ? 'left center' : 'center top',
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute z-0 rounded-full bg-red-600 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              style={{
+                left: timelineLine.left,
+                top: timelineLine.top,
+                width: timelineLine.horizontal ? timelineLine.length : 2,
+                height: timelineLine.horizontal ? 2 : timelineLine.length,
+                transform: timelineLine.horizontal
+                  ? `translateY(-50%) scaleX(${timelineLine.length ? timelineLine.progress / timelineLine.length : 0})`
+                  : `translateX(-50%) scaleY(${timelineLine.length ? timelineLine.progress / timelineLine.length : 0})`,
+                transformOrigin: timelineLine.horizontal ? 'left center' : 'center top',
+              }}
+            />
+            <ol className="relative grid gap-0 pl-1 lg:grid-cols-6">
+              {PROCESS_STEPS.map((step, index) => {
+                const isActive = activeProcessStep === index;
+                const isPrevious = activeProcessStep !== null && index < activeProcessStep;
+
+                return (
+                  <li
+                    key={step.title}
+                    ref={(element) => {
+                      processStepRefs.current[index] = element;
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Step ${index + 1}: ${step.title}`}
+                    aria-pressed={isActive}
+                    onPointerEnter={(event) => {
+                      if (event.pointerType !== 'touch') setActiveProcessStep(index);
+                    }}
+                    onFocus={() => setActiveProcessStep(index)}
+                    onClick={() => setActiveProcessStep(index)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        setActiveProcessStep(index);
+                      }
+                    }}
+                    className="relative z-10 cursor-pointer border-l border-transparent pb-7 pl-6 last:pb-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 lg:border-l-0 lg:border-t lg:pb-0 lg:pl-0 lg:pr-4 lg:pt-6"
+                  >
+                    <span
+                      ref={(element) => {
+                        processDotRefs.current[index] = element;
+                      }}
+                      className={`absolute -left-[5px] top-0 z-10 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-600 text-[0px] ring-4 ring-white transition-[transform,box-shadow,background-color] duration-300 ease-out motion-reduce:scale-100 motion-reduce:transition-none lg:-top-[5px] lg:left-1/2 lg:-translate-x-1/2 ${
+                        isActive
+                          ? 'scale-[1.3] bg-red-700 shadow-[0_0_0_5px_rgba(220,38,38,0.16)]'
+                          : isPrevious
+                            ? 'scale-110 bg-red-700 shadow-[0_0_0_3px_rgba(220,38,38,0.12)]'
+                            : ''
+                      }`}
+                      aria-hidden="true"
+                    >
+                      {index + 1}
+                    </span>
+                    <span className="font-mono text-xs font-bold text-red-600">0{index + 1}</span>
+                    <h3 className={`mt-2 text-sm font-bold leading-snug transition-colors duration-200 motion-reduce:transition-none ${
+                      isActive ? 'text-red-700' : 'text-slate-900'
+                    }`}>
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
+                      {step.detail}
+                    </p>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
           <p className="mt-6 border-t border-slate-100 pt-4 text-sm leading-relaxed text-slate-600">
             The actual process, inspection scope, and delivery schedule are confirmed for each order.
           </p>

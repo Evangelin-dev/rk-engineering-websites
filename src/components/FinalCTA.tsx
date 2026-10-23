@@ -30,7 +30,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenRFQ, onExploreProducts
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={onOpenRFQ}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-white bg-red-600 hover:bg-red-700 rounded-md transition-all cursor-pointer shadow-md active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-red-600 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-md transition-[color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:translate-y-0 active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none"
             >
               <span>Request an Export Quote</span>
               <ArrowRight className="w-4 h-4" />
@@ -38,7 +38,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenRFQ, onExploreProducts
 
             <button
               onClick={onExploreProducts}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-blue-950 bg-white hover:bg-slate-100 rounded-md transition-all cursor-pointer shadow-sm font-bold"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3.5 text-xs font-semibold font-bold uppercase tracking-wider text-blue-950 shadow-sm transition-[color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
             >
               <span>Explore Products</span>
             </button>

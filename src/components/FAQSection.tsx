@@ -45,7 +45,7 @@ export const FAQSection: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search questions..."
-              className="w-full rounded-lg border border-slate-300 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700/20"
+              className="w-full rounded-lg border border-slate-300 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 transition-[border-color,box-shadow] duration-200 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700/20"
             />
           </div>
 
@@ -61,7 +61,7 @@ export const FAQSection: React.FC = () => {
                 type="button"
                 onClick={() => setFilterCategory(cat.id)}
                 aria-pressed={filterCategory === cat.id}
-                className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors duration-200 ${
                   filterCategory === cat.id
                     ? 'border-blue-950 bg-blue-950 text-white'
                     : 'border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-950'
@@ -96,14 +96,14 @@ export const FAQSection: React.FC = () => {
               return (
                 <div
                   key={faq.id}
-                  className={`overflow-hidden rounded-xl border bg-white transition-shadow ${
+                  className={`overflow-hidden rounded-xl border bg-white transition-shadow duration-300 ${
                     isOpen ? 'border-blue-200 shadow-md shadow-slate-200/60' : 'border-slate-200 shadow-sm hover:shadow-md'
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => toggleAccordion(faq.id)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-blue-700 sm:px-6"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors duration-200 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-blue-700 sm:px-6"
                     aria-expanded={isOpen}
                     aria-controls={answerId}
                   >
@@ -115,17 +115,28 @@ export const FAQSection: React.FC = () => {
                     </span>
                     <ChevronDown
                       aria-hidden="true"
-                      className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 ${
+                      className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 motion-reduce:transition-none ${
                         isOpen ? 'rotate-180 text-blue-700' : ''
                       }`}
                     />
                   </button>
 
-                  {isOpen && (
-                    <div id={answerId} className="border-t border-slate-100 px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-600 sm:px-6 sm:text-base">
-                      {faq.answer}
+                  <div
+                    id={answerId}
+                    aria-hidden={!isOpen}
+                    inert={!isOpen}
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className={`border-t px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-600 sm:px-6 sm:text-base ${
+                        isOpen ? 'border-slate-100' : 'border-transparent'
+                      }`}>
+                        {faq.answer}
+                      </p>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
 import productsImage from '../assets/images/products_cable_trays_1792669705857.jpg';
 import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
@@ -89,7 +89,26 @@ const CAPABILITIES = [
 
 export const Highlights: React.FC = () => {
   const [activeId, setActiveId] = useState<string>(CAPABILITIES[0].id);
+  const [contentVisible, setContentVisible] = useState(true);
+  const contentFrameRef = useRef<number | undefined>(undefined);
   const activeCapability = CAPABILITIES.find((item) => item.id === activeId) ?? CAPABILITIES[0];
+
+  useEffect(
+    () => () => window.cancelAnimationFrame(contentFrameRef.current ?? 0),
+    [],
+  );
+
+  const selectCapability = (id: string) => {
+    window.cancelAnimationFrame(contentFrameRef.current ?? 0);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setActiveId(id);
+      setContentVisible(true);
+      return;
+    }
+    setContentVisible(false);
+    setActiveId(id);
+    contentFrameRef.current = window.requestAnimationFrame(() => setContentVisible(true));
+  };
 
   return (
     <section className="border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
@@ -116,8 +135,8 @@ export const Highlights: React.FC = () => {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setActiveId(item.id)}
-                    className={`relative w-full rounded-lg border px-4 py-4 text-left transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
+                    onClick={() => selectCapability(item.id)}
+                    className={`relative w-full rounded-lg border px-4 py-4 text-left transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 ${
                       isActive
                         ? 'border-blue-200 bg-blue-50 text-blue-950 shadow-sm'
                         : 'border-transparent bg-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-50'
@@ -136,12 +155,14 @@ export const Highlights: React.FC = () => {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+          <div className={`overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-opacity duration-200 motion-reduce:transition-none ${
+            contentVisible ? 'opacity-100' : 'opacity-0'
+          }`}>
             <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-slate-200">
               <img
                 src={activeCapability.image}
                 alt={activeCapability.alt}
-                className="h-full w-full object-cover transition-all duration-300 ease-out"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out motion-reduce:transition-none"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-950/10 to-transparent" />
               <span className="absolute bottom-4 left-4 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">

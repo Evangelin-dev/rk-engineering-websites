@@ -62,13 +62,18 @@ const SHOWCASE_LINKS = [
 ];
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `whitespace-nowrap transition-colors hover:text-blue-700 ${isActive ? 'font-bold text-blue-900' : 'text-slate-800'}`;
+  `relative whitespace-nowrap transition-colors duration-200 hover:text-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
+    isActive
+      ? 'font-bold text-blue-900 after:scale-x-100'
+      : 'text-slate-800 after:scale-x-0 hover:after:scale-x-100'
+  }`;
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<'products' | 'showcase' | null>(null);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileShowcaseOpen, setMobileShowcaseOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const productMenuRef = useRef<HTMLDivElement>(null);
   const productMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
@@ -113,8 +118,19 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => () => cancelProductMenuClose(), []);
 
+  useEffect(() => {
+    const updateScrolledState = () => setIsScrolled(window.scrollY > 8);
+    updateScrolledState();
+    window.addEventListener('scroll', updateScrolledState, { passive: true });
+    return () => window.removeEventListener('scroll', updateScrolledState);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+    <header className={`sticky top-0 z-40 w-full border-b transition-[background-color,border-color,box-shadow] duration-300 motion-reduce:transition-none ${
+      isScrolled
+        ? 'border-slate-200 bg-white/95 shadow-md backdrop-blur-sm'
+        : 'border-slate-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
+    }`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between gap-4">
           <Link
@@ -153,19 +169,24 @@ export const Navbar: React.FC = () => {
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') setActiveDesktopMenu(null);
                 }}
-                className={`inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 ${
+                className={`relative inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
                   location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : 'text-slate-800'
-                }`}
+                } ${activeDesktopMenu === 'products' ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`}
               >
                 Products
-                <ChevronDown className={`h-4 w-4 transition-transform ${activeDesktopMenu === 'products' ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-4 w-4 transition-transform motion-reduce:transition-none ${activeDesktopMenu === 'products' ? 'rotate-180' : ''}`} />
               </button>
-              {activeDesktopMenu === 'products' && (
-                <div
-                  className="absolute left-1/2 top-full z-50 w-[min(92vw,80rem)] max-h-[75svh] -translate-x-1/2 overflow-y-auto rounded-b-xl border border-slate-200 bg-white p-4 shadow-2xl sm:rounded-xl sm:p-5"
-                  onMouseEnter={cancelProductMenuClose}
-                  onMouseLeave={scheduleProductMenuClose}
-                >
+              <div
+                aria-hidden={activeDesktopMenu !== 'products'}
+                inert={activeDesktopMenu !== 'products'}
+                className={`absolute left-1/2 top-full z-50 max-h-[75svh] w-[min(92vw,80rem)] -translate-x-1/2 overflow-y-auto rounded-b-xl border border-slate-200 bg-white p-4 shadow-2xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none sm:rounded-xl sm:p-5 ${
+                  activeDesktopMenu === 'products'
+                    ? 'visible translate-y-0 opacity-100'
+                    : 'invisible pointer-events-none translate-y-2 opacity-0'
+                }`}
+                onMouseEnter={cancelProductMenuClose}
+                onMouseLeave={scheduleProductMenuClose}
+              >
                   <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-4">
                     <div>
                       <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-red-600">Product Directory</p>
@@ -220,7 +241,6 @@ export const Navbar: React.FC = () => {
                     ))}
                   </div>
                 </div>
-              )}
             </div>
 
             <div
@@ -236,27 +256,33 @@ export const Navbar: React.FC = () => {
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') setActiveDesktopMenu(null);
                 }}
-                className={`inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 ${
+                className={`relative inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
                   SHOWCASE_LINKS.some((link) => link.to === location.pathname) ? 'font-bold text-blue-900' : 'text-slate-800'
-                }`}
+                } ${activeDesktopMenu === 'showcase' ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`}
               >
                 Showcase
-                <ChevronDown className={`h-4 w-4 transition-transform ${activeDesktopMenu === 'showcase' ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-4 w-4 transition-transform motion-reduce:transition-none ${activeDesktopMenu === 'showcase' ? 'rotate-180' : ''}`} />
               </button>
-              {activeDesktopMenu === 'showcase' && (
-                <div className="absolute left-0 top-full z-50 w-64 rounded-b-xl border border-slate-100 bg-white p-3 shadow-2xl">
-                  {SHOWCASE_LINKS.map((link) => (
-                    <Link
-                      key={link.to}
-                      to={link.to}
-                      onClick={closeMenus}
-                      className="block rounded-md px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-800"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <div
+                aria-hidden={activeDesktopMenu !== 'showcase'}
+                inert={activeDesktopMenu !== 'showcase'}
+                className={`absolute left-0 top-full z-50 w-64 rounded-b-xl border border-slate-100 bg-white p-3 shadow-2xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${
+                  activeDesktopMenu === 'showcase'
+                    ? 'visible translate-y-0 opacity-100'
+                    : 'invisible pointer-events-none translate-y-2 opacity-0'
+                }`}
+              >
+                {SHOWCASE_LINKS.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={closeMenus}
+                    className="block rounded-md px-3 py-2.5 text-sm text-slate-700 transition-colors duration-200 hover:bg-slate-50 hover:text-blue-800"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </div>
 
             <NavLink to="/associations" onClick={closeMenus} className={linkClass}>
@@ -317,13 +343,21 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setMobileProductsOpen((open) => !open)}
               aria-expanded={mobileProductsOpen}
+              aria-controls="mobile-products-menu"
               className={`flex items-center justify-between py-3 text-left ${location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : ''}`}
             >
               Products
-              <ChevronDown className={`h-4 w-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${mobileProductsOpen ? 'rotate-180' : ''}`} />
             </button>
-            {mobileProductsOpen && (
-              <div className="pb-2 pl-3">
+            <div
+              id="mobile-products-menu"
+              aria-hidden={!mobileProductsOpen}
+              inert={!mobileProductsOpen}
+              className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                mobileProductsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden pb-2 pl-3">
                 <Link to="/products" onClick={closeMenus} className="block py-2 font-bold text-red-600">All Products</Link>
                 {PRODUCT_LINK_GROUPS.map((group) => (
                   <div key={group.label} className="border-t border-slate-100 py-2 first:border-t-0">
@@ -343,26 +377,34 @@ export const Navbar: React.FC = () => {
                   </div>
                 ))}
               </div>
-            )}
+            </div>
 
             <button
               type="button"
               onClick={() => setMobileShowcaseOpen((open) => !open)}
               aria-expanded={mobileShowcaseOpen}
+              aria-controls="mobile-showcase-menu"
               className="flex items-center justify-between py-3 text-left"
             >
               Showcase
-              <ChevronDown className={`h-4 w-4 transition-transform ${mobileShowcaseOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${mobileShowcaseOpen ? 'rotate-180' : ''}`} />
             </button>
-            {mobileShowcaseOpen && (
-              <div className="pb-2 pl-3">
+            <div
+              id="mobile-showcase-menu"
+              aria-hidden={!mobileShowcaseOpen}
+              inert={!mobileShowcaseOpen}
+              className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                mobileShowcaseOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden pb-2 pl-3">
                 {SHOWCASE_LINKS.map((link) => (
-                  <Link key={link.to} to={link.to} onClick={closeMenus} className="block py-2 text-slate-600 hover:text-blue-800">
+                  <Link key={link.to} to={link.to} onClick={closeMenus} className="block py-2 text-slate-600 transition-colors duration-200 hover:text-blue-800">
                     {link.label}
                   </Link>
                 ))}
               </div>
-            )}
+            </div>
 
             <NavLink to="/associations" onClick={closeMenus} className={({ isActive }) => `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`}>
               Our Association

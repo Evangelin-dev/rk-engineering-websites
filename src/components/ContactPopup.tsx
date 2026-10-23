@@ -91,7 +91,7 @@ export const ContactPopup: React.FC = () => {
         rel="noreferrer"
         aria-label="Chat with RK Engineering on WhatsApp"
         title="Chat with us on WhatsApp"
-        className="fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-white/70 transition duration-200 hover:scale-105 hover:bg-[#1DA851] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] active:scale-95"
+        className="fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-white/70 transition duration-200 hover:scale-105 hover:bg-[#1DA851] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] active:scale-95 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
       >
         <svg aria-hidden="true" viewBox="0 0 32 32" className="h-8 w-8" fill="none">
           <path
