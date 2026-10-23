@@ -1,11 +1,8 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, Mail, MapPin, PhoneCall } from 'lucide-react';
 
-interface FooterProps {
-  onOpenRFQ: () => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onOpenRFQ }) => {
+export const Footer: React.FC = () => {
   return (
     <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -34,25 +31,25 @@ export const Footer: React.FC<FooterProps> = ({ onOpenRFQ }) => {
             </span>
             <ul className="space-y-2">
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">HDG Perforated Cable Tray</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">HDG Perforated Cable Tray</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">Ladder Type Cable Tray</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">Ladder Type Cable Tray</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">Raceway Cable Tray</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">Raceway Cable Tray</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">GI Earthing Strip & Rods</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">GI Earthing Strip & Rods</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">Cable Tray Duct</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">Cable Tray Duct</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">Solar Mounting Structures</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">Solar Mounting Structures</Link>
               </li>
               <li>
-                <a href="#products" className="hover:text-red-400 transition-colors">Hot-Dip Galvanized Steel</a>
+                <Link to="/products" className="hover:text-red-400 transition-colors">Hot-Dip Galvanized Steel</Link>
               </li>
             </ul>
           </div>
@@ -64,45 +61,65 @@ export const Footer: React.FC<FooterProps> = ({ onOpenRFQ }) => {
             </span>
             <ul className="space-y-2">
               <li>
-                <a href="#exports" className="hover:text-red-400 transition-colors">African Markets Supply</a>
+                <Link to="/export-solutions" className="hover:text-red-400 transition-colors">African Markets Supply</Link>
               </li>
               <li>
-                <a href="#exports" className="hover:text-red-400 transition-colors">United States Projects</a>
+                <Link to="/export-solutions" className="hover:text-red-400 transition-colors">United States Projects</Link>
               </li>
               <li>
-                <a href="#exports" className="hover:text-red-400 transition-colors">Middle East & Global</a>
+                <Link to="/export-solutions" className="hover:text-red-400 transition-colors">Middle East & Global</Link>
               </li>
               <li>
-                <a href="#calculator" className="hover:text-red-400 transition-colors">Tray Weight Calculator</a>
+                <Link to="/process-quality" className="hover:text-red-400 transition-colors">Hot-Dip Galvanizing (450°C)</Link>
               </li>
               <li>
-                <a href="#process" className="hover:text-red-400 transition-colors">Hot-Dip Galvanizing (450°C)</a>
-              </li>
-              <li>
-                <a href="#faq" className="hover:text-red-400 transition-colors">Export FAQs</a>
+                <Link to="/export-solutions" className="hover:text-red-400 transition-colors">Export FAQs</Link>
               </li>
             </ul>
           </div>
 
-          {/* Plant & Contact */}
-          <div className="space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-white block">
-              Export Enquiries
+          {/* Contact */}
+          <div className="space-y-4">
+            <span className="block border-l-2 border-red-500 pl-3 text-xs font-bold uppercase tracking-wider text-white">
+              Contact Us
             </span>
-            <div className="space-y-2 text-xs">
-              <div className="text-slate-300 font-mono">info@rkenggindia.com</div>
-              <div className="text-slate-300 font-mono">+91 84220 44452</div>
-              <div className="text-slate-400">Head Office & Works: India</div>
-              <div className="text-slate-400">Shipping: JNPT / Mundra Ports</div>
+            <div className="space-y-4 text-xs">
+              <div className="flex items-start gap-3">
+                <PhoneCall aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-white" />
+                <div>
+                  <h2 className="text-sm font-bold text-white">Support</h2>
+                  <a href="tel:+918422044453" className="mt-1 inline-block text-slate-300 transition-colors hover:text-white">
+                    +91 84220 44453
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-white" />
+                <div>
+                  <h2 className="text-sm font-bold text-white">Email</h2>
+                  <a href="mailto:info@rkenggindia.com" className="mt-1 inline-block break-all text-slate-300 transition-colors hover:text-white">
+                    info@rkenggindia.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-white" />
+                <div>
+                  <h2 className="text-sm font-bold text-white">Our Address</h2>
+                  <address className="mt-1 text-slate-300 not-italic leading-relaxed">
+                    Unit-1 N-70, Factory Unit 2 - W 87 Anand Nagar, Additional M.I.D.C, Ambernath (E), Dist. Thane- 421501, INDIA.
+                  </address>
+                </div>
+              </div>
             </div>
             <div className="pt-2">
-              <button
-                onClick={onOpenRFQ}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-red-300 cursor-pointer"
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-red-300"
               >
                 <span>Request Project Quotation</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+              </Link>
             </div>
           </div>
 

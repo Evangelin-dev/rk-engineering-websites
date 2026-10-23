@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { FAQS } from '../data/company.ts';
 import { ChevronDown, Search, HelpCircle } from 'lucide-react';
 
+const HOME_FAQS = FAQS.slice(0, 5);
+
 export const FAQSection: React.FC = () => {
-  const [openId, setOpenId] = useState<string>(FAQS[0].id);
+  const [openId, setOpenId] = useState<string>(HOME_FAQS[0].id);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
 
-  const filteredFaqs = FAQS.filter((faq) => {
+  const filteredFaqs = HOME_FAQS.filter((faq) => {
     const matchesCategory = filterCategory === 'all' || faq.category === filterCategory;
     const matchesSearch = 
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||

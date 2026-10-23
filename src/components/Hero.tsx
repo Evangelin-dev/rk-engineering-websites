@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import heroVideo from '../assets/images/rkv.mp4';
 
 interface HeroProps {
   onOpenRFQ: () => void;
@@ -31,11 +32,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRFQ, onExploreProducts }) => {
 
       {!videoUnavailable && !prefersReducedMotion && (
         <video
-          src="/videos/industrial-hero.mp4"
+          src={heroVideo}
           autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
           aria-hidden="true"
           onError={() => setVideoUnavailable(true)}
           className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"

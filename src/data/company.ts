@@ -38,43 +38,43 @@ export const HIGHLIGHTS = [
   },
   {
     title: 'ISO-Certified Operations',
-    description: 'Triple-certified management systems covering Quality (ISO 9001:2015), Environmental (ISO 14001:2015), and Safety (ISO 45001:2018).',
+    description: 'Triple-certified systems covering Quality, Environmental, and Safety management to support compliant industrial supply.',
     metric: 'ISO & CE',
     badge: 'Compliance'
   },
   {
     title: '12,000 MT Cable Tray Capacity',
-    description: 'High-volume production facility with roll-forming lines, automated CNC perforations, and robotic welding stations.',
+    description: 'High-volume output with roll-forming, CNC perforation, and robotic welding supporting reliable production schedules.',
     metric: '12,000 MT',
     badge: 'Volume'
   },
   {
     title: '24,000 MT Galvanizing Capacity',
-    description: 'Massive in-house hot-dip galvanizing plant with industrial molten zinc kettles supporting seamless quality control.',
+    description: 'Massive in-house hot-dip galvanizing capacity supports consistent coating quality and smooth project delivery.',
     metric: '24,000 MT',
     badge: 'Integrated'
   },
   {
     title: 'In-House Hot-Dip Galvanizing',
-    description: 'Integrated manufacturing eliminates third-party transport delays, ensuring uniform coating thickness and zinc adherence.',
+    description: 'Integrated manufacturing removes third-party transport delays while helping keep coating thickness and zinc adherence consistent.',
     metric: '100% In-House',
     badge: 'Quality Control'
   },
   {
     title: 'Custom Manufacturing',
-    description: 'Full engineering assessment against customer CAD drawings, non-standard widths, custom gauges, and tailored hole matrices.',
+    description: 'Full engineering assessment supports custom widths, gauges, hole patterns, and project-specific fabrication requirements.',
     metric: 'Bespoke CAD',
     badge: 'Engineering'
   },
   {
     title: 'International Enquiries',
-    description: 'Dedicated export logistics desk providing CFR/CIF/FOB quotations, port clearance coordination, and seaworthy packing.',
+    description: 'Dedicated export logistics desk supports CFR/CIF/FOB quotations, port coordination, and seaworthy packing.',
     metric: 'Global Export',
     badge: 'Logistics'
   },
   {
     title: 'Industrial Project Focus',
-    description: 'Mission-critical supply for power utilities, solar parks, petrochemical complexes, hyperscale data centres, and mining.',
+    description: 'Mission-critical supply for power utilities, solar parks, petrochemical plants, data centres, and mining operations.',
     metric: '500+ Projects',
     badge: 'Sectors'
   },

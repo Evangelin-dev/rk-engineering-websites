@@ -1,146 +1,222 @@
-import React, { useState } from 'react';
-import { ArrowUpRight, ChevronDown, Menu, Phone, X } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { ChevronDown, Menu, Phone, X } from 'lucide-react';
 import rkLogo from '../assets/images/rk.png';
 
-interface NavbarProps {
-  onOpenRFQ: (productName?: string) => void;
-}
+const NAV_LINKS = [
+  { label: 'Home', to: '/' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Services', to: '/services' },
+  { label: 'Our Association', to: '/associations' },
+];
 
-const PRODUCT_GROUPS = [
+const PRODUCT_LINK_GROUPS = [
   {
-    title: 'Cable Tray',
-    items: ['Perforated Type Cable Tray', 'Ladder Type Cable Tray', 'Raceway Cable Tray', 'Cable Tray Duct'],
-  },
-  {
-    title: 'Earthing Materials',
-    items: ['Earthing Flats', 'Earthing Electrode', 'Junction Box', 'GI Wire', 'Copper Earthing Strips'],
-  },
-  {
-    title: 'Solar Mounting Structure',
-    items: ['Ground Mounted Structure', 'Rooftop Structure', 'Solar Tracker', 'Car Parking Structure', 'Walkway Structure'],
-  },
-  {
-    title: 'Hot Dip Galvanizing',
-    items: [
-      'Steel Angles',
-      'Construction Channel',
-      'High Mast Pole',
-      'Pipes',
-      'H-Beams',
-      'Crash Barrier',
-      'Handrail',
-      'Solar Mounting Channel',
-      'Gratings',
-      'Fabricated Beams',
-      'Tor Rod',
-      'Chequered Plate',
+    label: 'Cable Trays & Ducts',
+    products: [
+      { label: 'Industrial Cable Trays', slug: 'cable-trays' },
+      { label: 'Perforated Cable Trays', slug: 'perforated-cable-trays' },
+      { label: 'Ladder Cable Trays', slug: 'ladder-cable-trays' },
+      { label: 'Raceway Cable Trays', slug: 'raceway-cable-trays' },
+      { label: 'Cable Tray Ducts', slug: 'cable-tray-ducts' },
     ],
   },
   {
-    title: 'Towers',
-    items: ['Transmission Towers', 'Telecom Towers', 'Transmission Monopoles', 'Power Distribution Poles', 'Substation Structures'],
+    label: 'Earthing Materials',
+    products: [
+      { label: 'Earthing Materials', slug: 'earthing-materials' },
+      { label: 'Earthing Flats', slug: 'earthing-flats' },
+      { label: 'Earthing Electrodes', slug: 'earthing-electrodes' },
+      { label: 'Junction Boxes', slug: 'junction-boxes' },
+      { label: 'GI Wire', slug: 'gi-wire' },
+      { label: 'Copper Earthing Strips', slug: 'copper-earthing-strips' },
+    ],
+  },
+  {
+    label: 'Solar Mounting Structures',
+    products: [
+      { label: 'Solar Mounting Structures', slug: 'solar-mounting-structures' },
+      { label: 'Ground-Mounted Solar Structures', slug: 'ground-mounted-solar-structures' },
+      { label: 'Rooftop Solar Structures', slug: 'rooftop-solar-structures' },
+      { label: 'Solar Tracker Structures', slug: 'solar-tracker-structures' },
+      { label: 'Solar Car Parking Structures', slug: 'solar-car-parking-structures' },
+      { label: 'Solar Walkway Structures', slug: 'solar-walkway-structures' },
+    ],
+  },
+  {
+    label: 'Hot-Dip Galvanized Products',
+    products: [{ label: 'Hot-Dip Galvanized Steel Products', slug: 'hot-dip-galvanized-steel-products' }],
+    additionalGroup: {
+      label: 'Towers & Power Infrastructure',
+      products: [
+        { label: 'Transmission Towers', slug: 'transmission-towers' },
+        { label: 'Towers & Power Infrastructure', slug: 'towers-power-infrastructure' },
+      ],
+    },
   },
 ];
 
 const SHOWCASE_LINKS = [
-  { label: 'Export Solutions', href: '#exports' },
-  { label: 'Manufacturing Process', href: '#process' },
-  { label: 'Engineering Calculator', href: '#calculator' },
+  { label: 'Gallery', to: '/gallery' },
+  { label: 'Certifications', to: '/about#certifications' },
 ];
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
+const linkClass = ({ isActive }: { isActive: boolean }) =>
+  `whitespace-nowrap transition-colors hover:text-blue-700 ${isActive ? 'font-bold text-blue-900' : 'text-slate-800'}`;
+
+export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<'products' | 'showcase' | null>(null);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileShowcaseOpen, setMobileShowcaseOpen] = useState(false);
-
+  const productMenuRef = useRef<HTMLDivElement>(null);
+  const productMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const location = useLocation();
+  const cancelProductMenuClose = () => {
+    if (productMenuCloseTimer.current) {
+      clearTimeout(productMenuCloseTimer.current);
+      productMenuCloseTimer.current = null;
+    }
+  };
+  const scheduleProductMenuClose = () => {
+    cancelProductMenuClose();
+    productMenuCloseTimer.current = setTimeout(() => {
+      setActiveDesktopMenu((current) => current === 'products' ? null : current);
+    }, 160);
+  };
   const closeMenus = () => {
-    setActiveDesktopMenu(null);
+    cancelProductMenuClose();
     setMobileMenuOpen(false);
+    setActiveDesktopMenu(null);
     setMobileProductsOpen(false);
     setMobileShowcaseOpen(false);
   };
 
-  const openRFQ = () => {
-    closeMenus();
-    onOpenRFQ();
-  };
+  useEffect(() => {
+    if (activeDesktopMenu !== 'products') return;
+
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      if (!productMenuRef.current?.contains(event.target as Node)) {
+        setActiveDesktopMenu(null);
+      }
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveDesktopMenu(null);
+    };
+    document.addEventListener('pointerdown', closeOnOutsidePointer);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsidePointer);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [activeDesktopMenu]);
+
+  useEffect(() => () => cancelProductMenuClose(), []);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-5">
-          <a href="#" onClick={closeMenus} className="flex h-14 w-14 shrink-0 items-center justify-center" aria-label="RK Engineering home">
-            <img
-              src={rkLogo}
-              alt="RK Engineering & Galvanizers"
-              width={56}
-              height={56}
-              className="h-14 w-14 object-contain"
-            />
-          </a>
+        <div className="flex h-20 items-center justify-between gap-4">
+          <Link
+            to="/"
+            onClick={closeMenus}
+            className="flex h-14 w-14 shrink-0 items-center justify-center"
+            aria-label="RK Engineering home"
+          >
+            <img src={rkLogo} alt="RK Engineering & Galvanizers" width={56} height={56} className="h-14 w-14 object-contain" />
+          </Link>
 
-          <nav className="hidden h-full items-center gap-5 text-sm font-medium text-slate-800 lg:flex">
-            <a href="#" onClick={closeMenus} className="whitespace-nowrap transition-colors hover:text-blue-700">
-              Home
-            </a>
-            <a href="#about" onClick={closeMenus} className="whitespace-nowrap transition-colors hover:text-blue-700">
-              About Us
-            </a>
-            <a href="#process" onClick={closeMenus} className="whitespace-nowrap transition-colors hover:text-blue-700">
-              Services
-            </a>
+          <nav aria-label="Main navigation" className="hidden h-full items-center gap-3 text-xs font-medium lg:flex xl:gap-5 xl:text-sm">
+            {NAV_LINKS.slice(0, 3).map((link) => (
+              <NavLink key={link.label} to={link.to} onClick={closeMenus} className={linkClass} end={link.to === '/'}>
+                {link.label}
+              </NavLink>
+            ))}
 
             <div
-              className="relative flex h-full items-center"
-              onMouseEnter={() => setActiveDesktopMenu('products')}
-              onMouseLeave={() => setActiveDesktopMenu(null)}
+              ref={productMenuRef}
+              className="flex h-full items-center"
+              onMouseEnter={() => {
+                cancelProductMenuClose();
+                setActiveDesktopMenu('products');
+              }}
+              onMouseLeave={scheduleProductMenuClose}
             >
               <button
                 type="button"
                 aria-expanded={activeDesktopMenu === 'products'}
                 aria-haspopup="true"
-                onClick={() => setActiveDesktopMenu(activeDesktopMenu === 'products' ? null : 'products')}
+                onClick={() => {
+                  cancelProductMenuClose();
+                  setActiveDesktopMenu(activeDesktopMenu === 'products' ? null : 'products');
+                }}
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') setActiveDesktopMenu(null);
                 }}
-                className="inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700"
+                className={`inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 ${
+                  location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : 'text-slate-800'
+                }`}
               >
                 Products
                 <ChevronDown className={`h-4 w-4 transition-transform ${activeDesktopMenu === 'products' ? 'rotate-180' : ''}`} />
               </button>
               {activeDesktopMenu === 'products' && (
                 <div
-                  className="fixed z-[60] rounded-b-xl border border-slate-100 bg-white p-6 shadow-2xl sm:p-8"
-                  style={{
-                    top: 'calc(var(--header-height) + 1px)',
-                    left: '50%',
-                    width: 'min(1080px, calc(100vw - 32px))',
-                    transform: 'translateX(-50%)',
-                  }}
+                  className="absolute left-1/2 top-full z-50 w-[min(92vw,80rem)] max-h-[75svh] -translate-x-1/2 overflow-y-auto rounded-b-xl border border-slate-200 bg-white p-4 shadow-2xl sm:rounded-xl sm:p-5"
+                  onMouseEnter={cancelProductMenuClose}
+                  onMouseLeave={scheduleProductMenuClose}
                 >
-                  <div
-                    className="grid gap-x-8 gap-y-7"
-                    style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}
-                  >
-                    {PRODUCT_GROUPS.map((group) => (
-                      <div key={group.title} className={group.title === 'Hot Dip Galvanizing' ? 'col-span-2' : ''}>
-                        <h2 className="mb-3 text-lg font-extrabold tracking-tight text-blue-950">{group.title}</h2>
-                        <ul className={group.title === 'Hot Dip Galvanizing' ? 'grid grid-cols-2 gap-x-6' : 'space-y-2'}>
-                          {group.items.map((item) => (
-                            <li key={item}>
-                              <a
-                                href="#products"
-                                onClick={closeMenus}
-                                className="group flex items-center gap-3 rounded-sm py-1 text-sm text-slate-600 transition-colors hover:text-blue-800"
-                              >
-                                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-900" />
-                                <span className="group-hover:underline group-hover:underline-offset-2">{item}</span>
-                              </a>
-                            </li>
+                  <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-red-600">Product Directory</p>
+                      <p className="mt-1 text-xs text-slate-500">Browse product families and types</p>
+                    </div>
+                    <Link
+                      to="/products"
+                      onClick={closeMenus}
+                      className="inline-flex items-center justify-center rounded-md bg-blue-950 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
+                    >
+                      All Products
+                    </Link>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                    {PRODUCT_LINK_GROUPS.map((group) => (
+                      <section key={group.label} className="min-w-0 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
+                        <div className="border-b border-slate-200 px-2 pb-2">
+                          <h3 className="text-xs font-bold uppercase leading-snug tracking-wide text-blue-950">{group.label}</h3>
+                        </div>
+                        <div className="pt-1">
+                          {group.products.map((product) => (
+                            <Link
+                              key={product.slug}
+                              to={`/products/${product.slug}`}
+                              onClick={closeMenus}
+                              className={`block rounded-md px-2 py-2 text-sm leading-snug transition-colors hover:bg-white hover:text-blue-800 ${
+                                location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-700'
+                              }`}
+                            >
+                              {product.label}
+                            </Link>
                           ))}
-                        </ul>
-                      </div>
+                        </div>
+                        {group.additionalGroup && (
+                          <div className="mt-2 border-t border-slate-200 pt-2">
+                            <h3 className="px-2 pb-1 text-xs font-bold uppercase leading-snug tracking-wide text-blue-950">{group.additionalGroup.label}</h3>
+                            {group.additionalGroup.products.map((product) => (
+                              <Link
+                                key={product.slug}
+                                to={`/products/${product.slug}`}
+                                onClick={closeMenus}
+                                className={`block rounded-md px-2 py-2 text-sm leading-snug transition-colors hover:bg-white hover:text-blue-800 ${
+                                  location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-700'
+                                }`}
+                              >
+                                {product.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </section>
                     ))}
                   </div>
                 </div>
@@ -160,7 +236,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') setActiveDesktopMenu(null);
                 }}
-                className="inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700"
+                className={`inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 ${
+                  SHOWCASE_LINKS.some((link) => link.to === location.pathname) ? 'font-bold text-blue-900' : 'text-slate-800'
+                }`}
               >
                 Showcase
                 <ChevronDown className={`h-4 w-4 transition-transform ${activeDesktopMenu === 'showcase' ? 'rotate-180' : ''}`} />
@@ -168,41 +246,49 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
               {activeDesktopMenu === 'showcase' && (
                 <div className="absolute left-0 top-full z-50 w-64 rounded-b-xl border border-slate-100 bg-white p-3 shadow-2xl">
                   {SHOWCASE_LINKS.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
+                    <Link
+                      key={link.to}
+                      to={link.to}
                       onClick={closeMenus}
                       className="block rounded-md px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-800"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
-            <a href="#about" onClick={closeMenus} className="whitespace-nowrap transition-colors hover:text-blue-700">
+            <NavLink to="/associations" onClick={closeMenus} className={linkClass}>
               Our Association
-            </a>
-            <a href="#faq" onClick={closeMenus} className="whitespace-nowrap transition-colors hover:text-blue-700">
+            </NavLink>
+            <Link
+              to="/blog"
+              onClick={closeMenus}
+              className={`whitespace-nowrap transition-colors hover:text-blue-700 ${location.pathname === '/blog' ? 'font-bold text-blue-900' : 'text-slate-800'}`}
+            >
               Blog
-            </a>
+            </Link>
           </nav>
 
           <div className="hidden shrink-0 items-center lg:flex">
-            <button
-              type="button"
-              onClick={openRFQ}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-950 px-5 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
+            <NavLink
+              to="/contact"
+              onClick={closeMenus}
+              className={({ isActive }) =>
+                `inline-flex items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-white shadow-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950 ${
+                  isActive ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-950 hover:bg-blue-900'
+                }`
+              }
             >
               <Phone aria-hidden="true" className="h-4 w-4" />
-              <span>Contact Us</span>
-            </button>
+              Contact Us
+            </NavLink>
           </div>
 
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen((open) => !open)}
             className="rounded-md p-2 text-slate-700 transition-colors hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-blue-600 lg:hidden"
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
@@ -214,34 +300,46 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
 
       {mobileMenuOpen && (
         <div className="max-h-[calc(100svh-5rem)] overflow-y-auto border-t border-slate-100 bg-white px-5 py-4 shadow-lg lg:hidden">
-          <nav className="flex flex-col text-sm font-medium text-slate-800">
-            <a href="#" onClick={closeMenus} className="py-3">Home</a>
-            <a href="#about" onClick={closeMenus} className="py-3">About Us</a>
-            <a href="#process" onClick={closeMenus} className="py-3">Services</a>
+          <nav aria-label="Mobile navigation" className="flex flex-col text-sm font-medium text-slate-800">
+            {NAV_LINKS.slice(0, 3).map((link) => (
+              <NavLink
+                key={link.label}
+                to={link.to}
+                onClick={closeMenus}
+                className={({ isActive }) => `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`}
+                end={link.to === '/'}
+              >
+                {link.label}
+              </NavLink>
+            ))}
 
             <button
               type="button"
-              onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+              onClick={() => setMobileProductsOpen((open) => !open)}
               aria-expanded={mobileProductsOpen}
-              className="flex items-center justify-between py-3 text-left"
+              className={`flex items-center justify-between py-3 text-left ${location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : ''}`}
             >
               Products
               <ChevronDown className={`h-4 w-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
             </button>
             {mobileProductsOpen && (
-              <div className="space-y-4 pb-4 pl-3">
-                {PRODUCT_GROUPS.map((group) => (
-                  <div key={group.title}>
-                    <h2 className="pb-1 font-bold text-blue-950">{group.title}</h2>
-                    <ul className="space-y-1 border-l border-slate-200 pl-3">
-                      {group.items.map((item) => (
-                        <li key={item}>
-                          <a href="#products" onClick={closeMenus} className="block py-1.5 text-slate-600 hover:text-blue-800">
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+              <div className="pb-2 pl-3">
+                <Link to="/products" onClick={closeMenus} className="block py-2 font-bold text-red-600">All Products</Link>
+                {PRODUCT_LINK_GROUPS.map((group) => (
+                  <div key={group.label} className="border-t border-slate-100 py-2 first:border-t-0">
+                    <p className="py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{group.label}</p>
+                    {group.products.map((product) => (
+                      <Link
+                        key={product.slug}
+                        to={`/products/${product.slug}`}
+                        onClick={closeMenus}
+                        className={`block py-2 transition-colors hover:text-blue-800 ${
+                          location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-600'
+                        }`}
+                      >
+                        {product.label}
+                      </Link>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -249,7 +347,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
 
             <button
               type="button"
-              onClick={() => setMobileShowcaseOpen(!mobileShowcaseOpen)}
+              onClick={() => setMobileShowcaseOpen((open) => !open)}
               aria-expanded={mobileShowcaseOpen}
               className="flex items-center justify-between py-3 text-left"
             >
@@ -259,24 +357,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRFQ }) => {
             {mobileShowcaseOpen && (
               <div className="pb-2 pl-3">
                 {SHOWCASE_LINKS.map((link) => (
-                  <a key={link.label} href={link.href} onClick={closeMenus} className="block py-2 text-slate-600 hover:text-blue-800">
+                  <Link key={link.to} to={link.to} onClick={closeMenus} className="block py-2 text-slate-600 hover:text-blue-800">
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
 
-            <a href="#about" onClick={closeMenus} className="py-3">Our Association</a>
-            <a href="#faq" onClick={closeMenus} className="py-3">Blog</a>
-            <button
-              type="button"
-              onClick={openRFQ}
+            <NavLink to="/associations" onClick={closeMenus} className={({ isActive }) => `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`}>
+              Our Association
+            </NavLink>
+            <Link to="/blog" onClick={closeMenus} className={`py-3 ${location.pathname === '/blog' ? 'font-bold text-blue-900' : ''}`}>Blog</Link>
+            <NavLink
+              to="/contact"
+              onClick={closeMenus}
               className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-blue-950 px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-blue-900"
             >
               <Phone aria-hidden="true" className="h-4 w-4" />
               Contact Us
-              <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-            </button>
+            </NavLink>
           </nav>
         </div>
       )}

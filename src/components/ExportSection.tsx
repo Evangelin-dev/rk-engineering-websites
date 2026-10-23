@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
 import { 
   Globe2, 
   Container, 
@@ -39,7 +40,7 @@ export const ExportSection: React.FC<ExportSectionProps> = ({ onOpenRFQ }) => {
         <div className="mb-14 rounded-lg overflow-hidden border border-slate-200 bg-slate-50 grid grid-cols-1 lg:grid-cols-12 items-stretch shadow-sm">
           <div className="lg:col-span-6 relative min-h-[280px] lg:min-h-full">
             <img
-              src="/src/assets/images/global_export_shipping_1792669706316.jpg"
+              src={exportImage}
               alt="Export shipping crates and container port logistics for RK Engineering cable trays"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

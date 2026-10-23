@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { INDUSTRIES, IndustryItem } from '../data/company.ts';
 import { 
   Zap, 
@@ -27,7 +28,7 @@ const SECTOR_ICONS: Record<string, React.ElementType> = {
 };
 
 export const IndustriesSection: React.FC = () => {
-  const [activeSectorId, setActiveSectorId] = useState<string>(INDUSTRIES[0].id);
+  const [activeSectorId, setActiveSectorId] = useState<string>('water-treatment');
 
   const selectedSector = INDUSTRIES.find((i) => i.id === activeSectorId) || INDUSTRIES[0];
   const ActiveIcon = SECTOR_ICONS[selectedSector.id] || Zap;
@@ -125,10 +126,10 @@ export const IndustriesSection: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-              <span>Need custom design calculations for this application?</span>
-              <a href="#calculator" className="text-blue-700 hover:text-blue-900 font-semibold">
-                Open Engineering Calculator &rarr;
-              </a>
+              <span>Need a project-specific solution for this application?</span>
+              <Link to="/contact" className="text-blue-700 hover:text-blue-900 font-semibold">
+                Discuss your requirements &rarr;
+              </Link>
             </div>
           </div>
 
