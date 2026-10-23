@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Mail, MapPin, PhoneCall } from 'lucide-react';
+import rkLogo from '../assets/images/rk.png';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,9 +12,9 @@ export const Footer: React.FC = () => {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <span className="text-base sm:text-lg font-bold text-white tracking-tight block">
-              RK Engineering & Galvanizers Pvt. Ltd.
-            </span>
+            <Link to="/" aria-label="RK Engineering home" className="inline-flex rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              <img src={rkLogo} alt="RK Engineering & Galvanizers" className="h-16 w-24 object-contain object-left" />
+            </Link>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               Industrial Cable Tray Manufacturer & Exporter from India. Specialising in hot-dip galvanized cable trays, raceways, earthing materials, and solar mounting structures for global infrastructure.
             </p>

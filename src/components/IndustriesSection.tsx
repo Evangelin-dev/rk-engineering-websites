@@ -34,107 +34,107 @@ export const IndustriesSection: React.FC = () => {
   const ActiveIcon = SECTOR_ICONS[selectedSector.id] || Zap;
 
   return (
-    <section className="py-20 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="text-xs font-semibold tracking-wider uppercase text-red-600 mb-2 font-bold">
-            Target Applications · Critical Infrastructure
+    <section className="relative isolate overflow-hidden border-b border-blue-900 bg-blue-950 py-16 text-white sm:py-20">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 h-[32rem] w-[32rem] rounded-full border border-white/5" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 h-[24rem] w-[24rem] rounded-full border border-white/5" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid gap-5 lg:mb-12 lg:grid-cols-2 lg:items-end">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-red-400">
+              Applications Across Industries
+            </p>
+            <h2 className="text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
+              Industries We Serve
+            </h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight text-balance">
-            Industries We Serve
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-            RK Engineering's cable management and galvanized steel product range serves a variety of industrial and infrastructure applications. Product suitability, environmental conditions, and applicable standards should be confirmed for each application.
+          <p className="max-w-2xl text-sm leading-relaxed text-blue-100 sm:text-base lg:justify-self-end">
+            RK Engineering&apos;s cable management and galvanized steel product range serves a variety of industrial and infrastructure applications. Product suitability, environmental conditions, and applicable standards should be confirmed for each application.
           </p>
         </div>
 
-        {/* Interactive Industry Explorer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Sector Selector List */}
-          <div className="lg:col-span-5 space-y-2">
+        <div className="grid items-start gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:gap-7">
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
             {INDUSTRIES.map((sector) => {
               const Icon = SECTOR_ICONS[sector.id] || Zap;
               const isActive = sector.id === activeSectorId;
               return (
                 <button
                   key={sector.id}
+                  type="button"
                   onClick={() => setActiveSectorId(sector.id)}
-                  className={`w-full text-left p-3.5 rounded-lg border transition-all flex items-center justify-between cursor-pointer ${
+                  aria-pressed={isActive}
+                  className={`group flex min-h-[58px] w-full cursor-pointer items-center justify-between gap-3 rounded-lg border px-3.5 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
                     isActive
-                      ? 'bg-blue-900 border-blue-900 text-white shadow-md'
-                      : 'bg-slate-50 border-slate-200 hover:border-blue-300 text-slate-700 hover:text-slate-900'
+                      ? 'border-red-500/70 bg-white text-blue-950 shadow-lg'
+                      : 'border-white/10 bg-white/[0.04] text-blue-50 hover:border-white/25 hover:bg-white/[0.09]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`p-2 rounded ${isActive ? 'bg-red-600 text-white' : 'bg-white text-blue-900 border border-slate-200'}`}>
-                      <Icon className="w-4 h-4" />
+                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md ${
+                      isActive ? 'bg-red-600 text-white' : 'border border-white/10 bg-blue-900/70 text-blue-200'
+                    }`}>
+                      <Icon aria-hidden="true" className="h-4 w-4" />
                     </span>
-                    <span className="text-xs sm:text-sm font-semibold tracking-tight">
+                    <span className="text-sm font-semibold tracking-tight">
                       {sector.name}
                     </span>
                   </div>
-                  <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? 'text-red-400 translate-x-1' : 'text-slate-400'}`} />
+                  <ChevronRight aria-hidden="true" className={`h-4 w-4 shrink-0 transition-transform ${isActive ? 'translate-x-1 text-red-600' : 'text-blue-300 group-hover:translate-x-1'}`} />
                 </button>
               );
             })}
           </div>
 
-          {/* Detailed Sector Spotlight Card (Light) */}
-          <div className="lg:col-span-7 p-6 sm:p-8 rounded-lg bg-slate-50 border border-slate-200 space-y-6 shadow-sm">
-            <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
-              <span className="p-3 rounded-lg bg-red-600 text-white shadow-sm">
-                <ActiveIcon className="w-6 h-6" />
+          <article className="space-y-5 rounded-xl border border-slate-200 bg-white p-5 text-slate-900 shadow-xl sm:space-y-6 sm:p-7 lg:p-8">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-red-600 text-white shadow-sm">
+                <ActiveIcon aria-hidden="true" className="h-6 w-6" />
               </span>
               <div>
-                <span className="text-xs font-mono uppercase tracking-wider text-red-600 font-bold block">
+                <span className="block text-[11px] font-bold uppercase tracking-[0.16em] text-red-600">
                   Application Profile
                 </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                <h3 className="mt-1 text-xl font-extrabold tracking-tight sm:text-2xl">
                   {selectedSector.name}
                 </h3>
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+            <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
               {selectedSector.description}
             </p>
 
-            <div className="p-4 rounded-md bg-white border border-slate-200 shadow-sm">
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-500 block mb-1">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3.5">
+              <span className="mb-1 block text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 sm:text-xs">
                 Engineering Specification & Design Parameter
               </span>
-              <span className="text-xs sm:text-sm font-mono text-blue-900 font-bold">
+              <span className="font-mono text-xs font-bold leading-relaxed text-blue-900 sm:text-sm">
                 {selectedSector.specs}
               </span>
             </div>
 
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-900 block mb-3">
+              <span className="mb-3 block text-xs font-bold uppercase tracking-wider text-slate-900">
                 Tailored Cable Management & Steel Solutions:
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {selectedSector.solutions.map((sol, sIdx) => (
-                  <div key={sIdx} className="p-3 rounded-md bg-white border border-slate-200 flex items-start gap-2.5 shadow-sm">
-                    <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-                    <span className="text-xs text-slate-700">{sol}</span>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {selectedSector.solutions.map((solution) => (
+                  <div key={solution} className="flex items-start gap-2.5 rounded-lg border border-slate-200 bg-white p-3">
+                    <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
+                    <span className="text-sm leading-snug text-slate-700">{solution}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-              <span>Need a project-specific solution for this application?</span>
-              <Link to="/contact" className="text-blue-700 hover:text-blue-900 font-semibold">
-                Discuss your requirements &rarr;
+            <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+              <span className="text-slate-500">Need a project-specific solution for this application?</span>
+              <Link to="/contact" className="shrink-0 font-semibold text-blue-800 transition-colors hover:text-red-600">
+                Discuss your requirements <span aria-hidden="true">&rarr;</span>
               </Link>
             </div>
-          </div>
-
+          </article>
         </div>
-
       </div>
     </section>
   );
