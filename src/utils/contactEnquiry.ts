@@ -8,14 +8,19 @@ export type ContactEnquiryStatus = {
 export async function submitContactEnquiry(formData: ContactFormData): Promise<ContactEnquiryStatus> {
   const endpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
   if (!endpoint) {
-    const subject = encodeURIComponent(`Website enquiry: ${formData.product}`);
+    const subject = encodeURIComponent(
+      `Website enquiry${formData.enquiryType ? ` - ${formData.enquiryType}` : ''}: ${formData.product}`,
+    );
     const body = encodeURIComponent(
       [
         `Name: ${formData.name}`,
+        `Company: ${formData.companyName || 'Not provided'}`,
         `Mobile: ${formData.mobile}`,
         `Email: ${formData.email}`,
         `Country: ${formData.country || 'Not provided'}`,
         `Product: ${formData.product}`,
+        `Cable tray type: ${formData.cableTrayType || 'Not specified'}`,
+        `Enquiry type: ${formData.enquiryType || 'Not specified'}`,
         `Quantity: ${formData.quantity} m`,
         '',
         'Message:',

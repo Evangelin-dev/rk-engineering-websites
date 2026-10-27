@@ -7,6 +7,20 @@ import { ProductModal } from './components/ProductModal.tsx';
 import { ProductSpec } from './data/products.ts';
 import { AboutPage } from './pages/AboutPage.tsx';
 import { BlogPage } from './pages/BlogPage.tsx';
+import {
+  CableTrayExporterIndiaAfricaPage,
+  CableTrayManufacturerAfricaPage,
+  GalvanizedCableTrayAfricaPage,
+  LadderCableTrayAfricaPage,
+  PerforatedCableTrayAfricaPage,
+} from './pages/CableTrayAfricaPages.tsx';
+import {
+  CableTrayExporterUsaPage,
+  CableTrayManufacturerUsaPage,
+  GalvanizedCableTrayUsaPage,
+  OilGasCableTrayAfricaPage,
+  PowerEnergyCableTrayAfricaPage,
+} from './pages/CableTrayInternationalPages.tsx';
 import { AssociationsPage } from './pages/AssociationsPage.tsx';
 import { ContactPage } from './pages/ContactPage.tsx';
 import { ExportSolutionsPage } from './pages/ExportSolutionsPage.tsx';
@@ -33,22 +47,60 @@ const PAGE_TITLES: Record<string, string> = {
   '/gallery': 'Gallery',
   '/contact': 'Contact Us',
   '/blog': 'Blog',
+  '/cable-tray-manufacturer-africa': 'Cable Tray Manufacturer for Industrial Projects in Africa',
+  '/cable-tray-exporter-india-africa': 'Cable Tray Exporter from India to African Countries | Import Enquiries',
+  '/hot-dip-galvanized-cable-tray-africa': 'Hot Dip Galvanized Cable Tray Supplier for African Markets',
+  '/perforated-cable-tray-manufacturer-africa': 'Perforated Cable Tray Manufacturer for African Industrial Projects',
+  '/ladder-cable-tray-supplier-africa': 'Ladder Cable Tray Supplier for Power Projects in Africa',
+  '/cable-tray-oil-gas-projects-africa': 'Cable Tray Solutions for Oil and Gas Projects in Africa',
+  '/cable-tray-power-energy-projects-africa': 'Cable Tray Supplier for Power and Energy Projects in Africa',
+  '/cable-tray-manufacturer-usa': 'Cable Tray Manufacturer for Industrial Projects in the USA',
+  '/cable-tray-exporter-india-usa': 'Cable Tray Exporter from India to the USA',
+  '/hot-dip-galvanized-cable-tray-usa': 'Hot Dip Galvanized Cable Tray for US Industrial Applications',
 };
 
 const PAGE_DESCRIPTIONS: Record<string, string> = {
   '/products': 'Explore RK Engineering’s cable trays, earthing materials, solar mounting structures, hot-dip galvanized steel products, and towers for industrial and infrastructure projects.',
   '/services': 'Explore RK Engineering’s industrial hot-dip galvanizing services for cable trays, structural steel, earthing products, and suitable OEM-fabricated components.',
   '/about': 'Learn about RK Engineering & Galvanizers Pvt. Ltd., its cable tray manufacturing, in-house hot-dip galvanizing, industrial capabilities, quality systems, and international project enquiries.',
+  '/cable-tray-manufacturer-africa': 'Explore RK Engineering’s cable tray types, hot-dip galvanizing, industrial applications, stated manufacturing capacity, and export enquiry process for African projects.',
+  '/cable-tray-exporter-india-africa': 'African importers and distributors can review cable tray categories, minimum order quantities, quotation requirements, and destination-specific export arrangements from India.',
+  '/hot-dip-galvanized-cable-tray-africa': 'Review hot-dip galvanizing considerations, cable tray selection, industrial applications, buyer requirements, listed quality certifications, and export enquiries for African projects.',
+  '/perforated-cable-tray-manufacturer-africa': 'Explore perforated cable tray applications, selection factors, project requirements, African market enquiries, and quotation information from RK Engineering.',
+  '/ladder-cable-tray-supplier-africa': 'Review ladder cable tray applications for power plants and substations, engineering considerations, procurement requirements, and project enquiries.',
+  '/cable-tray-oil-gas-projects-africa': 'Cable tray applications for African oil and gas infrastructure, refineries, petrochemical facilities, pipeline systems, coastal sites, and project enquiries.',
+  '/cable-tray-power-energy-projects-africa': 'Explore cable tray options, applications, technical requirements, and enquiry information for African power generation and energy infrastructure projects.',
+  '/cable-tray-manufacturer-usa': 'US industrial buyers can review cable tray categories, manufacturing capacity, technical requirements, sourcing from India, and quotation information.',
+  '/cable-tray-exporter-india-usa': 'Information for US buyers sourcing cable trays from India, including product types, import and export documentation, packaging, shipping terms, and quotation requirements.',
+  '/hot-dip-galvanized-cable-tray-usa': 'Review galvanized cable tray benefits, product types, US industrial applications, technical specifications, and enquiry requirements from RK Engineering.',
 };
 
 const DEFAULT_PAGE_DESCRIPTION =
   'RK Engineering & Galvanizers Pvt. Ltd. manufactures cable trays, galvanized steel products, earthing materials, and solar mounting structures for industrial and infrastructure projects.';
+const PRODUCTION_ORIGIN = 'https://rkenggindia.com';
+const SEO_LANDING_PAGE_PATHS = [
+  '/cable-tray-manufacturer-africa',
+  '/cable-tray-exporter-india-africa',
+  '/hot-dip-galvanized-cable-tray-africa',
+  '/perforated-cable-tray-manufacturer-africa',
+  '/ladder-cable-tray-supplier-africa',
+  '/cable-tray-oil-gas-projects-africa',
+  '/cable-tray-power-energy-projects-africa',
+  '/cable-tray-manufacturer-usa',
+  '/cable-tray-exporter-india-usa',
+  '/hot-dip-galvanized-cable-tray-usa',
+] as const;
 
 function RoutedWebsite() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedProductForModal, setSelectedProductForModal] = useState<ProductSpec | null>(null);
-  const [rfqPreFill, setRfqPreFill] = useState<{ productName?: string; specs?: string }>({});
+  const [rfqPreFill, setRfqPreFill] = useState<{
+    productName?: string;
+    specs?: string;
+    cableTrayType?: string;
+    enquiryType?: string;
+  }>({});
 
   useEffect(() => {
     const isProductDetail = location.pathname.startsWith('/products/');
@@ -63,7 +115,17 @@ function RoutedWebsite() {
         document.head.append(metaDescription);
       }
       metaDescription.content = description ?? DEFAULT_PAGE_DESCRIPTION;
-      document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.remove();
+      let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      if (SEO_LANDING_PAGE_PATHS.includes(location.pathname as (typeof SEO_LANDING_PAGE_PATHS)[number])) {
+        if (!canonical) {
+          canonical = document.createElement('link');
+          canonical.rel = 'canonical';
+          document.head.append(canonical);
+        }
+        canonical.href = `${PRODUCTION_ORIGIN}${location.pathname}`;
+      } else {
+        canonical?.remove();
+      }
     }
     if (location.hash) {
       window.requestAnimationFrame(() => {
@@ -74,11 +136,18 @@ function RoutedWebsite() {
     }
   }, [location.hash, location.pathname]);
 
-  const handleOpenRFQ = (productName?: string, specs?: string) => {
-    if (productName || specs) {
+  const handleOpenRFQ = (
+    productName?: string,
+    specs?: string,
+    cableTrayType?: string,
+    enquiryType?: string,
+  ) => {
+    if (productName || specs || cableTrayType || enquiryType) {
       setRfqPreFill({
         productName: productName ?? rfqPreFill.productName,
         specs,
+        cableTrayType,
+        enquiryType,
       });
     }
     navigate('/contact');
@@ -101,6 +170,106 @@ function RoutedWebsite() {
               <HomePage
                 onOpenRFQ={() => handleOpenRFQ()}
                 onExploreProducts={() => navigate('/products')}
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-manufacturer-africa"
+            element={
+              <CableTrayManufacturerAfricaPage
+                onRequestQuote={(specs, cableTrayType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-exporter-india-africa"
+            element={
+              <CableTrayExporterIndiaAfricaPage
+                onRequestQuote={(specs, cableTrayType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/hot-dip-galvanized-cable-tray-africa"
+            element={
+              <GalvanizedCableTrayAfricaPage
+                onRequestQuote={(specs, cableTrayType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/perforated-cable-tray-manufacturer-africa"
+            element={
+              <PerforatedCableTrayAfricaPage
+                onRequestQuote={(specs, cableTrayType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/ladder-cable-tray-supplier-africa"
+            element={
+              <LadderCableTrayAfricaPage
+                onRequestQuote={(specs, cableTrayType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-oil-gas-projects-africa"
+            element={
+              <OilGasCableTrayAfricaPage
+                onRequestQuote={(specs, cableTrayType, enquiryType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType, enquiryType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-power-energy-projects-africa"
+            element={
+              <PowerEnergyCableTrayAfricaPage
+                onRequestQuote={(specs, cableTrayType, enquiryType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType, enquiryType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-manufacturer-usa"
+            element={
+              <CableTrayManufacturerUsaPage
+                onRequestQuote={(specs, cableTrayType, enquiryType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType, enquiryType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/cable-tray-exporter-india-usa"
+            element={
+              <CableTrayExporterUsaPage
+                onRequestQuote={(specs, cableTrayType, enquiryType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType, enquiryType)
+                }
+              />
+            }
+          />
+          <Route
+            path="/hot-dip-galvanized-cable-tray-usa"
+            element={
+              <GalvanizedCableTrayUsaPage
+                onRequestQuote={(specs, cableTrayType, enquiryType) =>
+                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType, enquiryType)
+                }
               />
             }
           />
@@ -138,6 +307,8 @@ function RoutedWebsite() {
               <ContactPage
                 preFilledProduct={rfqPreFill.productName}
                 preFilledSpecs={rfqPreFill.specs}
+                preFilledCableTrayType={rfqPreFill.cableTrayType}
+                preFilledEnquiryType={rfqPreFill.enquiryType}
               />
             }
           />

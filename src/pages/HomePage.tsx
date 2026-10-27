@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { FinalCTA } from '../components/FinalCTA.tsx';
 import { Highlights } from '../components/Highlights.tsx';
 import { Hero } from '../components/Hero.tsx';
 import { IndustriesSection } from '../components/IndustriesSection.tsx';
 import { FAQSection } from '../components/FAQSection.tsx';
 import { PRODUCTS } from '../data/products.ts';
-import { Link } from 'react-router-dom';
 import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
 import fabricationImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
 import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
@@ -42,6 +43,101 @@ const PROCESS_STEPS = [
   },
 ] as const;
 
+const CABLE_TRAY_CTA_CARDS = [
+  {
+    label: 'Industrial projects',
+    region: 'Africa',
+    title: 'Cable Tray Solutions for African Projects',
+    description:
+      'Explore cable tray types, industrial applications, galvanizing capabilities, manufacturing capacity, and the export enquiry process.',
+    action: 'Explore Industrial Solutions',
+    path: '/cable-tray-manufacturer-africa',
+  },
+  {
+    label: 'Importers & distributors',
+    region: 'Africa',
+    title: 'Cable Tray Exporter from India to Africa',
+    description:
+      'Review bulk order requirements, destination information, quotation requirements, and how to enquire about importing cable trays from India.',
+    action: 'Explore Export Options',
+    path: '/cable-tray-exporter-india-africa',
+  },
+  {
+    label: 'Corrosion protection',
+    region: 'Africa',
+    title: 'Hot Dip Galvanized Cable Trays',
+    description:
+      'Review coating considerations, industrial applications, buyer requirements, and galvanized tray export enquiries.',
+    action: 'Explore Galvanized Solutions',
+    path: '/hot-dip-galvanized-cable-tray-africa',
+  },
+  {
+    label: 'Industrial cable management',
+    region: 'Africa',
+    title: 'Perforated Cable Trays',
+    description:
+      'Explore perforated tray applications, selection considerations, and project-based requirements for African markets.',
+    action: 'Explore Perforated Trays',
+    path: '/perforated-cable-tray-manufacturer-africa',
+  },
+  {
+    label: 'Power infrastructure',
+    region: 'Africa',
+    title: 'Ladder Cable Trays for Power Projects',
+    description:
+      'Review ladder tray applications, engineering considerations, and quotation information for power projects.',
+    action: 'Explore Ladder Trays',
+    path: '/ladder-cable-tray-supplier-africa',
+  },
+  {
+    label: 'Oil & gas',
+    region: 'Africa',
+    title: 'Oil & Gas Cable Tray Solutions — Africa',
+    description:
+      'Review cable management applications for refineries, petrochemical facilities, terminals, pipelines, and coastal sites.',
+    action: 'Explore Oil & Gas Solutions',
+    path: '/cable-tray-oil-gas-projects-africa',
+  },
+  {
+    label: 'Power & energy',
+    region: 'Africa',
+    title: 'Power & Energy Cable Tray Solutions — Africa',
+    description:
+      'Explore tray categories and requirements for power generation, substations, transmission, distribution, and renewables.',
+    action: 'Explore Power Solutions',
+    path: '/cable-tray-power-energy-projects-africa',
+  },
+  {
+    label: 'Industrial projects',
+    region: 'United States',
+    title: 'Industrial Cable Tray Manufacturer — USA',
+    description:
+      'Review product categories, sourcing from India, technical requirements, packaging, and US buyer enquiries.',
+    action: 'Explore US Industrial Solutions',
+    path: '/cable-tray-manufacturer-usa',
+  },
+  {
+    label: 'Importers',
+    region: 'United States',
+    title: 'Cable Tray Exporter from India to the USA',
+    description:
+      'Explore US import considerations, export documents, packaging, shipping terms, and cable tray quotation details.',
+    action: 'Explore Export Options',
+    path: '/cable-tray-exporter-india-usa',
+  },
+  {
+    label: 'Galvanized products',
+    region: 'United States',
+    title: 'Hot Dip Galvanized Cable Trays — USA',
+    description:
+      'Review galvanized tray types, industrial applications, coating specifications, and US compliance confirmation.',
+    action: 'Explore Galvanized Solutions',
+    path: '/hot-dip-galvanized-cable-tray-usa',
+  },
+] as const;
+
+type CtaRegionFilter = 'All' | (typeof CABLE_TRAY_CTA_CARDS)[number]['region'];
+
 interface TimelineLine {
   horizontal: boolean;
   left: number;
@@ -59,6 +155,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
       !('IntersectionObserver' in window),
   );
   const [activeProcessStep, setActiveProcessStep] = useState<number | null>(null);
+  const [ctaRegionFilter, setCtaRegionFilter] = useState<CtaRegionFilter>('All');
   const [timelineLine, setTimelineLine] = useState<TimelineLine>({
     horizontal: false,
     left: 0,
@@ -276,6 +373,78 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+      <section className="border-b border-slate-200 bg-slate-50 py-14 sm:py-18 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">Cable Tray Enquiries</p>
+              <h2 className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+                Cable Tray Export &amp; Industrial Solutions
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-slate-600">
+                Find project and sourcing information by market. Select a guide to review products, requirements, and enquiry details.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter cable tray guides by market">
+              {(['All', 'Africa', 'United States'] as const).map((region) => {
+                const count = region === 'All'
+                  ? CABLE_TRAY_CTA_CARDS.length
+                  : CABLE_TRAY_CTA_CARDS.filter((card) => card.region === region).length;
+                const isSelected = ctaRegionFilter === region;
+                return (
+                  <button
+                    key={region}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => setCtaRegionFilter(region)}
+                    className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 ${
+                      isSelected
+                        ? 'border-blue-950 bg-blue-950 text-white'
+                        : 'border-slate-300 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-950'
+                    }`}
+                  >
+                    {region === 'All' ? 'All guides' : region}
+                    <span className={`rounded-full px-2 py-0.5 text-xs ${isSelected ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <p className="sr-only" aria-live="polite">
+            Showing {ctaRegionFilter === 'All' ? CABLE_TRAY_CTA_CARDS.length : CABLE_TRAY_CTA_CARDS.filter((card) => card.region === ctaRegionFilter).length}
+            {' '}cable tray {ctaRegionFilter === 'All' ? 'guides' : `guides for ${ctaRegionFilter}`}.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-label="Cable tray solution guides">
+            {CABLE_TRAY_CTA_CARDS
+              .filter((card) => ctaRegionFilter === 'All' || card.region === ctaRegionFilter)
+              .map((card) => (
+                <Link
+                  key={card.path}
+                  to={card.path}
+                  className="group flex min-h-full flex-col rounded-xl border border-slate-200 border-t-4 border-t-blue-950 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:border-t-red-600 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transform-none motion-reduce:transition-none sm:p-6"
+                  aria-label={`${card.action}: ${card.title}`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-bold uppercase tracking-[0.13em] text-blue-900">{card.label}</span>
+                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                      {card.region}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-blue-900 sm:text-xl">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{card.description}</p>
+                  <span className="mt-6 inline-flex min-h-11 w-full items-center justify-between gap-3 rounded-lg bg-blue-950 px-4 py-3 text-sm font-bold text-white transition-colors group-hover:bg-red-600">
+                    <span>{card.action}</span>
+                    <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transform-none" />
+                  </span>
+                </Link>
+              ))}
           </div>
         </div>
       </section>

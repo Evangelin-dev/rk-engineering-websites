@@ -1,5 +1,8 @@
 export interface ContactFormData {
   name: string;
+  companyName?: string;
+  cableTrayType?: string;
+  enquiryType?: string;
   mobile: string;
   email: string;
   country: string;

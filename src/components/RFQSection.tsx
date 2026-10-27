@@ -7,6 +7,8 @@ import { submitContactEnquiry, type ContactEnquiryStatus } from '../utils/contac
 interface RFQSectionProps {
   preFilledProduct?: string;
   preFilledSpecs?: string;
+  preFilledCableTrayType?: string;
+  preFilledEnquiryType?: string;
 }
 
 const inputClasses =
@@ -14,9 +16,17 @@ const inputClasses =
 
 const RequiredMark = () => <span aria-hidden="true" className="ml-1 text-red-600">*</span>;
 
-export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFilledSpecs }) => {
+export const RFQSection: React.FC<RFQSectionProps> = ({
+  preFilledProduct,
+  preFilledSpecs,
+  preFilledCableTrayType,
+  preFilledEnquiryType,
+}) => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
+    companyName: '',
+    cableTrayType: '',
+    enquiryType: '',
     mobile: '',
     email: '',
     country: '',
@@ -28,23 +38,32 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
   const [status, setStatus] = useState<ContactEnquiryStatus | null>(null);
 
   useEffect(() => {
-    if (!preFilledProduct && !preFilledSpecs) return;
+    if (!preFilledProduct && !preFilledSpecs && !preFilledCableTrayType && !preFilledEnquiryType) return;
     const matchingProduct = PRODUCT_DETAILS.find((product) => product.name === preFilledProduct);
-    const productGroup = MAIN_PRODUCTS.find((group) => group.id === matchingProduct?.group);
+    const productGroup =
+      MAIN_PRODUCTS.find((group) => group.id === matchingProduct?.group) ??
+      MAIN_PRODUCTS.find((group) => group.name === preFilledProduct);
     setFormData((current) => ({
       ...current,
       product: productGroup?.name ?? current.product,
       quantity: productGroup ? current.quantity || '500' : current.quantity,
+      cableTrayType: preFilledCableTrayType ?? current.cableTrayType,
+      enquiryType: preFilledEnquiryType ?? current.enquiryType,
       message: preFilledSpecs ?? (matchingProduct ? `Product of interest: ${matchingProduct.name}` : current.message),
     }));
-  }, [preFilledProduct, preFilledSpecs]);
+  }, [preFilledProduct, preFilledSpecs, preFilledCableTrayType, preFilledEnquiryType]);
 
   const updateField = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = event.currentTarget;
     setFormData((current) => ({
       ...current,
       [name]: value,
-      ...(name === 'product' ? { quantity: value ? '500' : '' } : {}),
+      ...(name === 'product'
+        ? {
+            quantity: value ? '500' : '',
+            cableTrayType: value === 'Cable Trays & Ducts' ? current.cableTrayType ?? '' : '',
+          }
+        : {}),
     }));
     setStatus(null);
   };
@@ -138,6 +157,25 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                 </div>
 
                 <div>
+                  <label htmlFor="contact-company" className="text-sm font-bold text-slate-800">
+                    Company Name
+                  </label>
+                  <input
+                    id="contact-company"
+                    name="companyName"
+                    type="text"
+                    autoComplete="organization"
+                    maxLength={150}
+                    value={formData.companyName ?? ''}
+                    onChange={updateField}
+                    placeholder="Enter your company name"
+                    className={inputClasses}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-3 lg:grid-cols-2">
+                <div>
                   <label htmlFor="contact-mobile" className="text-sm font-bold text-slate-800">
                     Mobile Number<RequiredMark />
                   </label>
@@ -158,9 +196,7 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                     className={inputClasses}
                   />
                 </div>
-              </div>
 
-              <div className="grid gap-3 lg:grid-cols-2">
                 <div>
                   <label htmlFor="contact-email" className="text-sm font-bold text-slate-800">
                     Email<RequiredMark />
@@ -179,8 +215,11 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                   />
                 </div>
 
+              </div>
+
+              <div className="grid items-start gap-3 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="contact-country" className="text-sm font-bold text-slate-800">Country</label>
+                  <label htmlFor="contact-country" className="text-sm font-bold text-slate-800">Destination Country</label>
                   <input
                     id="contact-country"
                     name="country"
@@ -189,13 +228,11 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                     maxLength={100}
                     value={formData.country}
                     onChange={updateField}
-                    placeholder="Enter Your Country"
+                    placeholder="Enter your destination country"
                     className={inputClasses}
                   />
                 </div>
-              </div>
 
-              <div className="grid items-start gap-3 sm:grid-cols-2">
                 <div>
                   <label htmlFor="contact-product" className="text-sm font-bold text-slate-800">
                     Products<RequiredMark />
@@ -212,6 +249,50 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                     {MAIN_PRODUCTS.map((product) => (
                       <option key={product.id} value={product.name}>{product.name}</option>
                     ))}
+                  </select>
+                </div>
+
+                {formData.product === 'Cable Trays & Ducts' && (
+                  <div>
+                    <label htmlFor="contact-cable-tray-type" className="text-sm font-bold text-slate-800">
+                      Cable Tray Type<RequiredMark />
+                    </label>
+                    <select
+                      id="contact-cable-tray-type"
+                      name="cableTrayType"
+                      required
+                      value={formData.cableTrayType ?? ''}
+                      onChange={updateField}
+                      className={`${inputClasses} cursor-pointer`}
+                    >
+                      <option value="">--- Select Cable Tray Type ---</option>
+                      <option value="Perforated Cable Tray">Perforated Cable Tray</option>
+                      <option value="Ladder Type Cable Tray">Ladder Type Cable Tray</option>
+                      <option value="Raceway Cable Tray">Raceway Cable Tray</option>
+                      <option value="Cable Tray Duct">Cable Tray Duct</option>
+                      <option value="Not sure / Other">Not sure / Other</option>
+                    </select>
+                  </div>
+                )}
+
+                <div>
+                  <label htmlFor="contact-enquiry-type" className="text-sm font-bold text-slate-800">
+                    Enquiry Type
+                  </label>
+                  <select
+                    id="contact-enquiry-type"
+                    name="enquiryType"
+                    value={formData.enquiryType ?? ''}
+                    onChange={updateField}
+                    className={`${inputClasses} cursor-pointer`}
+                  >
+                    <option value="">--- Select Enquiry Type ---</option>
+                    <option value="Oil and Gas Project Enquiry">Oil and Gas Project</option>
+                    <option value="Power and Energy Project Enquiry">Power and Energy Project</option>
+                    <option value="US Industrial Manufacturing Enquiry">US Industrial Manufacturing</option>
+                    <option value="US Export / Import Enquiry">US Export / Import</option>
+                    <option value="US Galvanized Cable Tray Enquiry">US Galvanized Cable Tray</option>
+                    <option value="African Export Enquiry">African Export</option>
                   </select>
                 </div>
 
@@ -259,7 +340,7 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
                   maxLength={5000}
                   value={formData.message}
                   onChange={updateField}
-                  placeholder="Enter your message"
+                  placeholder="Share dimensions, material or coating requirements, destination details, and project specifications or drawings."
                   className={`${inputClasses} min-h-28 resize-y`}
                 />
               </div>

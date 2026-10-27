@@ -142,47 +142,60 @@ export const Navbar: React.FC = () => {
                 onMouseEnter={cancelProductMenuClose}
                 onMouseLeave={scheduleProductMenuClose}
               >
-                  <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-4">
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-red-600">Product Directory</p>
-                      <p className="mt-1 text-xs text-slate-500">Browse product families and types</p>
-                    </div>
-                    <Link
-                      to="/products"
-                      onClick={closeMenus}
-                      className="inline-flex items-center justify-center rounded-md bg-blue-950 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
-                    >
-                      All Products
-                    </Link>
-                  </div>
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                    {PRODUCT_NAVIGATION_CATEGORIES.map((category) => (
-                      <section key={category.id} className="min-w-0 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
+                <div className="mb-4 flex justify-end">
+                  <Link
+                    to="/products"
+                    onClick={closeMenus}
+                    className="text-xs font-semibold text-blue-900 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
+                  >
+                    View all products
+                  </Link>
+                </div>
+                <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
+                  {PRODUCT_NAVIGATION_CATEGORIES.map((category) => {
+                    const products = getProductNavigationProducts(category);
+                    const isGalvanizedCategory = category.id === 'galvanized-steel';
+                    const galvanizedMidpoint = Math.ceil(products.length / 2);
+                    const productColumns = isGalvanizedCategory
+                      ? [products.slice(0, galvanizedMidpoint), products.slice(galvanizedMidpoint)]
+                      : [products];
+
+                    return (
+                      <section
+                        key={category.id}
+                        className={`min-w-0 ${isGalvanizedCategory ? 'sm:col-span-2 lg:col-span-2' : ''}`}
+                      >
                         <Link
                           to={`/products?category=${category.id}`}
                           onClick={closeMenus}
-                          className="block border-b border-slate-200 px-2 pb-2 text-xs font-bold uppercase leading-snug tracking-wide text-blue-950 transition-colors hover:text-red-600"
+                          className="mb-3 block text-lg font-extrabold leading-snug text-blue-950 transition-colors hover:text-red-600"
                         >
                           {category.label}
                         </Link>
-                        <div className="pt-1">
-                          {getProductNavigationProducts(category).map((product) => (
-                            <Link
-                              key={product.slug}
-                              to={`/products/${product.slug}`}
-                              onClick={closeMenus}
-                              className={`block rounded-md px-2 py-2 text-sm leading-snug transition-colors hover:bg-white hover:text-blue-800 ${
-                                location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-700'
-                              }`}
-                            >
-                              {product.navigationLabel ?? product.name}
-                            </Link>
+                        <div className={`grid ${isGalvanizedCategory ? 'gap-x-8 sm:grid-cols-2' : ''}`}>
+                          {productColumns.map((column, columnIndex) => (
+                            <ul key={columnIndex} className="list-disc space-y-2 pl-5 marker:text-blue-900">
+                              {column.map((product) => (
+                                <li key={product.slug} className="pl-0.5">
+                                  <Link
+                                    to={`/products/${product.slug}`}
+                                    onClick={closeMenus}
+                                    className={`text-sm leading-snug transition-colors hover:text-blue-900 ${
+                                      location.pathname === `/products/${product.slug}` ? 'font-semibold text-blue-900' : 'text-slate-600'
+                                    }`}
+                                  >
+                                    {product.navigationLabel ?? product.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
                           ))}
                         </div>
                       </section>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
+              </div>
             </div>
 
             <div
