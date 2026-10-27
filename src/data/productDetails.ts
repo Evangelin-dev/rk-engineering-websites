@@ -13,12 +13,15 @@ export interface ProductDetail {
   slug: string;
   name: string;
   group: string;
+  navigationLabel?: string;
   image: ProductImage;
   imageAlt?: string;
   description: string;
   overview: string;
   applications: string[];
   requirements: string[];
+  technicalSpecifications?: string[];
+  variants?: string[];
   faqs: ProductFaq[];
   related: string[];
 }
@@ -30,6 +33,80 @@ export interface ProductGroup {
   exportText: string;
   exportRequirements: string[];
 }
+
+export interface ProductNavigationCategory {
+  id: string;
+  label: string;
+  backLabel: string;
+  group: string;
+  productSlugs: string[];
+}
+
+export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
+  {
+    id: 'cable-trays',
+    label: 'Cable Tray',
+    backLabel: 'Cable Tray & Duct Products',
+    group: 'cable',
+    productSlugs: ['perforated-cable-trays', 'ladder-cable-trays', 'raceway-cable-trays', 'cable-tray-ducts'],
+  },
+  {
+    id: 'earthing',
+    label: 'Earthing Materials',
+    backLabel: 'Earthing Materials',
+    group: 'earthing',
+    productSlugs: ['earthing-flats', 'earthing-electrodes', 'junction-boxes', 'gi-wire', 'copper-earthing-strips'],
+  },
+  {
+    id: 'solar',
+    label: 'Solar Mounting Structure',
+    backLabel: 'Solar Mounting Structures',
+    group: 'solar',
+    productSlugs: [
+      'ground-mounted-solar-structures',
+      'rooftop-solar-structures',
+      'solar-tracker-structures',
+      'solar-car-parking-structures',
+      'solar-walkway-structures',
+    ],
+  },
+  {
+    id: 'galvanized-steel',
+    label: 'Hot Dip Galvanizing',
+    backLabel: 'Hot-Dip Galvanized Products',
+    group: 'galvanized',
+    productSlugs: [
+      'galvanized-steel-angles',
+      'galvanized-construction-channels',
+      'galvanized-high-mast-poles',
+      'galvanized-pipes',
+      'galvanized-h-beams',
+      'galvanized-crash-barriers',
+      'galvanized-handrails',
+      'solar-mounting-channels',
+      'galvanized-steel-gratings',
+      'galvanized-fabricated-beams',
+      'galvanized-tor-rods',
+      'galvanized-chequered-plates',
+    ],
+  },
+  {
+    id: 'towers',
+    label: 'Towers',
+    backLabel: 'Towers & Power Infrastructure',
+    group: 'towers',
+    productSlugs: [
+      'transmission-towers',
+      'telecom-towers',
+      'transmission-monopoles',
+      'power-distribution-poles',
+      'substation-structures',
+    ],
+  },
+];
+
+export const getProductNavigationCategory = (group: string): ProductNavigationCategory | undefined =>
+  PRODUCT_NAVIGATION_CATEGORIES.find((category) => category.group === group);
 
 export const PRODUCT_GROUPS: Record<string, ProductGroup> = {
   cable: {
@@ -133,6 +210,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'perforated-cable-trays',
     name: 'Perforated Cable Trays',
+    navigationLabel: 'Perforated Type Cable Tray',
     group: 'cable',
     image: 'cable-tray',
     imageAlt: 'Perforated cable tray for organized industrial cable routing',
@@ -161,6 +239,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'ladder-cable-trays',
     name: 'Ladder Cable Trays',
+    navigationLabel: 'Ladder Type Cable Tray',
     group: 'cable',
     image: 'cable-tray',
     imageAlt: 'Ladder cable tray with side rails and cross rungs',
@@ -189,6 +268,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'raceway-cable-trays',
     name: 'Raceway Cable Trays',
+    navigationLabel: 'Raceway Cable Tray',
     group: 'cable',
     image: 'cable-tray',
     imageAlt: 'Raceway cable tray system for structured cable routing',
@@ -217,6 +297,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'cable-tray-ducts',
     name: 'Cable Tray Ducts',
+    navigationLabel: 'Cable Tray Duct',
     group: 'cable',
     image: 'cable-tray',
     imageAlt: 'Cable tray duct for organized industrial cable management',
@@ -279,6 +360,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'earthing-flats',
     name: 'Earthing Flats',
+    navigationLabel: 'Earthing Flats',
     group: 'earthing',
     image: 'placeholder',
     description:
@@ -306,6 +388,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'earthing-electrodes',
     name: 'Earthing Electrodes',
+    navigationLabel: 'Earthing Electrode',
     group: 'earthing',
     image: 'placeholder',
     description:
@@ -333,6 +416,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'junction-boxes',
     name: 'Junction Boxes',
+    navigationLabel: 'Junction Box',
     group: 'earthing',
     image: 'placeholder',
     description:
@@ -360,6 +444,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'gi-wire',
     name: 'GI Wire',
+    navigationLabel: 'GI Wire',
     group: 'earthing',
     image: 'placeholder',
     description:
@@ -387,6 +472,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'copper-earthing-strips',
     name: 'Copper Earthing Strips',
+    navigationLabel: 'Copper Earthing Strips',
     group: 'earthing',
     image: 'placeholder',
     description:
@@ -447,6 +533,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'ground-mounted-solar-structures',
     name: 'Ground-Mounted Solar Structures',
+    navigationLabel: 'Ground Mounted Structure',
     group: 'solar',
     image: 'placeholder',
     description:
@@ -474,6 +561,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'rooftop-solar-structures',
     name: 'Rooftop Solar Mounting Structures',
+    navigationLabel: 'Rooftop Structure',
     group: 'solar',
     image: 'placeholder',
     description:
@@ -501,6 +589,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'solar-tracker-structures',
     name: 'Solar Tracker Structures',
+    navigationLabel: 'Solar Tracker',
     group: 'solar',
     image: 'placeholder',
     description:
@@ -528,6 +617,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'solar-car-parking-structures',
     name: 'Solar Car Parking Structures',
+    navigationLabel: 'Car Parking Structure',
     group: 'solar',
     image: 'placeholder',
     description:
@@ -555,6 +645,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
   {
     slug: 'solar-walkway-structures',
     name: 'Solar Walkway Structures',
+    navigationLabel: 'Walkway Structure',
     group: 'solar',
     image: 'placeholder',
     description:
@@ -595,6 +686,11 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
       'Applicable coating specification, inspection, and acceptance criteria',
       'Intended environment, quantity, packaging, and destination requirements',
     ],
+    technicalSpecifications: [
+      'Hot-dip galvanizing is specified for suitable iron and steel components after surface preparation.',
+      'Coating suitability and coverage depend on the base material, component geometry, fabrication, venting, drainage, environment, and inspection criteria.',
+      'Confirm the applicable coating standard and edition against the product type and project specification.',
+    ],
     faqs: [
       faq(
         'Which galvanized steel products are listed?',
@@ -605,11 +701,696 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
         'It applies a protective zinc coating to suitable steel components to help reduce corrosion. The required coating and inspection criteria must be confirmed for the product and project.',
       ),
     ],
-    related: ['cable-trays', 'solar-mounting-structures', 'transmission-towers', 'towers-power-infrastructure'],
+    related: ['galvanized-steel-angles', 'galvanized-construction-channels', 'galvanized-high-mast-poles'],
+  },
+  {
+    slug: 'galvanized-steel-angles',
+    name: 'Hot Dip Galvanized Steel Angles',
+    navigationLabel: 'Steel Angles',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized L-shaped steel angles for structural frameworks, electrical supports, solar mounting systems, cable tray supports, industrial platforms, and general fabrication.',
+    overview:
+      'Equal- and unequal-leg angles can be specified for support frames, bracing, equipment structures, and fabricated assemblies. Suitable angles may be cut, drilled, or fabricated before galvanizing when the design supports effective processing. Section, steel grade, dimensions, connections, and coating requirements are project-specific.',
+    applications: [
+      'Structural steel frameworks and fabricated assemblies',
+      'Electrical transmission, distribution, and utility supports',
+      'Cable tray support systems',
+      'Solar mounting structures',
+      'Industrial equipment supports and platforms',
+      'Fencing, construction, telecommunications, and general fabrication',
+    ],
+    requirements: [
+      'Equal or unequal angle section, steel grade, leg dimensions, thickness, and cut lengths',
+      'Approved drawings, connection details, fabrication or hole requirements, and quantity',
+      'Coating standard, environmental exposure, inspection documents, packing, and destination',
+    ],
+    technicalSpecifications: [
+      'Section designation, leg widths, thickness, length, and dimensional tolerances',
+      'Steel grade, material standard, structural loading, and connection requirements',
+      'Galvanizing specification and coating acceptance criteria; ISO 1461 or ASTM A123/A123M may be relevant to suitable fabricated articles, subject to project confirmation',
+      'Material certificates, inspection, packaging, and delivery requirements',
+    ],
+    variants: ['Equal-leg steel angles', 'Unequal-leg steel angles'],
+    faqs: [
+      faq(
+        'What is the difference between equal and unequal steel angles?',
+        'Equal angles have two legs of the same nominal width; unequal angles have legs of different widths. Selection depends on the structural design and connection geometry.',
+      ),
+      faq(
+        'Can steel angles be customized?',
+        'Dimensions, lengths, hole arrangements, and fabrication details may be specified on project drawings, subject to available material sizes and confirmed manufacturing capability.',
+      ),
+      faq(
+        'Which galvanizing standards can apply to steel angles?',
+        'ISO 1461 and ASTM A123/A123M may be relevant references for batch hot-dip galvanized fabricated steel articles. Confirm the applicable standard and edition for the product and project.',
+      ),
+    ],
+    related: ['galvanized-fabricated-beams', 'galvanized-h-beams', 'galvanized-construction-channels'],
+  },
+  {
+    slug: 'galvanized-construction-channels',
+    name: 'Hot Dip Galvanized Construction Channels',
+    navigationLabel: 'Construction Channel',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized construction channels for industrial frameworks, equipment supports, electrical and cable support systems, construction, and infrastructure projects.',
+    overview:
+      'Construction channels are steel sections with a web and two flanges, commonly forming a C- or U-shaped profile. They are used in support frames, structural assemblies, equipment mounting, and customized fabrication. Section size, material, connections, loading, and coating are selected for the specific design.',
+    applications: [
+      'Industrial structural frameworks and equipment supports',
+      'Electrical and cable tray support systems',
+      'Solar mounting assemblies where specified',
+      'Utility, infrastructure, warehouse, and construction projects',
+      'Equipment brackets, platforms, and general steel fabrication',
+    ],
+    requirements: [
+      'Channel profile, section designation, overall depth, flange width, and web/flange thickness',
+      'Steel grade, required length, loading, connection details, and fabrication or hole patterns',
+      'Galvanizing standard, coating acceptance, inspection documents, packing, and destination',
+    ],
+    technicalSpecifications: [
+      'C- or U-shaped profile and section dimensions',
+      'Web and flange thickness, length, steel grade, and material standard',
+      'Approved drawings, bill of quantities, structural loading, hole patterns, and connection requirements',
+      'Coating specification and inspection criteria; applicable requirements depend on product and processing method',
+    ],
+    variants: ['C-shaped channel profiles', 'U-shaped channel profiles'],
+    faqs: [
+      faq(
+        'What is a construction channel?',
+        'It is a steel section with a web and two flanges, generally forming a C-shaped or U-shaped profile, used in supports, framing, brackets, and fabricated assemblies.',
+      ),
+      faq(
+        'What affects the load capacity of a construction channel?',
+        'Capacity depends on section dimensions, steel properties, member length, support conditions, load type, orientation, and connection design. The responsible engineer should establish the design capacity.',
+      ),
+      faq(
+        'Can construction channels be drilled or welded before galvanizing?',
+        'Suitable channels may be fabricated before galvanizing. Fabrication details should be coordinated so the design allows effective cleaning, zinc coverage, venting, drainage, and safe processing.',
+      ),
+    ],
+    related: ['galvanized-steel-angles', 'galvanized-fabricated-beams', 'galvanized-h-beams'],
+  },
+  {
+    slug: 'galvanized-high-mast-poles',
+    name: 'Hot Dip Galvanized High Mast Poles',
+    navigationLabel: 'High Mast Pole',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized high mast poles are structural supports for lighting installations over highways, ports, airports, industrial facilities, logistics areas, and other large outdoor spaces.',
+    overview:
+      'Pole height, shaft configuration, luminaire arrangement, wind loading, foundation interface, and any lowering equipment depend on the lighting layout and project design. A complete enquiry should identify the required pole and accessory scope and applicable structural and coating specifications.',
+    applications: [
+      'Highways, expressways, interchanges, and toll plazas',
+      'Airports, seaports, harbours, and container terminals',
+      'Industrial plants, warehouses, and logistics parks',
+      'Railway yards, transport terminals, sports grounds, and large parking areas',
+      'Power, renewable energy, and public infrastructure projects',
+    ],
+    requirements: [
+      'Pole quantity, height, project location, design code, wind speed, and approved drawings',
+      'Luminaire number, type, weight, mounting configuration, and projected area',
+      'Base plate, anchor bolts, foundation interface, coating, inspection, and accessory scope',
+    ],
+    technicalSpecifications: [
+      'Pole height, structural configuration, material grade, design loads, and applicable standard',
+      'Luminaire ring or carriage, lowering mechanism, winch, wire ropes, and safety features when specified',
+      'Base plate drawings, anchor bolt arrangement, and foundation interface',
+      'Galvanizing standard, coastal or industrial exposure, coating inspection, and delivery constraints',
+    ],
+    faqs: [
+      faq(
+        'What is the standard height of a high mast pole?',
+        'There is no single universal height. The required height depends on the illumination area, luminaire type, lighting layout, structural design, and project specification.',
+      ),
+      faq(
+        'Can a high mast pole include a lowering system?',
+        'A lowering system may be specified as part of a compatible assembly. Confirm whether the pole, luminaire carriage or ring, winch, wire ropes, and safety features are included in the supply scope.',
+      ),
+      faq(
+        'Which standards apply to high mast poles?',
+        'Requirements depend on the project and destination. Confirm the applicable structural and galvanizing standards, design code, and approval requirements rather than assuming one standard applies universally.',
+      ),
+    ],
+    related: ['transmission-towers', 'galvanized-steel-angles', 'galvanized-crash-barriers'],
+  },
+  {
+    slug: 'galvanized-pipes',
+    name: 'Hot Dip Galvanized Pipes',
+    navigationLabel: 'Pipes',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized steel pipes for suitable structural supports, outdoor frameworks, construction, utility installations, fencing, agriculture, and industrial fabrication.',
+    overview:
+      'Pipe selection depends on its intended service, not nominal diameter alone. Structural supports, water conveyance, fire protection, and other pressure-related uses can require different product standards and mechanical properties. Confirm the product specification and intended use before procurement.',
+    applications: [
+      'Construction frameworks and structural supports',
+      'Industrial fabrication and equipment structures',
+      'Fencing, boundary frameworks, and security systems',
+      'Agricultural structures and greenhouses',
+      'Utility supports, warehouses, and logistics facilities',
+    ],
+    requirements: [
+      'Pipe diameter, wall thickness, length, steel grade, and manufacturing specification',
+      'Intended service, connection or end preparation, and installation conditions',
+      'Coating specification, inspection, quantity, packing, and delivery destination',
+    ],
+    technicalSpecifications: [
+      'Nominal diameter, wall thickness, length, dimensional tolerances, and end preparation',
+      'Steel grade, pipe manufacturing standard, mechanical properties, and connection type',
+      'Intended service and environmental exposure, including soil, moisture, chemicals, or fertilizers',
+      'Galvanizing specification, inspection tests, and any required coating repair after fabrication',
+    ],
+    faqs: [
+      faq(
+        'Which sizes and steel grades are available for galvanized pipes?',
+        'Pipe sizes and grades must be confirmed for the order. Specify the required diameter, wall thickness, product standard, and intended application for a project-specific review.',
+      ),
+      faq(
+        'Can galvanized pipes be used for water conveyance or pressure service?',
+        'Only when the selected pipe meets the applicable product and service requirements. Structural pipe and pressure-related pipe are not automatically interchangeable.',
+      ),
+      faq(
+        'Can galvanized pipes be cut, welded, or threaded?',
+        'These operations depend on the pipe type and specification and require appropriate procedures. Fabrication can damage the zinc coating, so any required coating repair should be addressed.',
+      ),
+    ],
+    related: ['galvanized-steel-angles', 'galvanized-construction-channels', 'galvanized-handrails'],
+  },
+  {
+    slug: 'galvanized-h-beams',
+    name: 'Hot Dip Galvanized H-Beams',
+    navigationLabel: 'H-Beams',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized H-beams for suitable industrial buildings, structural frameworks, warehouses, equipment supports, platforms, utility infrastructure, and fabricated steel assemblies.',
+    overview:
+      'An H-beam has a central web and two flanges. Its performance depends on section dimensions, steel grade, unbraced length, support conditions, loading, and connections. Specify the required rolled section or fabricated assembly and use approved structural design information for selection.',
+    applications: [
+      'Industrial buildings, factory structures, and warehouses',
+      'Structural columns, beams, floor framing, and platforms',
+      'Power and electrical infrastructure supports',
+      'Solar and renewable energy projects where designed',
+      'Equipment supports and outdoor corrosion-exposed structures',
+    ],
+    requirements: [
+      'Section designation, dimensions, steel grade, required length, and quantity',
+      'Structural drawings, loads, support conditions, connections, and fabrication scope',
+      'Galvanizing specification, coating inspection, documentation, and destination',
+    ],
+    technicalSpecifications: [
+      'Section depth, flange width, web and flange thickness, and tolerances',
+      'Steel grade, material standard, length, and whether the section is rolled or part of a fabricated assembly',
+      'Loading arrangement, unbraced length, support conditions, connection details, and design code',
+      'Corrosion-protection standard, coating acceptance, inspection records, and delivery requirements',
+    ],
+    variants: ['Rolled H-beam sections', 'H-beams incorporated into fabricated assemblies'],
+    faqs: [
+      faq(
+        'What is the difference between an H-beam and an I-beam?',
+        'The profiles differ in their web and flange proportions. The appropriate section is determined by the structural design and applicable section designation, not by the name alone.',
+      ),
+      faq(
+        'What H-beam dimensions and steel grades are available?',
+        'Dimensions and grades should be specified by section designation and project material standard. Confirm availability and suitability for the required design before ordering.',
+      ),
+      faq(
+        'What determines an H-beam’s load capacity?',
+        'Capacity depends on section dimensions, steel grade, unbraced length, support conditions, loading arrangement, and connection design. It should be established through project structural calculations.',
+      ),
+    ],
+    related: ['galvanized-fabricated-beams', 'galvanized-construction-channels', 'galvanized-steel-angles'],
+  },
+  {
+    slug: 'galvanized-crash-barriers',
+    name: 'Hot Dip Galvanized Crash Barriers',
+    navigationLabel: 'Crash Barrier',
+    group: 'galvanized',
+    image: 'placeholder',
+    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    description:
+      'Hot dip galvanized steel crash barrier components for road and transport projects, specified as part of an engineered and approved roadside safety system.',
+    overview:
+      'Crash barriers are vehicle-restraint systems designed to contain or redirect vehicles under defined impact conditions. Safety performance depends on the tested system configuration and its installation; galvanizing provides corrosion protection but does not establish crash-test performance or compliance.',
+    applications: [
+      'Highways, expressways, and selected roadside hazards',
+      'Road embankments, hilly roads, bridges, and flyover approaches',
+      'Median protection where required by the road safety design',
+      'Industrial roads, logistics facilities, ports, and airport access roads',
+      'Urban roads where the authority identifies a vehicle-restraint need',
+    ],
+    requirements: [
+      'Approved barrier system, tested designation, required performance criteria, and road authority requirements',
+      'Rail profile and thickness, steel grade, post type and spacing, terminals, transitions, and fasteners',
+      'Galvanizing, inspection evidence, installation details, quantities, and delivery destination',
+    ],
+    technicalSpecifications: [
+      'W-beam, thrie-beam, or other explicitly approved system configuration',
+      'Rail geometry, material grade, post spacing, spacer blocks, fasteners, terminals, and transitions',
+      'Test reports and applicable MASH, AASHTO, or project-owner requirements as specified by the road authority',
+      'Galvanizing specification, coating acceptance, working width, deflection, and site clearances',
+    ],
+    variants: ['W-beam systems', 'Thrie-beam systems'],
+    faqs: [
+      faq(
+        'What is the difference between a W-beam and a thrie-beam crash barrier?',
+        'They have different rail profiles and system configurations. The required type must match the tested and approved system for the project.',
+      ),
+      faq(
+        'Does hot dip galvanizing make a crash barrier crash-tested?',
+        'No. Galvanizing concerns corrosion protection. Crash performance depends on documented testing of the complete barrier configuration and its installation.',
+      ),
+      faq(
+        'Which components are needed for a complete crash barrier system?',
+        'The project may specify rails, posts, spacers, fasteners, terminals, transitions, and other system components. Confirm the bill of quantities and tested configuration.',
+      ),
+    ],
+    related: ['galvanized-handrails', 'galvanized-high-mast-poles', 'transmission-towers'],
+  },
+  {
+    slug: 'galvanized-handrails',
+    name: 'Hot Dip Galvanized Steel Handrails',
+    navigationLabel: 'Handrail',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'Hot dip galvanized steel handrails and railing components for industrial stairs, platforms, walkways, ramps, access routes, and infrastructure projects.',
+    overview:
+      'A handrail provides a graspable support along an access route, while a guardrail helps protect people from exposed edges. Depending on the design, a railing assembly may include top and intermediate rails, posts, base plates, brackets, toe boards, and mounting accessories. Configuration must meet the applicable safety and project requirements.',
+    applications: [
+      'Industrial plants, manufacturing facilities, and maintenance platforms',
+      'Warehouses, logistics parks, and loading platforms',
+      'Power plants, utility facilities, and process industries',
+      'Commercial buildings, stairs, ramps, and accessible routes',
+      'Bridges, walkways, solar facilities, ports, and outdoor infrastructure',
+    ],
+    requirements: [
+      'Intended use, railing configuration, dimensions, loads, and applicable code',
+      'Rail and post profiles, spacing, base plates, anchors, supporting substrate, and connections',
+      'Infill or toe boards where required, coating, inspection, and destination',
+    ],
+    technicalSpecifications: [
+      'Handrail, guardrail, or combined system and required rail height/profile',
+      'Rail and post profiles, dimensions, wall thickness, material grade, post spacing, design loads, and connection details',
+      'Base plates, anchors, supporting substrate, intermediate rails, infill, and toe boards where specified',
+      'Steel pipes, hollow sections, bars, plates, or other specified materials; applicable safety, building, accessibility, galvanizing, and project requirements',
+      'For US projects, the specified OSHA, building-code, accessibility, or owner requirements; OSHA 29 CFR 1910.29 and 29 CFR 1926.502 address different applications',
+      'Venting, drainage, coating buildup, and potential distortion for suitable fabricated assemblies galvanized after fabrication',
+    ],
+    faqs: [
+      faq(
+        'What is the difference between a handrail and a guardrail?',
+        'A handrail provides a graspable surface to support people moving along stairs or access routes. A guardrail helps protect people from falling from an exposed edge. Some installations combine both functions, but the complete system must meet applicable requirements.',
+      ),
+      faq(
+        'What materials are used for industrial handrails?',
+        'Industrial handrails may be fabricated from steel pipes, hollow sections, bars, plates, or other specified materials. Selection depends on the application, loads, environmental exposure, finish, and applicable standards.',
+      ),
+      faq(
+        'Why choose hot-dip galvanized steel handrails?',
+        'Hot-dip galvanizing provides a zinc coating that helps protect steel against atmospheric corrosion. It can suit outdoor and industrial applications when the coating and product specification are appropriate.',
+      ),
+      faq(
+        'What is the standard height of a handrail?',
+        'There is no single height for every handrail installation. Requirements depend on the governing code and whether the product is a stair handrail, guardrail, ramp handrail, or another system. Confirm the applicable requirements before finalizing dimensions.',
+      ),
+      faq(
+        'Are galvanized handrails suitable for outdoor industrial environments?',
+        'They can suit many outdoor environments, subject to coating requirements and exposure conditions. Coastal, chemical, and highly corrosive environments may need additional assessment and maintenance planning.',
+      ),
+      faq(
+        'Can steel handrails be customized according to drawings?',
+        'Project requirements can be reviewed against approved drawings, dimensions, material specifications, connection details, and manufacturing scope. Confirm availability before ordering.',
+      ),
+      faq(
+        'What standards apply to handrails in the USA?',
+        'Requirements depend on the application. OSHA 29 CFR 1910.29 addresses handrails and stair rail systems in general industry, while OSHA 29 CFR 1926.502 addresses guardrail systems in construction fall protection. Building codes, accessibility requirements, and owner specifications may also apply.',
+      ),
+      faq(
+        'Can handrails be hot-dip galvanized after fabrication?',
+        'Suitable assemblies may be galvanized after fabrication when their geometry and processing requirements permit it. Hollow sections need appropriate venting and drainage, and the design should account for coating buildup and potential distortion.',
+      ),
+      faq(
+        'Can RK Engineering supply handrails for Africa and the USA?',
+        'Export enquiries can be submitted for review. Specify the destination, product design, applicable code, dimensions, coating requirements, quantity, and documentation needs.',
+      ),
+      faq(
+        'How do I request a handrail quotation?',
+        'Share the application, drawings, dimensions, material grade, finish, quantity, required standards, and delivery destination so the product and supply scope can be reviewed.',
+      ),
+    ],
+    related: ['galvanized-crash-barriers', 'galvanized-construction-channels', 'galvanized-steel-angles'],
+  },
+  {
+    slug: 'solar-mounting-channels',
+    name: 'Hot Dip Galvanized Solar Mounting Channels',
+    navigationLabel: 'Solar Mounting Channel',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'Hot dip galvanized steel channels for photovoltaic mounting structures, manufactured to project drawings and requirements for suitable rooftop, ground-mounted, commercial, and industrial solar installations.',
+    overview:
+      'Solar mounting channels can function as rails, purlins, support members, or connection components within a larger PV mounting assembly. Profile, dimensions, hole pattern, steel grade, loading, and coating must be coordinated with the approved structure and installation conditions.',
+    applications: [
+      'Ground-mounted solar power plants and utility-scale solar farms',
+      'Rooftop systems on suitable industrial, warehouse, and commercial buildings',
+      'Commercial and industrial PV projects',
+      'Solar car parking and walkway structures',
+      'Renewable energy infrastructure',
+    ],
+    requirements: [
+      'Approved drawings, channel profile, dimensions, hole pattern, steel grade, and thickness',
+      'Module layout, span, wind loads, roof or foundation conditions, and mounting interfaces',
+      'Coating, inspection, quantity, packaging, delivery schedule, and destination',
+    ],
+    technicalSpecifications: [
+      'Channel profile, section dimensions, thickness, length, and hole positions',
+      'Steel grade, material documentation, tolerances, and interfaces with brackets, rails, clamps, or other components',
+      'Structural loads, module layout, span, wind and snow loading where applicable, foundation or roof details, attachment, and waterproofing',
+      'Galvanizing specification and exposure conditions, including coastal environments',
+      'Applicable material, structural-design, dimensional-tolerance, and galvanizing standards; confirm governing standards and editions for the project',
+      'For US projects, confirm project-specific design requirements, which may reference applicable building codes and ASCE/SEI 7 loading criteria',
+    ],
+    variants: ['Rails or purlins', 'Support or connection members'],
+    faqs: [
+      faq(
+        'What is a solar mounting channel?',
+        'It is a steel component used within a photovoltaic mounting system as a rail, purlin, support member, or connection component, depending on the approved design.',
+      ),
+      faq(
+        'Where are solar mounting channels used?',
+        'They may be used in suitable rooftop solar systems, ground-mounted solar plants, commercial and industrial PV projects, solar car parks, and solar walkway structures.',
+      ),
+      faq(
+        'Are solar mounting channels available with hot-dip galvanizing?',
+        'The source document identifies hot-dip galvanized finishing for these channels. Confirm the coating specification and availability for the required product.',
+      ),
+      faq(
+        'Can solar mounting channels be manufactured according to customer drawings?',
+        'The source identifies customized fabrication to customer drawings, dimensions, and hole patterns, subject to confirmation of the required specification and manufacturing scope.',
+      ),
+      faq(
+        'Which steel grade is used for solar mounting channels?',
+        'The grade depends on the mounting-system design, required mechanical properties, material standard, and project specification. Specify the required grade for review.',
+      ),
+      faq(
+        'How is the correct channel thickness selected?',
+        'Thickness should follow the structural design, taking account of the channel profile, material grade, span, support spacing, wind loading, connection details, and applicable requirements. It should not be selected from module weight alone.',
+      ),
+      faq(
+        'Are galvanized solar mounting channels suitable for coastal projects?',
+        'They may be suitable when the coating system is selected for the environmental exposure. Assess coastal corrosion conditions, coating requirements, maintenance, and compatibility with other mounting components.',
+      ),
+      faq(
+        'Which standards apply to solar mounting channels?',
+        'Applicable standards depend on the product and destination. Material, structural design, dimensional tolerances, and galvanizing may be governed by different standards; confirm the standards and editions in the approved project specification.',
+      ),
+      faq(
+        'Does RK Engineering supply solar mounting channels for Africa and the USA?',
+        'International enquiries can be submitted for review. Provide the destination, drawings, channel specifications, quantities, coating requirements, and any required compliance documentation.',
+      ),
+      faq(
+        'What information is needed to request a quote?',
+        'Share the channel profile, dimensions, material grade, hole pattern, length, quantity, finish, project location, approved drawings, structural requirements, and delivery details.',
+      ),
+    ],
+    related: ['solar-mounting-structures', 'galvanized-steel-angles', 'galvanized-construction-channels'],
+  },
+  {
+    slug: 'galvanized-steel-gratings',
+    name: 'Hot Dip Galvanized Steel Gratings',
+    navigationLabel: 'Gratings',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'Hot dip galvanized open-grid steel grating panels for industrial flooring, access walkways, maintenance platforms, drainage channels, cable trenches, and stairways.',
+    overview:
+      'Steel gratings use load-bearing bars joined by cross bars or another specified arrangement. The open surface can allow water and air to pass through. Configuration and capacity depend on bar dimensions and spacing, panel size, span, supports, imposed loads, and project safety requirements.',
+    applications: [
+      'Industrial floors, factory platforms, and maintenance walkways',
+      'Power plants and electrical infrastructure',
+      'Oil, gas, petrochemical, water, and wastewater facilities',
+      'Warehouses, manufacturing units, and solar projects',
+      'Drainage channels, cable trenches, access platforms, and stairways',
+    ],
+    requirements: [
+      'Panel layout, dimensions, bearing-bar size and spacing, and cross-bar arrangement',
+      'Design loads, clear span, support spacing, connections, and permitted deflection',
+      'Steel grade, galvanizing standard, inspection, packing, and delivery requirements',
+    ],
+    technicalSpecifications: [
+      'Bearing-bar and cross-bar configuration, dimensions, spacing, and joining arrangement',
+      'Panel sizes, clear span, support conditions, connection details, and opening dimensions',
+      'Uniform, concentrated, wheel, or other applicable loads and permitted deflection',
+      'Steel grade, surface treatment, galvanizing standard, inspection records, and panel identification',
+      'ISO 1461:2022 may apply to fabricated iron and steel articles galvanized by immersion; confirm the governing product or project standard and edition',
+      'Custom panel dimensions and cut-outs are subject to drawing review and confirmed manufacturing capabilities',
+    ],
+    faqs: [
+      faq(
+        'What are steel gratings used for?',
+        'Steel gratings are used for industrial flooring, maintenance platforms, walkways, stair treads, drainage channels, cable trenches, and access areas in industrial and infrastructure projects.',
+      ),
+      faq(
+        'What is a hot-dip galvanized steel grating?',
+        'It is a fabricated steel grating that receives a zinc coating through hot-dip galvanizing to help protect the steel against corrosion.',
+      ),
+      faq(
+        'How do I select the correct grating load capacity?',
+        'Selection depends on bearing-bar dimensions, clear span, bar spacing, material properties, support conditions, and imposed loading. Use applicable manufacturer load data or approved engineering calculations for the proposed configuration.',
+      ),
+      faq(
+        'Can steel gratings be manufactured to custom dimensions?',
+        'Project-specific dimensions and cut-outs can be evaluated against customer drawings and manufacturing capabilities. Confirm the configuration and quantities before ordering.',
+      ),
+      faq(
+        'Which galvanizing standard should be specified?',
+        'The correct standard depends on the product, manufacturing process, and contract. ISO 1461:2022 may apply to fabricated iron and steel articles galvanized by immersion, while another product-specific or project requirement may govern. Confirm the applicable standard and edition.',
+      ),
+      faq(
+        'Are galvanized steel gratings suitable for outdoor use?',
+        'They are commonly used outdoors because zinc coatings help protect steel against corrosion. Suitability depends on environmental exposure, coating requirements, drainage, installation, and maintenance conditions.',
+      ),
+      faq(
+        'What information is needed for a grating quotation?',
+        'Provide drawings, panel dimensions, quantities, load requirements, support spacing, material grade, surface finish, applicable standards, inspection needs, and delivery location.',
+      ),
+      faq(
+        'Can RK Engineering support export enquiries for Africa and the USA?',
+        'International enquiries can be submitted for review. Share the destination, technical specification, quantities, packing requirements, and required documentation.',
+      ),
+    ],
+    related: ['galvanized-chequered-plates', 'galvanized-handrails', 'galvanized-fabricated-beams'],
+  },
+  {
+    slug: 'galvanized-fabricated-beams',
+    name: 'Hot Dip Galvanized Fabricated Beams',
+    navigationLabel: 'Fabricated Beams',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'Project-specific fabricated steel beams for industrial structures, equipment supports, utility projects, and customized assemblies, with hot dip galvanizing where specified and suitable.',
+    overview:
+      'Fabricated beams are assembled from steel sections and plates to meet project dimensions and connection requirements. Unlike a standard rolled section, a fabricated beam is built to a defined drawing. Structural design, weld details, inspection, and galvanizing suitability must be reviewed for the complete assembly.',
+    applications: [
+      'Industrial structures and structural frameworks',
+      'Equipment supports and platforms',
+      'Utility and infrastructure projects',
+      'Customized steel assemblies and EPC projects',
+    ],
+    requirements: [
+      'Approved drawings, section and plate dimensions, steel grade, and quantity',
+      'Structural loads, connection design, weld details, fabrication tolerances, and inspection scope',
+      'Galvanizing suitability, coating criteria, material traceability, and delivery destination',
+    ],
+    technicalSpecifications: [
+      'Beam dimensions, constituent sections and plates, material grades, and tolerances',
+      'Design loads, support conditions, connection details, weld requirements, and approved drawings',
+      'Fabrication and dimensional checks, material verification, inspection records, and documentation',
+      'Venting, drainage, processing suitability, galvanizing specification, and coating inspection',
+      'Beam configuration may include web and flange plates, stiffeners, end plates, and connection plates as defined by the approved design',
+      'ISO 1461:2022 may be relevant to hot-dip galvanized fabricated steel articles; confirm the governing standard and edition in the project documents',
+    ],
+    faqs: [
+      faq(
+        'What are fabricated steel beams?',
+        'They are structural members made by cutting, assembling, and joining steel plates or sections to achieve the dimensions and configuration required by an engineering design.',
+      ),
+      faq(
+        'What is the difference between a fabricated beam and a rolled beam?',
+        'A rolled beam is formed through rolling into a standard section profile. A fabricated beam is assembled from steel plates or sections for project-specific geometry. The suitable choice depends on design, availability, fabrication requirements, and cost.',
+      ),
+      faq(
+        'Can fabricated beams be manufactured to custom drawings?',
+        'Custom fabrication can be evaluated against approved drawings, required dimensions, connection details, and project specifications. Confirm the design and manufacturing scope before ordering.',
+      ),
+      faq(
+        'Can fabricated steel beams be hot dip galvanized?',
+        'Suitable fabricated beams may be hot-dip galvanized for corrosion protection. Review the beam geometry, material, dimensions, venting, and drainage for process suitability.',
+      ),
+      faq(
+        'Which information is needed to calculate a fabricated beam’s load capacity?',
+        'Assessment typically requires the beam cross-section, steel grade, span, support conditions, load combinations, restraint arrangement, and applicable design criteria. Establish capacity through appropriate engineering calculations.',
+      ),
+      faq(
+        'What quality checks are important for fabricated beams?',
+        'Depending on the specification, checks may include material verification, dimensions, alignment, weld inspection, connection-hole accuracy, coating inspection, and final documentation.',
+      ),
+      faq(
+        'Which galvanizing standard should be specified?',
+        'The applicable standard depends on the product, project, and contract. ISO 1461:2022 may be relevant to hot-dip galvanized coatings on fabricated steel articles, but confirm the governing standard and edition in the project documents.',
+      ),
+      faq(
+        'Does RK Engineering accept fabricated beam enquiries from Africa and the USA?',
+        'International enquiries can be submitted for review. Provide drawings, quantities, material and coating requirements, documentation needs, and destination details.',
+      ),
+    ],
+    related: ['galvanized-h-beams', 'galvanized-construction-channels', 'galvanized-steel-gratings'],
+  },
+  {
+    slug: 'galvanized-tor-rods',
+    name: 'Hot Dip Galvanized TOR Rods',
+    navigationLabel: 'Tor Rod',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'TOR rods are listed for reinforced-concrete applications. Confirm the actual reinforcement type, grade, dimensions, availability, and any specifically approved galvanizing requirement against the project specification.',
+    overview:
+      'TOR is a traditional term associated with cold-twisted deformed reinforcement bars and does not automatically mean a modern TMT bar. Reinforcement selection must follow structural drawings and the governing material standard. The source lists galvanized TOR rods, but galvanizing suitability should be assessed for the specific reinforcement, concrete application, and project requirements.',
+    applications: [
+      'Reinforced-concrete buildings and foundations',
+      'Industrial structures and equipment bases',
+      'Roads, bridges, flyovers, and other infrastructure',
+      'Water-retaining structures and civil works',
+    ],
+    requirements: [
+      'Actual bar type, grade, nominal diameter, quantity, and required length',
+      'Approved structural drawings, bar-bending schedule, and applicable material standard',
+      'Test certificates, inspection, delivery requirements, and any specifically approved galvanizing scope',
+    ],
+    technicalSpecifications: [
+      'Bar type, specified grade, nominal diameter, length, and material standard',
+      'Mechanical properties, test requirements, markings, and material traceability',
+      'Bar-bending schedule and fabrication requirements approved by the project engineer',
+      'Any galvanizing requirement must be evaluated against the reinforcement specification and concrete application',
+      'IS 1786 is a relevant Indian reference for high-strength deformed reinforcement bars; ASTM A615/A615M may be relevant to some US projects. Confirm the applicable specification, edition, and grade',
+    ],
+    faqs: [
+      faq(
+        'What is a TOR rod?',
+        'TOR rod is a traditional term associated with cold-twisted deformed steel reinforcement bars. Verify the actual product type and grade because TOR/CTD bars are not automatically equivalent to modern TMT reinforcement bars.',
+      ),
+      faq(
+        'What are TOR rods used for?',
+        'Historically, TOR rods have been used as reinforcement in concrete construction. Current material selection should follow the structural design, approved bar type, and applicable standard.',
+      ),
+      faq(
+        'What is the difference between TOR rods and TMT bars?',
+        'TOR or CTD bars are associated with cold twisting, while TMT bars are produced through thermo-mechanical treatment. Their properties can differ, so they should not be substituted without engineering approval.',
+      ),
+      faq(
+        'Which standard applies to reinforcement bars in India?',
+        'IS 1786 is a relevant Indian Standard for high-strength deformed steel bars and wires for concrete reinforcement. Confirm the applicable edition, amendments, and specified grade.',
+      ),
+      faq(
+        'Which standard may apply to reinforcement bars in the USA?',
+        'ASTM A615/A615M is one relevant specification for deformed and plain carbon-steel bars for concrete reinforcement. Other requirements may apply depending on the project and product.',
+      ),
+      faq(
+        'What details are needed to order reinforcement bars?',
+        'Provide the bar type, grade, nominal diameter, quantity, required length, material standard, testing requirements, and delivery location.',
+      ),
+      faq(
+        'Can reinforcement bars be welded or heated for bending?',
+        'Only when permitted by the applicable material specification, design requirements, and approved procedure. Confirm weldability and follow approved bar-bending instructions; do not assume every reinforcement product is suitable for welding or heating.',
+      ),
+      faq(
+        'Does RK Engineering supply TOR rods for Africa and the USA?',
+        'International supply of TOR rods or other reinforcement bars must be confirmed directly. Verify availability, applicable standards, documentation, and export requirements before placing an order.',
+      ),
+    ],
+    related: ['galvanized-steel-angles', 'galvanized-fabricated-beams', 'galvanized-steel-gratings'],
+  },
+  {
+    slug: 'galvanized-chequered-plates',
+    name: 'Hot Dip Galvanized Chequered Plates',
+    navigationLabel: 'Chequered Plate',
+    group: 'galvanized',
+    image: 'placeholder',
+    description:
+      'Hot dip galvanized steel chequered plates for suitable industrial platforms, walkways, equipment access areas, stairs, maintenance spaces, and fabrication projects.',
+    overview:
+      'Chequered plates, also called checker plates, checkered plates, or tread plates, have a raised surface pattern that can improve traction in suitable access applications. Plate grade, thickness, dimensions, support arrangement, loading, surface condition, and coating requirements should be selected for the project. A patterned surface should not be treated as a guarantee of slip resistance.',
+    applications: [
+      'Industrial platforms and walkways',
+      'Equipment access areas and maintenance spaces',
+      'Stairs and fabrication projects',
+      'Industrial and infrastructure installations exposed to weather',
+    ],
+    requirements: [
+      'Plate dimensions, thickness, steel grade, pattern, and quantity',
+      'Support conditions, loading, fabrication details, and intended access application',
+      'Galvanizing or other specified finish, inspection, packaging, and delivery destination',
+    ],
+    technicalSpecifications: [
+      'Plate length, width, thickness, material grade, and raised-pattern requirements',
+      'Support spacing, loading, connections, cut-outs, and fabrication details',
+      'Surface condition and traction requirements for the intended application',
+      'Applicable product and galvanizing standards, coating inspection, and delivery documentation',
+      'ASTM A786/A786M may be relevant to certain hot-rolled steel floor plates; confirm the governing material specification and edition for the project',
+      'Evaluate material, unsupported span, loading, deflection, connection details, and operating environment as part of the design',
+    ],
+    faqs: [
+      faq(
+        'What is a chequered plate used for?',
+        'Chequered plates are used for industrial flooring, walkways, ramps, stair treads, access platforms, transportation flooring, and selected fabrication applications where a raised-pattern steel surface is required.',
+      ),
+      faq(
+        'What is the difference between a chequered plate and a plain steel plate?',
+        'A chequered plate has raised projections on one surface, while a plain plate has a comparatively flat surface. The raised pattern can improve traction in suitable conditions, but actual slip performance depends on the environment and surface condition.',
+      ),
+      faq(
+        'What is the difference between a chequered plate and a steel grating?',
+        'Chequered plates provide a solid steel surface with a raised pattern. Steel gratings have open spaces between load-bearing members, allowing drainage and airflow. The choice depends on application, loading, drainage, and access requirements.',
+      ),
+      faq(
+        'Which standard applies to steel chequered plates?',
+        'ASTM A786/A786M is a relevant specification for certain hot-rolled steel floor plates. Other material or national standards may apply; confirm the governing specification and edition for the project.',
+      ),
+      faq(
+        'Are chequered plates slip-proof?',
+        'No. Raised patterns may improve traction, but oil, grease, water, dust, and other contaminants can reduce slip resistance. Assess actual operating conditions and applicable safety requirements.',
+      ),
+      faq(
+        'How do I choose the correct chequered plate thickness?',
+        'Selection depends on steel grade, support spacing, applied loads, plate dimensions, deflection limits, and installation details. Do not select thickness based only on appearance or general rules of thumb.',
+      ),
+      faq(
+        'Can chequered plates be galvanized?',
+        'Galvanizing may be possible for suitable steel plates or fabricated components. Confirm product dimensions, surface condition, process suitability, and coating specification before ordering.',
+      ),
+      faq(
+        'Does RK Engineering supply chequered plates to Africa and the USA?',
+        'International enquiries can be discussed, but availability and export scope must be confirmed. Provide the product specification, quantity, and destination for review.',
+      ),
+    ],
+    related: ['galvanized-steel-gratings', 'galvanized-handrails', 'galvanized-fabricated-beams'],
   },
   {
     slug: 'transmission-towers',
     name: 'Transmission Towers',
+    navigationLabel: 'Transmission Towers',
     group: 'towers',
     image: 'placeholder',
     description:
@@ -632,11 +1413,124 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
         'Specifications depend on voltage requirements, structural loading, tower configuration, material grades, corrosion protection, and project engineering standards.',
       ),
     ],
-    related: ['towers-power-infrastructure', 'hot-dip-galvanized-steel-products', 'earthing-materials'],
+    related: ['telecom-towers', 'transmission-monopoles', 'substation-structures'],
+  },
+  {
+    slug: 'telecom-towers',
+    name: 'Telecom Towers',
+    navigationLabel: 'Telecom Towers',
+    group: 'towers',
+    image: 'placeholder',
+    description:
+      'Tower structures for telecommunications infrastructure, with configuration and project requirements subject to the applicable design and approvals.',
+    overview:
+      'Telecom tower specifications depend on the project configuration, structural loading, material requirements, corrosion protection, engineering standards, and approvals. Confirm the proposed scope against project drawings and requirements.',
+    applications: ['Telecommunications infrastructure', 'Communication networks'],
+    requirements: [
+      'Project location, tower configuration, drawings, and intended installation',
+      'Structural loading, material requirements, and corrosion protection',
+      'Applicable engineering standards, inspection criteria, approvals, and delivery destination',
+    ],
+    faqs: [
+      faq(
+        'What information should be included in a telecom tower enquiry?',
+        'Provide the project location, tower configuration, drawings, structural loading criteria, material and corrosion-protection requirements, applicable standards, quantity, and required approvals.',
+      ),
+      faq(
+        'Are telecom tower specifications the same for every project?',
+        'No. Specifications and approvals depend on the individual project design, loading conditions, material requirements, engineering standards, and site conditions.',
+      ),
+    ],
+    related: ['transmission-towers', 'transmission-monopoles', 'power-distribution-poles'],
+  },
+  {
+    slug: 'transmission-monopoles',
+    name: 'Transmission Monopoles',
+    navigationLabel: 'Transmission Monopoles',
+    group: 'towers',
+    image: 'placeholder',
+    description:
+      'Monopole structures for suitable electricity transmission and distribution infrastructure projects, subject to project-specific design requirements.',
+    overview:
+      'Monopole configuration and suitability depend on the project drawings, structural loading, material requirements, corrosion protection, applicable engineering standards, and approvals. Requirements must be reviewed for each project.',
+    applications: ['Electricity transmission infrastructure', 'Electricity distribution projects'],
+    requirements: [
+      'Project location, monopole configuration, drawings, and intended use',
+      'Structural loading, material requirements, and corrosion protection',
+      'Applicable engineering standards, inspection criteria, approvals, and delivery destination',
+    ],
+    faqs: [
+      faq(
+        'What determines transmission monopole specifications?',
+        'Specifications depend on the project configuration, structural loading, material requirements, corrosion protection, engineering standards, and approvals.',
+      ),
+      faq(
+        'What should I provide for a monopole quotation?',
+        'Share the project location, drawings, configuration, loading criteria, material and coating requirements, quantity, applicable standards, and delivery destination.',
+      ),
+    ],
+    related: ['transmission-towers', 'power-distribution-poles', 'substation-structures'],
+  },
+  {
+    slug: 'power-distribution-poles',
+    name: 'Power Distribution Poles',
+    navigationLabel: 'Power Distribution Poles',
+    group: 'towers',
+    image: 'placeholder',
+    description:
+      'Pole structures for suitable electricity distribution infrastructure, with requirements established by project design and applicable approvals.',
+    overview:
+      'Power distribution pole specifications depend on the installation, structural loading, configuration, material requirements, corrosion protection, engineering standards, and project approvals.',
+    applications: ['Electricity distribution networks', 'Utility infrastructure'],
+    requirements: [
+      'Project location, pole configuration, drawings, and installation requirements',
+      'Structural loading, material requirements, and corrosion protection',
+      'Applicable engineering standards, inspection criteria, approvals, and delivery destination',
+    ],
+    faqs: [
+      faq(
+        'What information is needed for a power distribution pole enquiry?',
+        'Provide the project location, pole configuration, drawings, structural loading, material and corrosion-protection requirements, applicable standards, quantity, and delivery destination.',
+      ),
+      faq(
+        'Are power distribution poles available to one standard specification?',
+        'The required specification depends on the project design, loading conditions, material requirements, applicable engineering standards, and approvals.',
+      ),
+    ],
+    related: ['transmission-towers', 'transmission-monopoles', 'substation-structures'],
+  },
+  {
+    slug: 'substation-structures',
+    name: 'Substation Structures',
+    navigationLabel: 'Substation Structures',
+    group: 'towers',
+    image: 'placeholder',
+    description:
+      'Structures for suitable electrical substation infrastructure, with configuration and specifications defined by the project requirements.',
+    overview:
+      'Substation structure requirements depend on the project drawings, structural loading, configuration, material requirements, corrosion protection, engineering standards, and approvals. Confirm the required scope for each project.',
+    applications: ['Electrical substations', 'Power and utility infrastructure'],
+    requirements: [
+      'Project location, structure configuration, drawings, and intended installation',
+      'Structural loading, material requirements, and corrosion protection',
+      'Applicable engineering standards, inspection criteria, approvals, and delivery destination',
+    ],
+    faqs: [
+      faq(
+        'What determines a substation structure specification?',
+        'Specifications depend on the project design, configuration, structural loading, material requirements, corrosion protection, applicable standards, and approvals.',
+      ),
+      faq(
+        'What should be included in a substation structure enquiry?',
+        'Share project drawings, location, configuration, loading criteria, material and coating requirements, quantity, standards, inspection requirements, and approvals.',
+      ),
+    ],
+    related: ['transmission-towers', 'transmission-monopoles', 'power-distribution-poles'],
   },
   {
     slug: 'towers-power-infrastructure',
     name: 'Towers and Power Infrastructure Structures',
+    navigationLabel: 'Towers & Power Infrastructure',
     group: 'towers',
     image: 'placeholder',
     description:
@@ -659,11 +1553,16 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
         'Confirm structural design, loading conditions, material requirements, applicable engineering standards, project approvals, and manufacturing feasibility.',
       ),
     ],
-    related: ['transmission-towers', 'hot-dip-galvanized-steel-products', 'earthing-materials'],
+    related: ['transmission-towers', 'telecom-towers', 'transmission-monopoles'],
   },
 ];
 
 export const getProductDetail = (slug: string | undefined): ProductDetail | undefined =>
   PRODUCT_DETAILS.find((product) => product.slug === slug);
+
+export const getProductNavigationProducts = (category: ProductNavigationCategory): ProductDetail[] =>
+  category.productSlugs
+    .map((slug) => getProductDetail(slug))
+    .filter((product): product is ProductDetail => product !== undefined);
 
 export const getProductGroup = (product: ProductDetail): ProductGroup => PRODUCT_GROUPS[product.group];

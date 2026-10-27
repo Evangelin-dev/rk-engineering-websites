@@ -5,6 +5,7 @@ import galvanizedImage from '../assets/images/galvanizing_facility_1792669705362
 import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
 import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
 import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
+import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../data/productDetails.ts';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -18,7 +19,8 @@ interface ProductCategory {
   description: string;
   image: string;
   imageAlt: string;
-  products: { name: string; slug: string }[];
+  products?: { name: string; slug: string }[];
+  navigationCategoryId?: string;
   considerations: string[];
 }
 
@@ -48,12 +50,7 @@ const CATEGORIES: ProductCategory[] = [
     description: 'Cable tray solutions organise and support electrical cables in factories, commercial buildings, power plants, and infrastructure projects.',
     image: cableTrayImage,
     imageAlt: 'Perforated and ladder cable trays for electrical cable management',
-    products: [
-      { name: 'Perforated cable trays', slug: 'perforated-cable-trays' },
-      { name: 'Ladder cable trays', slug: 'ladder-cable-trays' },
-      { name: 'Raceway cable trays', slug: 'raceway-cable-trays' },
-      { name: 'Cable tray ducts', slug: 'cable-tray-ducts' },
-    ],
+    navigationCategoryId: 'cable-trays',
     considerations: ['Select according to cable loads, installation conditions, and project specifications.'],
   },
   {
@@ -64,13 +61,7 @@ const CATEGORIES: ProductCategory[] = [
     description: 'Products for suitable electrical grounding, bonding, and infrastructure applications, subject to project specifications.',
     image: galvanizedImage,
     imageAlt: 'Industrial galvanizing facility for steel products',
-    products: [
-      { name: 'Earthing flats', slug: 'earthing-flats' },
-      { name: 'Earthing electrodes', slug: 'earthing-electrodes' },
-      { name: 'Junction boxes', slug: 'junction-boxes' },
-      { name: 'GI wire', slug: 'gi-wire' },
-      { name: 'Copper earthing strips', slug: 'copper-earthing-strips' },
-    ],
+    navigationCategoryId: 'earthing',
     considerations: ['Selection depends on the intended grounding application and project specifications.'],
   },
   {
@@ -81,13 +72,7 @@ const CATEGORIES: ProductCategory[] = [
     description: 'Structure solutions for ground-mounted and rooftop solar installations, trackers, car parking structures, and walkways.',
     image: heroImage,
     imageAlt: 'Industrial steel manufacturing facility supporting solar structure enquiries',
-    products: [
-      { name: 'Ground-mounted structures', slug: 'ground-mounted-solar-structures' },
-      { name: 'Rooftop structures', slug: 'rooftop-solar-structures' },
-      { name: 'Solar tracker structures', slug: 'solar-tracker-structures' },
-      { name: 'Car parking structures', slug: 'solar-car-parking-structures' },
-      { name: 'Walkway structures', slug: 'solar-walkway-structures' },
-    ],
+    navigationCategoryId: 'solar',
     considerations: ['Suitability depends on site conditions, structural loading, installation requirements, and project design.'],
   },
   {
@@ -98,7 +83,7 @@ const CATEGORIES: ProductCategory[] = [
     description: 'Hot-dip galvanizing applies a protective zinc coating to suitable steel components to help reduce corrosion. Specifications and coating requirements are assessed for the intended application and project standards.',
     image: galvanizedImage,
     imageAlt: 'Steel components at a hot-dip galvanizing facility',
-    products: [{ name: 'Hot-dip galvanized steel products', slug: 'hot-dip-galvanized-steel-products' }],
+    navigationCategoryId: 'galvanized-steel',
     considerations: ['Product specifications and coating requirements depend on the intended application and project standards.'],
   },
   {
@@ -109,10 +94,7 @@ const CATEGORIES: ProductCategory[] = [
     description: 'Transmission towers support overhead power lines and are an important part of electricity transmission and distribution infrastructure.',
     image: exportImage,
     imageAlt: 'Industrial products packed for shipment; tower product imagery is not currently available',
-    products: [
-      { name: 'Transmission towers', slug: 'transmission-towers' },
-      { name: 'Towers and power infrastructure structures', slug: 'towers-power-infrastructure' },
-    ],
+    navigationCategoryId: 'towers',
     considerations: ['Project review includes voltage requirements, structural loading, tower configuration, material grades, corrosion protection, and engineering standards.', 'Specifications and approvals depend on the individual project.'],
   },
 ];
@@ -177,6 +159,12 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeCategory = CATEGORIES.find(({ id }) => id === activeCategoryId) ?? CATEGORIES[0];
+  const activeNavigationCategory = PRODUCT_NAVIGATION_CATEGORIES.find(
+    ({ id }) => id === activeCategory.navigationCategoryId,
+  );
+  const activeProducts = activeNavigationCategory
+    ? getProductNavigationProducts(activeNavigationCategory)
+    : activeCategory.products ?? [];
 
   React.useEffect(() => {
     const nextCategoryId = CATEGORIES.some(({ id }) => id === requestedCategory) ? requestedCategory ?? 'all' : 'all';
@@ -269,7 +257,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
           </div>
 
           <div id="featured-product" role="tabpanel" aria-labelledby={`product-tab-${activeCategory.id}`} className="grid overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-sm transition-colors duration-200 lg:grid-cols-2">
-            <Link to={`/products/${activeCategory.products[0].slug}`} aria-label={`View ${activeCategory.products[0].name} details`} className="group relative block min-h-[260px] overflow-hidden focus-visible:outline-4 focus-visible:outline-blue-700 sm:min-h-[360px] lg:min-h-[480px]">
+            <Link to={`/products/${activeProducts[0].slug}`} aria-label={`View ${activeProducts[0].name} details`} className="group relative block min-h-[260px] overflow-hidden focus-visible:outline-4 focus-visible:outline-blue-700 sm:min-h-[360px] lg:min-h-[480px]">
               <img key={activeCategory.id} src={activeCategory.image} alt={activeCategory.imageAlt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
               <span className="absolute bottom-4 right-4 rounded-md bg-blue-950/90 px-3 py-2 text-xs font-bold text-white shadow transition-colors group-hover:bg-red-600">
                 View product details
@@ -283,13 +271,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
               <div className="mt-6">
                 <h4 className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Products in this category</h4>
                 <ul id="category-product-list" className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {activeCategory.products.map((product) => (
+                  {activeProducts.map((product) => (
                     <li key={product.slug}>
                       <Link to={`/products/${product.slug}`} className="group flex h-full min-h-12 items-center justify-between gap-2 rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-blue-900 transition-colors hover:border-blue-300 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-blue-700">
                         <span className="flex items-start gap-2">
                           <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-blue-800" />
                           {product.name}
                         </span>
+                        <span className="shrink-0 text-xs font-bold uppercase tracking-wide">View details</span>
                         <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
                       </Link>
                     </li>

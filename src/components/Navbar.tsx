@@ -2,58 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, Phone, X } from 'lucide-react';
 import rkLogo from '../assets/images/rk.png';
+import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../data/productDetails.ts';
 
 const NAV_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'About Us', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'Our Association', to: '/associations' },
-];
-
-const PRODUCT_LINK_GROUPS = [
-  {
-    label: 'Cable Trays & Ducts',
-    products: [
-      { label: 'Industrial Cable Trays', slug: 'cable-trays' },
-      { label: 'Perforated Cable Trays', slug: 'perforated-cable-trays' },
-      { label: 'Ladder Cable Trays', slug: 'ladder-cable-trays' },
-      { label: 'Raceway Cable Trays', slug: 'raceway-cable-trays' },
-      { label: 'Cable Tray Ducts', slug: 'cable-tray-ducts' },
-    ],
-  },
-  {
-    label: 'Earthing Materials',
-    products: [
-      { label: 'Earthing Materials', slug: 'earthing-materials' },
-      { label: 'Earthing Flats', slug: 'earthing-flats' },
-      { label: 'Earthing Electrodes', slug: 'earthing-electrodes' },
-      { label: 'Junction Boxes', slug: 'junction-boxes' },
-      { label: 'GI Wire', slug: 'gi-wire' },
-      { label: 'Copper Earthing Strips', slug: 'copper-earthing-strips' },
-    ],
-  },
-  {
-    label: 'Solar Mounting Structures',
-    products: [
-      { label: 'Solar Mounting Structures', slug: 'solar-mounting-structures' },
-      { label: 'Ground-Mounted Solar Structures', slug: 'ground-mounted-solar-structures' },
-      { label: 'Rooftop Solar Structures', slug: 'rooftop-solar-structures' },
-      { label: 'Solar Tracker Structures', slug: 'solar-tracker-structures' },
-      { label: 'Solar Car Parking Structures', slug: 'solar-car-parking-structures' },
-      { label: 'Solar Walkway Structures', slug: 'solar-walkway-structures' },
-    ],
-  },
-  {
-    label: 'Hot-Dip Galvanized Products',
-    products: [{ label: 'Hot-Dip Galvanized Steel Products', slug: 'hot-dip-galvanized-steel-products' }],
-    additionalGroup: {
-      label: 'Towers & Power Infrastructure',
-      products: [
-        { label: 'Transmission Towers', slug: 'transmission-towers' },
-        { label: 'Towers & Power Infrastructure', slug: 'towers-power-infrastructure' },
-      ],
-    },
-  },
 ];
 
 const SHOWCASE_LINKS = [
@@ -200,14 +155,18 @@ export const Navbar: React.FC = () => {
                       All Products
                     </Link>
                   </div>
-                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                    {PRODUCT_LINK_GROUPS.map((group) => (
-                      <section key={group.label} className="min-w-0 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
-                        <div className="border-b border-slate-200 px-2 pb-2">
-                          <h3 className="text-xs font-bold uppercase leading-snug tracking-wide text-blue-950">{group.label}</h3>
-                        </div>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                    {PRODUCT_NAVIGATION_CATEGORIES.map((category) => (
+                      <section key={category.id} className="min-w-0 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
+                        <Link
+                          to={`/products?category=${category.id}`}
+                          onClick={closeMenus}
+                          className="block border-b border-slate-200 px-2 pb-2 text-xs font-bold uppercase leading-snug tracking-wide text-blue-950 transition-colors hover:text-red-600"
+                        >
+                          {category.label}
+                        </Link>
                         <div className="pt-1">
-                          {group.products.map((product) => (
+                          {getProductNavigationProducts(category).map((product) => (
                             <Link
                               key={product.slug}
                               to={`/products/${product.slug}`}
@@ -216,27 +175,10 @@ export const Navbar: React.FC = () => {
                                 location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-700'
                               }`}
                             >
-                              {product.label}
+                              {product.navigationLabel ?? product.name}
                             </Link>
                           ))}
                         </div>
-                        {group.additionalGroup && (
-                          <div className="mt-2 border-t border-slate-200 pt-2">
-                            <h3 className="px-2 pb-1 text-xs font-bold uppercase leading-snug tracking-wide text-blue-950">{group.additionalGroup.label}</h3>
-                            {group.additionalGroup.products.map((product) => (
-                              <Link
-                                key={product.slug}
-                                to={`/products/${product.slug}`}
-                                onClick={closeMenus}
-                                className={`block rounded-md px-2 py-2 text-sm leading-snug transition-colors hover:bg-white hover:text-blue-800 ${
-                                  location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-700'
-                                }`}
-                              >
-                                {product.label}
-                              </Link>
-                            ))}
-                          </div>
-                        )}
                       </section>
                     ))}
                   </div>
@@ -359,10 +301,16 @@ export const Navbar: React.FC = () => {
             >
               <div className="overflow-hidden pb-2 pl-3">
                 <Link to="/products" onClick={closeMenus} className="block py-2 font-bold text-red-600">All Products</Link>
-                {PRODUCT_LINK_GROUPS.map((group) => (
-                  <div key={group.label} className="border-t border-slate-100 py-2 first:border-t-0">
-                    <p className="py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{group.label}</p>
-                    {group.products.map((product) => (
+                {PRODUCT_NAVIGATION_CATEGORIES.map((category) => (
+                  <div key={category.id} className="border-t border-slate-100 py-2 first:border-t-0">
+                    <Link
+                      to={`/products?category=${category.id}`}
+                      onClick={closeMenus}
+                      className="block py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 transition-colors hover:text-red-600"
+                    >
+                      {category.label}
+                    </Link>
+                    {getProductNavigationProducts(category).map((product) => (
                       <Link
                         key={product.slug}
                         to={`/products/${product.slug}`}
@@ -371,7 +319,7 @@ export const Navbar: React.FC = () => {
                           location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-600'
                         }`}
                       >
-                        {product.label}
+                        {product.navigationLabel ?? product.name}
                       </Link>
                     ))}
                   </div>

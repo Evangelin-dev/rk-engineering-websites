@@ -11,7 +11,12 @@ import {
   SunMedium,
   TowerControl,
 } from 'lucide-react';
-import { getProductDetail, getProductGroup, PRODUCT_DETAILS } from '../data/productDetails.ts';
+import {
+  getProductDetail,
+  getProductGroup,
+  getProductNavigationCategory,
+  PRODUCT_DETAILS,
+} from '../data/productDetails.ts';
 import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
 import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
 
@@ -58,25 +63,16 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
   const group = getProductGroup(product);
   const Icon = GROUP_ICONS[product.group] ?? Factory;
   const groupProducts = PRODUCT_DETAILS.filter(({ group: productGroup }) => productGroup === product.group);
-  const categorySlug = product.group === 'cable'
-    ? 'cable-trays'
-    : product.group === 'earthing'
-      ? 'earthing'
-      : product.group === 'solar'
-        ? 'solar'
-        : product.group === 'galvanized'
-          ? 'galvanized-steel'
-          : 'towers';
-  const categoryLabel = product.group === 'cable'
-    ? 'Cable Trays & Ducts'
-    : product.group === 'earthing'
-      ? 'Earthing Materials'
-      : product.group === 'solar'
-        ? 'Solar Mounting Structures'
-        : product.group === 'galvanized'
-          ? 'Hot-Dip Galvanized Products'
-          : 'Towers & Power Infrastructure';
-  const isFamilyPage = ['cable-trays', 'earthing-materials', 'solar-mounting-structures'].includes(product.slug);
+  const category = getProductNavigationCategory(product.group);
+  const categoryLabel = category?.backLabel ?? 'Products';
+  const categoryPath = category ? `/products?category=${category.id}` : '/products';
+  const isFamilyPage = [
+    'cable-trays',
+    'earthing-materials',
+    'solar-mounting-structures',
+    'hot-dip-galvanized-steel-products',
+    'towers-power-infrastructure',
+  ].includes(product.slug);
   const variants = groupProducts.filter(({ slug: variantSlug }) => variantSlug !== product.slug);
   const relatedProducts = product.related
     .map((relatedSlug) => getProductDetail(relatedSlug))
@@ -88,22 +84,18 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${window.location.origin}/` },
       { '@type': 'ListItem', position: 2, name: 'Products', item: `${window.location.origin}/products` },
-      { '@type': 'ListItem', position: 3, name: product.name, item: `${window.location.origin}/products/${product.slug}` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: category?.label ?? categoryLabel,
+        item: `${window.location.origin}${categoryPath}`,
+      },
+      { '@type': 'ListItem', position: 4, name: product.name, item: `${window.location.origin}/products/${product.slug}` },
     ],
   };
-  const productData = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    brand: { '@type': 'Brand', name: 'RK Engineering & Galvanizers Pvt. Ltd.' },
-    ...(product.image !== 'placeholder' ? { image: new URL(PRODUCT_IMAGES[product.image], window.location.origin).href } : {}),
-  };
-
   return (
     <>
       <script type="application/ld+json">{JSON.stringify(breadcrumbData)}</script>
-      <script type="application/ld+json">{JSON.stringify(productData)}</script>
 
       <section className="border-b border-slate-200 bg-white py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -111,6 +103,8 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
             <Link to="/" className="transition-colors hover:text-blue-900">Home</Link>
             <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
             <Link to="/products" className="transition-colors hover:text-blue-900">Products</Link>
+            <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+            <Link to={categoryPath} className="transition-colors hover:text-blue-900">{category?.label ?? categoryLabel}</Link>
             <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
             <span aria-current="page" className="font-semibold text-slate-800">{product.name}</span>
           </nav>
@@ -120,7 +114,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
       <section className="border-b border-slate-200 bg-white py-10 sm:py-14 lg:py-16">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
           <div className="order-2 lg:order-1">
-            <Link to={`/products?category=${categorySlug}`} className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600 transition-colors hover:text-red-700">
+            <Link to={categoryPath} className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600 transition-colors hover:text-red-700">
               <ArrowLeft aria-hidden="true" className="h-3.5 w-3.5" />
               {categoryLabel}
             </Link>
@@ -149,7 +143,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
               <div className="flex aspect-[4/3] flex-col items-center justify-center gap-4 bg-gradient-to-br from-blue-950 to-slate-800 px-8 text-center text-white">
                 <Icon aria-hidden="true" className="h-12 w-12 text-blue-200" />
                 <p className="max-w-sm text-sm font-semibold leading-relaxed text-blue-50">
-                  Product imagery for {product.name.toLowerCase()} can be added here.
+                  Product-specific imagery is not available in the provided materials.
                 </p>
               </div>
             ) : (
@@ -192,6 +186,28 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
         </div>
       </section>
 
+      {product.technicalSpecifications && (
+        <section className="border-b border-slate-200 bg-white py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">Technical Information</p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Technical Specifications</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                Final dimensions, material, performance, coating, and inspection requirements must follow the approved drawings and applicable project specification.
+              </p>
+            </div>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {product.technicalSpecifications.map((specification) => (
+                <li key={specification} className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-relaxed text-slate-700">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-600" aria-hidden="true" />
+                  {specification}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {isFamilyPage && variants.length > 0 && (
         <section className="border-b border-slate-200 bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -210,6 +226,21 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {product.variants && product.variants.length > 0 && (
+        <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">Types and Variants</h2>
+            <ul className="mt-4 flex flex-wrap gap-3">
+              {product.variants.map((variant) => (
+                <li key={variant} className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700">
+                  {variant}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       )}
@@ -292,31 +323,6 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-slate-50 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">Explore More</p>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Related Products</h2>
-            </div>
-            <Link to={`/products?category=${categorySlug}`} className="inline-flex items-center gap-2 text-sm font-bold text-blue-900 hover:text-red-600">
-              Back to {categoryLabel} <ArrowRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {relatedProducts.filter((relatedProduct) => relatedProduct.slug !== product.slug).slice(0, 3).map((relatedProduct) => (
-              <Link key={relatedProduct.slug} to={`/products/${relatedProduct.slug}`} className="group rounded-lg border border-slate-200 bg-white p-5 transition-colors hover:border-blue-200 hover:shadow-sm">
-                <h3 className="font-bold text-slate-900 group-hover:text-blue-900">{relatedProduct.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{relatedProduct.description}</p>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-900">
-                  View details <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-5 rounded-xl bg-blue-950 p-6 text-white shadow-lg sm:flex-row sm:items-center sm:justify-between sm:p-8">
@@ -328,6 +334,31 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
             <button type="button" onClick={() => onRequestQuote(product.name)} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
               Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-slate-50 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">EXPLORE MORE</p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Related Products</h2>
+            </div>
+            <Link to={categoryPath} className="inline-flex items-center gap-2 text-sm font-bold text-blue-900 transition-colors hover:text-red-600">
+              Back to {categoryLabel} <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedProducts.filter((relatedProduct) => relatedProduct.slug !== product.slug).slice(0, 3).map((relatedProduct) => (
+              <Link key={relatedProduct.slug} to={`/products/${relatedProduct.slug}`} className="group rounded-lg border border-slate-200 bg-white p-5 transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-sm">
+                <h3 className="font-bold text-slate-900 group-hover:text-blue-900">{relatedProduct.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{relatedProduct.description}</p>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-blue-900">
+                  View details <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

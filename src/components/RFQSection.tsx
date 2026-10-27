@@ -35,7 +35,7 @@ export const RFQSection: React.FC<RFQSectionProps> = ({ preFilledProduct, preFil
       ...current,
       product: productGroup?.name ?? current.product,
       quantity: productGroup ? current.quantity || '500' : current.quantity,
-      message: preFilledSpecs ?? current.message,
+      message: preFilledSpecs ?? (matchingProduct ? `Product of interest: ${matchingProduct.name}` : current.message),
     }));
   }, [preFilledProduct, preFilledSpecs]);
 
