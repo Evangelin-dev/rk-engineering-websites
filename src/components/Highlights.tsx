@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-import productsImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
 const CAPABILITIES = [
   {
@@ -12,8 +9,8 @@ const CAPABILITIES = [
     description:
       'Established in 2000, RK Engineering has more than 25 years of continuous manufacturing experience in heavy steel fabrication, cable management, and surface protection.',
     metric: '25+ Years',
-    image: heroImage,
-    alt: 'Industrial cable tray plant and production facility',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'RK Engineering steel product',
   },
   {
     id: 'certifications',
@@ -22,8 +19,8 @@ const CAPABILITIES = [
     description:
       'RK Engineering operates under certified quality, environmental, and safety management systems, supporting disciplined industrial production and supply control.',
     metric: 'ISO & CE',
-    image: productsImage,
-    alt: 'Industrial quality inspection and manufacturing output',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'RK Engineering steel product',
   },
   {
     id: 'tray-capacity',
@@ -32,8 +29,8 @@ const CAPABILITIES = [
     description:
       'Our stated annual cable tray manufacturing capacity is 12,000 metric tonnes, supported by roll-forming, CNC perforation, and industrial fabrication operations.',
     metric: '12,000 MT',
-    image: productsImage,
-    alt: 'Cable tray production and fabrication activity',
+    image: UPLOADED_PRODUCT_IMAGES['58'],
+    alt: 'RK Engineering cable tray product',
   },
   {
     id: 'galvanizing-capacity',
@@ -42,8 +39,8 @@ const CAPABILITIES = [
     description:
       'RK Engineering supports a stated annual hot-dip galvanizing capacity of 24,000 metric tonnes for industrial and infrastructure steel products.',
     metric: '24,000 MT',
-    image: galvanizingImage,
-    alt: 'In-house hot-dip galvanizing facility and zinc bath',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'RK Engineering hot-dip galvanized steel product',
   },
   {
     id: 'in-house-galvanizing',
@@ -52,8 +49,8 @@ const CAPABILITIES = [
     description:
       'Integrated manufacturing minimizes third-party handling and supports consistent coating thickness, zinc adherence, and smoother project execution.',
     metric: '100% In-House',
-    image: galvanizingImage,
-    alt: 'Close-up of galvanizing process and zinc coating operation',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'RK Engineering galvanized steel product',
   },
   {
     id: 'custom',
@@ -62,8 +59,8 @@ const CAPABILITIES = [
     description:
       'Full engineering assessment supports custom widths, gauges, hole patterns, and fabrication requirements for product-specific industrial applications.',
     metric: 'Bespoke CAD',
-    image: heroImage,
-    alt: 'Custom fabrication and engineering work for industrial steel components',
+    image: UPLOADED_PRODUCT_IMAGES['55'],
+    alt: 'RK Engineering industrial steel product',
   },
   {
     id: 'exports',
@@ -72,8 +69,8 @@ const CAPABILITIES = [
     description:
       'We support global export enquiries with CFR, CIF, FOB quotations, port coordination, and seaworthy packing for international project procurement.',
     metric: 'Global Export',
-    image: exportImage,
-    alt: 'Export packing and shipping logistics for industrial goods',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'RK Engineering steel product for international enquiries',
   },
   {
     id: 'project-capabilities',
@@ -82,8 +79,8 @@ const CAPABILITIES = [
     description:
       'Our manufacturing focus spans power utilities, solar parks, petrochemical facilities, data centres, and industrial infrastructure where reliable material supply is essential.',
     metric: '500+ Projects',
-    image: heroImage,
-    alt: 'Industrial infrastructure project installation and steel application',
+    image: UPLOADED_PRODUCT_IMAGES['66'],
+    alt: 'RK Engineering steel product for infrastructure projects',
   },
 ] as const;
 

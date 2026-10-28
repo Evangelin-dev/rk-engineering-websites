@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import heroVideo from '../assets/images/rkv.mp4';
 
 interface HeroProps {
@@ -40,7 +40,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRFQ, onExploreProducts }) => {
   return (
     <section className="hero-viewport relative isolate flex flex-col overflow-hidden bg-blue-950 text-white">
       <img
-        src={heroImage}
+        src={UPLOADED_PRODUCT_IMAGES['54']}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 z-0 h-full w-full object-cover"

@@ -1,5 +1,14 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import {
+  ArrowRight,
+  Cable,
+  ChevronLeft,
+  ChevronRight,
+  Factory,
+  Globe2,
+  ShieldCheck,
+  Zap,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FinalCTA } from '../components/FinalCTA.tsx';
 import { Highlights } from '../components/Highlights.tsx';
@@ -7,9 +16,7 @@ import { Hero } from '../components/Hero.tsx';
 import { IndustriesSection } from '../components/IndustriesSection.tsx';
 import { FAQSection } from '../components/FAQSection.tsx';
 import { PRODUCTS } from '../data/products.ts';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import fabricationImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
 interface HomePageProps {
   onOpenRFQ: () => void;
@@ -136,6 +143,20 @@ const CABLE_TRAY_CTA_CARDS = [
   },
 ] as const;
 
+const GUIDE_CATEGORY_ICONS = {
+  'Industrial projects': Factory,
+  'Importers & distributors': Globe2,
+  'Corrosion protection': ShieldCheck,
+  'Industrial cable management': Cable,
+  'Power infrastructure': Zap,
+  'Oil & gas': Factory,
+  'Power & energy': Zap,
+  Importers: Globe2,
+  'Galvanized products': ShieldCheck,
+} as const;
+
+const GUIDE_MARKETS = ['All', 'Africa', 'United States'] as const;
+
 type CtaRegionFilter = 'All' | (typeof CABLE_TRAY_CTA_CARDS)[number]['region'];
 
 interface TimelineLine {
@@ -156,6 +177,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
   );
   const [activeProcessStep, setActiveProcessStep] = useState<number | null>(null);
   const [ctaRegionFilter, setCtaRegionFilter] = useState<CtaRegionFilter>('All');
+  const [canScrollGuidesBackward, setCanScrollGuidesBackward] = useState(false);
+  const [canScrollGuidesForward, setCanScrollGuidesForward] = useState(true);
   const [timelineLine, setTimelineLine] = useState<TimelineLine>({
     horizontal: false,
     left: 0,
@@ -164,6 +187,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
     progress: 0,
   });
   const processTimelineRef = useRef<HTMLDivElement>(null);
+  const guideCarouselRef = useRef<HTMLDivElement>(null);
   const processStepRefs = useRef<Array<HTMLLIElement | null>>([]);
   const processDotRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
@@ -268,12 +292,59 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
     };
   }, [activeProcessStep]);
 
-  const productImages = [cableTrayImage, fabricationImage, galvanizingImage];
-  const productImageAlts = [
-    'Hot-dip galvanized perforated cable tray products',
-    'Industrial cable tray manufacturing and fabrication facility',
-    'Steel components at a hot-dip galvanizing facility',
+  const productImages = [
+    UPLOADED_PRODUCT_IMAGES['55'],
+    UPLOADED_PRODUCT_IMAGES['58'],
+    UPLOADED_PRODUCT_IMAGES['59'],
   ];
+  const productImageAlts = [
+    'Industrial cable tray products',
+    'Ladder cable tray product',
+    'Cable tray duct product',
+  ];
+
+  const visibleGuides = CABLE_TRAY_CTA_CARDS.filter(
+    (guide) => ctaRegionFilter === 'All' || guide.region === ctaRegionFilter,
+  );
+
+  const selectGuideMarket = (market: CtaRegionFilter) => {
+    setCtaRegionFilter(market);
+  };
+
+  const updateGuideCarouselControls = () => {
+    const carousel = guideCarouselRef.current;
+    if (!carousel) return;
+    setCanScrollGuidesBackward(carousel.scrollLeft > 2);
+    setCanScrollGuidesForward(
+      carousel.scrollLeft + carousel.clientWidth < carousel.scrollWidth - 2,
+    );
+  };
+
+  const scrollGuideCarousel = (direction: -1 | 1) => {
+    const carousel = guideCarouselRef.current;
+    if (!carousel) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth * 0.85,
+      behavior: reducedMotion ? 'auto' : 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const carousel = guideCarouselRef.current;
+    if (!carousel) return;
+    carousel.style.scrollBehavior = 'auto';
+    carousel.scrollLeft = 0;
+    const frame = window.requestAnimationFrame(() => {
+      carousel.style.removeProperty('scroll-behavior');
+      updateGuideCarouselControls();
+    });
+    window.addEventListener('resize', updateGuideCarouselControls);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('resize', updateGuideCarouselControls);
+    };
+  }, [ctaRegionFilter]);
 
   return (
     <div ref={pageRef}>
@@ -283,8 +354,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
         <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div className="relative">
             <img
-              src={fabricationImage}
-              alt="RK Engineering industrial steel manufacturing facility"
+              src={UPLOADED_PRODUCT_IMAGES['63']}
+              alt="RK Engineering industrial steel product"
               loading="lazy"
               className="aspect-[4/3] w-full rounded-xl object-cover shadow-lg"
             />
@@ -376,75 +447,171 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
           </div>
         </div>
       </section>
-      <section className="border-b border-slate-200 bg-slate-50 py-14 sm:py-18 lg:py-20">
+      <section className="overflow-hidden border-y border-slate-200 bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="grid gap-8 border-b border-slate-200 pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.65fr)] lg:items-end lg:gap-12">
             <div className="max-w-3xl">
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">Cable Tray Enquiries</p>
-              <h2 className="text-balance text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-                Cable Tray Export &amp; Industrial Solutions
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-900">
+                RK Engineering Knowledge Centre
+              </p>
+              <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+                Industrial Solutions. Global Markets.
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Find project and sourcing information by market. Select a guide to review products, requirements, and enquiry details.
+              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+                Product applications, sourcing guidance and export information for global projects.
               </p>
             </div>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter cable tray guides by market">
-              {(['All', 'Africa', 'United States'] as const).map((region) => {
-                const count = region === 'All'
-                  ? CABLE_TRAY_CTA_CARDS.length
-                  : CABLE_TRAY_CTA_CARDS.filter((card) => card.region === region).length;
-                const isSelected = ctaRegionFilter === region;
-                return (
-                  <button
-                    key={region}
-                    type="button"
-                    aria-pressed={isSelected}
-                    onClick={() => setCtaRegionFilter(region)}
-                    className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 ${
-                      isSelected
-                        ? 'border-blue-950 bg-blue-950 text-white'
-                        : 'border-slate-300 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-950'
-                    }`}
-                  >
-                    {region === 'All' ? 'All guides' : region}
-                    <span className={`rounded-full px-2 py-0.5 text-xs ${isSelected ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="lg:justify-self-end">
+              <p className="mb-2 text-[0.65rem] font-bold uppercase tracking-[0.15em] text-slate-500">
+                Browse by market
+              </p>
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter guides by market">
+                {GUIDE_MARKETS.map((market) => {
+                  const count =
+                    market === 'All'
+                      ? CABLE_TRAY_CTA_CARDS.length
+                      : CABLE_TRAY_CTA_CARDS.filter((guide) => guide.region === market).length;
+                  const isSelected = ctaRegionFilter === market;
+                  return (
+                    <button
+                      key={market}
+                      type="button"
+                      aria-pressed={isSelected}
+                      onClick={() => selectGuideMarket(market)}
+                      className={`inline-flex min-h-10 items-center gap-2 border px-3 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transition-none ${
+                        isSelected
+                          ? 'border-blue-950 bg-blue-950 text-white'
+                          : 'border-slate-300 bg-white text-slate-600 hover:border-blue-800 hover:text-blue-950'
+                      }`}
+                    >
+                      {market === 'All' ? 'All Guides' : market}
+                      <span className={isSelected ? 'text-blue-200' : 'font-mono text-slate-400'}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-4 flex items-center gap-2 lg:justify-end">
+                <button
+                  type="button"
+                  aria-label="Previous guides"
+                  onClick={() => scrollGuideCarousel(-1)}
+                  disabled={!canScrollGuidesBackward}
+                  className="inline-flex h-10 w-10 items-center justify-center border border-slate-300 bg-white text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
+                >
+                  <ChevronLeft aria-hidden="true" className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next guides"
+                  onClick={() => scrollGuideCarousel(1)}
+                  disabled={!canScrollGuidesForward}
+                  className="inline-flex h-10 w-10 items-center justify-center border border-slate-300 bg-white text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
+                >
+                  <ChevronRight aria-hidden="true" className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
-          <p className="sr-only" aria-live="polite">
-            Showing {ctaRegionFilter === 'All' ? CABLE_TRAY_CTA_CARDS.length : CABLE_TRAY_CTA_CARDS.filter((card) => card.region === ctaRegionFilter).length}
-            {' '}cable tray {ctaRegionFilter === 'All' ? 'guides' : `guides for ${ctaRegionFilter}`}.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-label="Cable tray solution guides">
-            {CABLE_TRAY_CTA_CARDS
-              .filter((card) => ctaRegionFilter === 'All' || card.region === ctaRegionFilter)
-              .map((card) => (
+
+          <div className="mb-4 mt-6 flex items-center justify-between gap-4">
+            <p className="text-sm font-semibold text-slate-700" aria-live="polite">
+              {visibleGuides.length} {visibleGuides.length === 1 ? 'guide' : 'guides'}
+              {ctaRegionFilter !== 'All' && (
+                <span className="font-normal text-slate-500"> for {ctaRegionFilter}</span>
+              )}
+            </p>
+            <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-slate-400">
+              Product &amp; export library
+            </span>
+          </div>
+
+          <div
+            ref={guideCarouselRef}
+            role="region"
+            aria-label="Industrial product and export guides"
+            aria-roledescription="carousel"
+            onScroll={updateGuideCarouselControls}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pb-3 scroll-smooth motion-reduce:scroll-auto md:gap-5"
+          >
+            {visibleGuides.map((guide, index) => {
+              const CategoryIcon = GUIDE_CATEGORY_ICONS[guide.label];
+              const treatment = index % 3;
+              const isNavy = treatment === 2;
+              const isBlueGray = treatment === 1;
+              const baseIndex = CABLE_TRAY_CTA_CARDS.findIndex((item) => item.path === guide.path);
+              return (
                 <Link
-                  key={card.path}
-                  to={card.path}
-                  className="group flex min-h-full flex-col rounded-xl border border-slate-200 border-t-4 border-t-blue-950 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:border-t-red-600 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transform-none motion-reduce:transition-none sm:p-6"
-                  aria-label={`${card.action}: ${card.title}`}
+                  key={guide.path}
+                  to={guide.path}
+                  aria-label={`Explore guide: ${guide.title} — ${guide.label}, ${guide.region}`}
+                  className={`group relative flex min-h-[25rem] shrink-0 snap-start flex-col border p-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transition-none sm:min-h-[27rem] sm:p-6 md:basis-[calc((100%-1.25rem)/2)] xl:basis-[calc((100%-2.5rem)/3)] ${
+                    isNavy
+                      ? 'border-blue-950 bg-blue-950 text-white hover:bg-blue-900'
+                      : isBlueGray
+                        ? 'border-blue-100 bg-blue-50/80 text-slate-950 hover:bg-blue-100/80'
+                        : 'border-slate-200 bg-white text-slate-950 hover:bg-slate-100'
+                  } w-full`}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs font-bold uppercase tracking-[0.13em] text-blue-900">{card.label}</span>
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
-                      {card.region}
+                  <div className="flex items-start justify-between gap-4">
+                    <span
+                      className={`text-xs font-semibold uppercase tracking-[0.12em] ${
+                        isNavy ? 'text-blue-200' : 'text-slate-500'
+                      }`}
+                    >
+                      {guide.region}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`font-mono text-xs tabular-nums ${
+                        isNavy ? 'text-blue-300' : 'text-slate-400'
+                      }`}
+                    >
+                      {String(baseIndex + 1).padStart(2, '0')} / 10
                     </span>
                   </div>
-                  <h3 className="mt-4 text-lg font-extrabold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-blue-900 sm:text-xl">
-                    {card.title}
+                  <div className="mt-8 flex items-center gap-2">
+                    <CategoryIcon
+                      aria-hidden="true"
+                      className={`h-4 w-4 ${isNavy ? 'text-blue-200' : 'text-blue-900'}`}
+                    />
+                    <span
+                      className={`text-[0.65rem] font-bold uppercase tracking-[0.14em] ${
+                        isNavy ? 'text-blue-200' : 'text-blue-900'
+                      }`}
+                    >
+                      {guide.label}
+                    </span>
+                  </div>
+                  <h3
+                    className={`mt-4 text-xl font-extrabold leading-tight tracking-tight transition-colors ${
+                      isNavy ? 'text-white group-hover:text-blue-100' : 'text-slate-950 group-hover:text-blue-900'
+                    }`}
+                  >
+                    {guide.title}
                   </h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{card.description}</p>
-                  <span className="mt-6 inline-flex min-h-11 w-full items-center justify-between gap-3 rounded-lg bg-blue-950 px-4 py-3 text-sm font-bold text-white transition-colors group-hover:bg-red-600">
-                    <span>{card.action}</span>
-                    <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transform-none" />
+                  <p
+                    className={`mt-4 text-sm leading-6 ${
+                      isNavy ? 'text-blue-100' : 'text-slate-600'
+                    }`}
+                  >
+                    {guide.description}
+                  </p>
+                  <span
+                    className={`mt-auto inline-flex min-h-12 items-center justify-between gap-3 border-t pt-4 text-sm font-bold ${
+                      isNavy ? 'border-white/20 text-white' : 'border-slate-300 text-blue-950'
+                    }`}
+                  >
+                    Explore Guide
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+                    />
                   </span>
                 </Link>
-              ))}
+              );
+            })}
           </div>
         </div>
       </section>

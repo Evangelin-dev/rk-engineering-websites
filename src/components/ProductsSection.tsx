@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { ArrowRight, Check, ChevronDown, Globe2 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import galvanizedImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
 import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../data/productDetails.ts';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -31,8 +28,8 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Industrial Product Range',
     title: 'Industrial Steel Products for Project Requirements',
     description: 'RK Engineering manufactures and supplies industrial steel products for electrical infrastructure, renewable energy, construction, power transmission, and industrial applications.',
-    image: heroImage,
-    imageAlt: 'RK Engineering industrial steel manufacturing facility',
+    image: UPLOADED_PRODUCT_IMAGES['54'],
+    imageAlt: 'RK Engineering industrial steel products',
     products: [
       { name: 'Cable trays and ducts', slug: 'cable-trays' },
       { name: 'Earthing materials', slug: 'earthing-materials' },
@@ -48,7 +45,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Cable Management',
     title: 'Cable Trays and Ducts',
     description: 'Cable tray solutions organise and support electrical cables in factories, commercial buildings, power plants, and infrastructure projects.',
-    image: cableTrayImage,
+    image: UPLOADED_PRODUCT_IMAGES['55'],
     imageAlt: 'Perforated and ladder cable trays for electrical cable management',
     navigationCategoryId: 'cable-trays',
     considerations: ['Select according to cable loads, installation conditions, and project specifications.'],
@@ -59,8 +56,8 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Electrical Grounding',
     title: 'Earthing Materials',
     description: 'Products for suitable electrical grounding, bonding, and infrastructure applications, subject to project specifications.',
-    image: galvanizedImage,
-    imageAlt: 'Industrial galvanizing facility for steel products',
+    image: UPLOADED_PRODUCT_IMAGES['57'],
+    imageAlt: 'Earthing materials for electrical grounding applications',
     navigationCategoryId: 'earthing',
     considerations: ['Selection depends on the intended grounding application and project specifications.'],
   },
@@ -70,8 +67,8 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Renewable Energy',
     title: 'Solar Mounting Structures',
     description: 'Structure solutions for ground-mounted and rooftop solar installations, trackers, car parking structures, and walkways.',
-    image: heroImage,
-    imageAlt: 'Industrial steel manufacturing facility supporting solar structure enquiries',
+    image: UPLOADED_PRODUCT_IMAGES['64'],
+    imageAlt: 'Steel products for solar mounting applications',
     navigationCategoryId: 'solar',
     considerations: ['Suitability depends on site conditions, structural loading, installation requirements, and project design.'],
   },
@@ -81,8 +78,8 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Steel Products and Corrosion Protection',
     title: 'Hot-Dip Galvanized Steel Products',
     description: 'Hot-dip galvanizing applies a protective zinc coating to suitable steel components to help reduce corrosion. Specifications and coating requirements are assessed for the intended application and project standards.',
-    image: galvanizedImage,
-    imageAlt: 'Steel components at a hot-dip galvanizing facility',
+    image: UPLOADED_PRODUCT_IMAGES['69'],
+    imageAlt: 'Hot-dip galvanized steel products',
     navigationCategoryId: 'galvanized-steel',
     considerations: ['Product specifications and coating requirements depend on the intended application and project standards.'],
   },
@@ -92,8 +89,8 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Power Transmission and Infrastructure',
     title: 'Transmission Towers and Power Infrastructure',
     description: 'Transmission towers support overhead power lines and are an important part of electricity transmission and distribution infrastructure.',
-    image: exportImage,
-    imageAlt: 'Industrial products packed for shipment; tower product imagery is not currently available',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    imageAlt: 'Steel products for power infrastructure projects',
     navigationCategoryId: 'towers',
     considerations: ['Project review includes voltage requirements, structural loading, tower configuration, material grades, corrosion protection, and engineering standards.', 'Specifications and approvals depend on the individual project.'],
   },
@@ -186,7 +183,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
     <>
       <section className="relative isolate overflow-hidden bg-blue-950 text-white">
         <div className="absolute inset-0 -z-10">
-          <img src={heroImage} alt="" className="h-full w-full object-cover opacity-25" />
+          <img src={UPLOADED_PRODUCT_IMAGES['54']} alt="" className="h-full w-full object-cover opacity-25" />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-950/90 to-blue-950/45" />
         </div>
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
@@ -329,7 +326,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
             </button>
           </div>
           <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-            <img src={exportImage} alt="Industrial products packed for international export shipment" className="aspect-[4/3] w-full object-cover" />
+            <img src={UPLOADED_PRODUCT_IMAGES['71']} alt="Industrial steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
           </div>
         </div>
       </section>

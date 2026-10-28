@@ -1,8 +1,4 @@
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-
-export type ProductImage = 'cable-tray' | 'galvanizing' | 'placeholder';
+import type { ProductImage } from './productImages.ts';
 
 export interface ProductFaq {
   question: string;
@@ -183,7 +179,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'cable-trays',
     name: 'Industrial Cable Trays',
     group: 'cable',
-    image: 'cable-tray',
+    image: '54',
     imageAlt: 'Industrial cable tray systems for electrical cable routing',
     description:
       'Industrial cable tray systems for routing power, control, instrumentation, and communication cables in industrial and infrastructure projects.',
@@ -212,7 +208,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Perforated Cable Trays',
     navigationLabel: 'Perforated Type Cable Tray',
     group: 'cable',
-    image: 'cable-tray',
+    image: '55',
     imageAlt: 'Perforated cable tray for organized industrial cable routing',
     description:
       'Perforated cable trays support organized cable routing and provide openings for ventilation and cable fastening where the design permits.',
@@ -241,7 +237,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Ladder Cable Trays',
     navigationLabel: 'Ladder Type Cable Tray',
     group: 'cable',
-    image: 'cable-tray',
+    image: '58',
     imageAlt: 'Ladder cable tray with side rails and cross rungs',
     description:
       'Ladder cable trays use side rails connected by rungs to support cables and provide access for installation and maintenance.',
@@ -270,7 +266,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Raceway Cable Trays',
     navigationLabel: 'Raceway Cable Tray',
     group: 'cable',
-    image: 'cable-tray',
+    image: '59',
     imageAlt: 'Raceway cable tray system for structured cable routing',
     description:
       'Raceway cable trays provide a defined route for organizing power, control, and communication cables in industrial and commercial installations.',
@@ -299,7 +295,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Cable Tray Ducts',
     navigationLabel: 'Cable Tray Duct',
     group: 'cable',
-    image: 'cable-tray',
+    image: '60',
     imageAlt: 'Cable tray duct for organized industrial cable management',
     description:
       'Cable tray ducts provide a duct-style arrangement for organizing electrical cables in specified industrial, commercial, and infrastructure installations.',
@@ -327,7 +323,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'earthing-materials',
     name: 'Earthing Materials',
     group: 'earthing',
-    image: 'placeholder',
+    image: '57',
     description:
       'Conductive grounding and bonding components for electrical installations, utility projects, industrial facilities, and infrastructure.',
     overview:
@@ -362,7 +358,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Earthing Flats',
     navigationLabel: 'Earthing Flats',
     group: 'earthing',
-    image: 'placeholder',
+    image: '58',
     description:
       'Strip-shaped conductors used in grounding networks to connect equipment, structures, and earthing-system components.',
     overview:
@@ -390,7 +386,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Earthing Electrodes',
     navigationLabel: 'Earthing Electrode',
     group: 'earthing',
-    image: 'placeholder',
+    image: '59',
     description:
       'Grounding components installed in soil to establish an electrical connection as part of an earthing system.',
     overview:
@@ -418,7 +414,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Junction Boxes',
     navigationLabel: 'Junction Box',
     group: 'earthing',
-    image: 'placeholder',
+    image: '60',
     description:
       'Enclosures for suitable electrical connections and terminations within specified grounding and electrical installations.',
     overview:
@@ -446,7 +442,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'GI Wire',
     navigationLabel: 'GI Wire',
     group: 'earthing',
-    image: 'placeholder',
+    image: '61',
     description:
       'Galvanized iron wire for suitable electrical and grounding applications where its properties meet project requirements.',
     overview:
@@ -474,7 +470,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Copper Earthing Strips',
     navigationLabel: 'Copper Earthing Strips',
     group: 'earthing',
-    image: 'placeholder',
+    image: '62',
     description:
       'Conductive copper components for grounding networks where copper conductivity and compatibility with the system design are required.',
     overview:
@@ -501,7 +497,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'solar-mounting-structures',
     name: 'Solar Mounting Structures',
     group: 'solar',
-    image: 'placeholder',
+    image: '63',
     description:
       'Project-specific frameworks that support photovoltaic modules and transfer loads to an approved roof, foundation, or support system.',
     overview:
@@ -535,7 +531,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Ground-Mounted Solar Structures',
     navigationLabel: 'Ground Mounted Structure',
     group: 'solar',
-    image: 'placeholder',
+    image: '64',
     description:
       'Support structures for photovoltaic modules installed on prepared ground or engineered foundations.',
     overview:
@@ -563,7 +559,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Rooftop Solar Mounting Structures',
     navigationLabel: 'Rooftop Structure',
     group: 'solar',
-    image: 'placeholder',
+    image: '65',
     description:
       'Structures supporting PV modules on suitable industrial sheds, commercial buildings, warehouses, and other roofs.',
     overview:
@@ -591,7 +587,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Tracker Structures',
     navigationLabel: 'Solar Tracker',
     group: 'solar',
-    image: 'placeholder',
+    image: '66',
     description:
       'Structures designed to move PV modules along a defined tracking path, subject to the selected tracker technology and engineering scope.',
     overview:
@@ -619,7 +615,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Car Parking Structures',
     navigationLabel: 'Car Parking Structure',
     group: 'solar',
-    image: 'placeholder',
+    image: '67',
     description:
       'Solar carports combine vehicle parking areas with overhead photovoltaic modules in a structure designed for site and vehicle requirements.',
     overview:
@@ -647,7 +643,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Walkway Structures',
     navigationLabel: 'Walkway Structure',
     group: 'solar',
-    image: 'placeholder',
+    image: '68',
     description:
       'Structures that support PV modules above designated pedestrian routes or covered walkways.',
     overview:
@@ -674,8 +670,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'hot-dip-galvanized-steel-products',
     name: 'Hot-Dip Galvanized Steel Products',
     group: 'galvanized',
-    image: 'galvanizing',
-    imageAlt: 'Steel components being processed at a hot-dip galvanizing facility',
+    image: '69',
+    imageAlt: 'Hot-dip galvanized steel products',
     description:
       'Galvanized steel products and suitable fabricated components for industrial, construction, and infrastructure applications.',
     overview:
@@ -708,8 +704,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Steel Angles',
     navigationLabel: 'Steel Angles',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '70',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized L-shaped steel angles for structural frameworks, electrical supports, solar mounting systems, cable tray supports, industrial platforms, and general fabrication.',
     overview:
@@ -755,8 +751,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Construction Channels',
     navigationLabel: 'Construction Channel',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '71',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized construction channels for industrial frameworks, equipment supports, electrical and cable support systems, construction, and infrastructure projects.',
     overview:
@@ -801,8 +797,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized High Mast Poles',
     navigationLabel: 'High Mast Pole',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '69',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized high mast poles are structural supports for lighting installations over highways, ports, airports, industrial facilities, logistics areas, and other large outdoor spaces.',
     overview:
@@ -846,8 +842,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Pipes',
     navigationLabel: 'Pipes',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '70',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized steel pipes for suitable structural supports, outdoor frameworks, construction, utility installations, fencing, agriculture, and industrial fabrication.',
     overview:
@@ -891,8 +887,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized H-Beams',
     navigationLabel: 'H-Beams',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '71',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized H-beams for suitable industrial buildings, structural frameworks, warehouses, equipment supports, platforms, utility infrastructure, and fabricated steel assemblies.',
     overview:
@@ -937,8 +933,8 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Crash Barriers',
     navigationLabel: 'Crash Barrier',
     group: 'galvanized',
-    image: 'placeholder',
-    imageAlt: 'RK Engineering hot-dip galvanizing facility for steel products',
+    image: '69',
+    imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized steel crash barrier components for road and transport projects, specified as part of an engineered and approved roadside safety system.',
     overview:
@@ -983,7 +979,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Steel Handrails',
     navigationLabel: 'Handrail',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '70',
     description:
       'Hot dip galvanized steel handrails and railing components for industrial stairs, platforms, walkways, ramps, access routes, and infrastructure projects.',
     overview:
@@ -1057,7 +1053,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Solar Mounting Channels',
     navigationLabel: 'Solar Mounting Channel',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '71',
     description:
       'Hot dip galvanized steel channels for photovoltaic mounting structures, manufactured to project drawings and requirements for suitable rooftop, ground-mounted, commercial, and industrial solar installations.',
     overview:
@@ -1132,7 +1128,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Steel Gratings',
     navigationLabel: 'Gratings',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '69',
     description:
       'Hot dip galvanized open-grid steel grating panels for industrial flooring, access walkways, maintenance platforms, drainage channels, cable trenches, and stairways.',
     overview:
@@ -1198,7 +1194,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Fabricated Beams',
     navigationLabel: 'Fabricated Beams',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '70',
     description:
       'Project-specific fabricated steel beams for industrial structures, equipment supports, utility projects, and customized assemblies, with hot dip galvanizing where specified and suitable.',
     overview:
@@ -1263,7 +1259,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized TOR Rods',
     navigationLabel: 'Tor Rod',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '71',
     description:
       'TOR rods are listed for reinforced-concrete applications. Confirm the actual reinforcement type, grade, dimensions, availability, and any specifically approved galvanizing requirement against the project specification.',
     overview:
@@ -1327,7 +1323,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Chequered Plates',
     navigationLabel: 'Chequered Plate',
     group: 'galvanized',
-    image: 'placeholder',
+    image: '69',
     description:
       'Hot dip galvanized steel chequered plates for suitable industrial platforms, walkways, equipment access areas, stairs, maintenance spaces, and fabrication projects.',
     overview:
@@ -1392,7 +1388,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Transmission Towers',
     navigationLabel: 'Transmission Towers',
     group: 'towers',
-    image: 'placeholder',
+    image: '66',
     description:
       'Transmission structures that support overhead power lines as part of electricity transmission and distribution infrastructure.',
     overview:
@@ -1420,7 +1416,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Telecom Towers',
     navigationLabel: 'Telecom Towers',
     group: 'towers',
-    image: 'placeholder',
+    image: '67',
     description:
       'Tower structures for telecommunications infrastructure, with configuration and project requirements subject to the applicable design and approvals.',
     overview:
@@ -1448,7 +1444,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Transmission Monopoles',
     navigationLabel: 'Transmission Monopoles',
     group: 'towers',
-    image: 'placeholder',
+    image: '54',
     description:
       'Monopole structures for suitable electricity transmission and distribution infrastructure projects, subject to project-specific design requirements.',
     overview:
@@ -1476,7 +1472,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Power Distribution Poles',
     navigationLabel: 'Power Distribution Poles',
     group: 'towers',
-    image: 'placeholder',
+    image: '55',
     description:
       'Pole structures for suitable electricity distribution infrastructure, with requirements established by project design and applicable approvals.',
     overview:
@@ -1504,7 +1500,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Substation Structures',
     navigationLabel: 'Substation Structures',
     group: 'towers',
-    image: 'placeholder',
+    image: '56',
     description:
       'Structures for suitable electrical substation infrastructure, with configuration and specifications defined by the project requirements.',
     overview:
@@ -1532,7 +1528,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Towers and Power Infrastructure Structures',
     navigationLabel: 'Towers & Power Infrastructure',
     group: 'towers',
-    image: 'placeholder',
+    image: '57',
     description:
       'Structures for suitable power transmission, electricity distribution, telecommunications, and electrical infrastructure projects.',
     overview:

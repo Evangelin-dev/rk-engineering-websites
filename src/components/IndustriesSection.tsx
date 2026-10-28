@@ -19,9 +19,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { INDUSTRIES } from '../data/company.ts';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import facilityImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import cableRoutingImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
 const SECTOR_ICONS: Record<string, LucideIcon> = {
   'power-generation': Zap,
@@ -37,39 +35,39 @@ const SECTOR_ICONS: Record<string, LucideIcon> = {
 
 const SECTOR_IMAGES: Record<string, { src: string; alt: string }> = {
   'power-generation': {
-    src: cableTrayImage,
+    src: UPLOADED_PRODUCT_IMAGES['54'],
     alt: 'Galvanized cable tray and ladder products',
   },
   'renewable-energy': {
-    src: cableRoutingImage,
-    alt: 'Cable routing systems in an industrial facility',
+    src: UPLOADED_PRODUCT_IMAGES['64'],
+    alt: 'Steel products for renewable energy infrastructure',
   },
   'oil-and-gas': {
-    src: facilityImage,
-    alt: 'Steel components being processed at a galvanizing facility',
+    src: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'Steel products for oil and gas infrastructure',
   },
   'petrochemical-manufacturing': {
-    src: facilityImage,
-    alt: 'Steel components being processed at an industrial galvanizing facility',
+    src: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'Steel products for industrial infrastructure',
   },
   telecommunications: {
-    src: cableTrayImage,
+    src: UPLOADED_PRODUCT_IMAGES['55'],
     alt: 'Galvanized cable tray products',
   },
   'commercial-buildings': {
-    src: cableRoutingImage,
+    src: UPLOADED_PRODUCT_IMAGES['58'],
     alt: 'Cable routing systems installed in an industrial facility',
   },
   'infrastructure-railways': {
-    src: facilityImage,
+    src: UPLOADED_PRODUCT_IMAGES['66'],
     alt: 'Fabricated steel components at a galvanizing facility',
   },
   'data-centres': {
-    src: cableRoutingImage,
+    src: UPLOADED_PRODUCT_IMAGES['59'],
     alt: 'Cable routing systems installed in an industrial facility',
   },
   'water-treatment': {
-    src: cableTrayImage,
+    src: UPLOADED_PRODUCT_IMAGES['60'],
     alt: 'Galvanized cable tray products',
   },
 };

@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Send, X } from 'lucide-react';
 import { MAIN_PRODUCTS, type ContactFormData } from '../data/contact.ts';
-import { submitContactEnquiry, type ContactEnquiryStatus } from '../utils/contactEnquiry.ts';
+import {
+  getSelectedOptionLabel,
+  submitContactEnquiry,
+  type ContactEnquiryStatus,
+} from '../utils/contactEnquiry.ts';
 
 const DISMISSED_KEY = 'rk-contact-popup-dismissed';
 const fieldClasses =
@@ -22,6 +26,7 @@ export const ContactPopup: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<ContactEnquiryStatus | null>(null);
+  const submissionInProgress = useRef(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -74,11 +79,18 @@ export const ContactPopup: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submissionInProgress.current) return;
+    submissionInProgress.current = true;
     setIsSubmitting(true);
     setStatus(null);
     try {
-      setStatus(await submitContactEnquiry(formData));
+      const result = await submitContactEnquiry(formData, {
+        product: getSelectedOptionLabel(event.currentTarget, 'product'),
+      });
+      setStatus(result);
+      if (result.type === 'success') setFormData(emptyForm);
     } finally {
+      submissionInProgress.current = false;
       setIsSubmitting(false);
     }
   };

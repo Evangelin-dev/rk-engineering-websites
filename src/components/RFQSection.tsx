@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { PRODUCT_DETAILS } from '../data/productDetails.ts';
 import { MAIN_PRODUCTS, type ContactFormData } from '../data/contact.ts';
-import { submitContactEnquiry, type ContactEnquiryStatus } from '../utils/contactEnquiry.ts';
+import {
+  getSelectedOptionLabel,
+  submitContactEnquiry,
+  type ContactEnquiryStatus,
+} from '../utils/contactEnquiry.ts';
 
 interface RFQSectionProps {
   preFilledProduct?: string;
@@ -36,6 +40,7 @@ export const RFQSection: React.FC<RFQSectionProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<ContactEnquiryStatus | null>(null);
+  const submissionInProgress = useRef(false);
 
   useEffect(() => {
     if (!preFilledProduct && !preFilledSpecs && !preFilledCableTrayType && !preFilledEnquiryType) return;
@@ -70,11 +75,34 @@ export const RFQSection: React.FC<RFQSectionProps> = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submissionInProgress.current) return;
+    submissionInProgress.current = true;
     setStatus(null);
     setIsSubmitting(true);
     try {
-      setStatus(await submitContactEnquiry(formData));
+      const form = event.currentTarget;
+      const result = await submitContactEnquiry(formData, {
+        product: getSelectedOptionLabel(form, 'product'),
+        cableTrayType: getSelectedOptionLabel(form, 'cableTrayType'),
+        enquiryType: getSelectedOptionLabel(form, 'enquiryType'),
+      });
+      setStatus(result);
+      if (result.type === 'success') {
+        setFormData({
+          name: '',
+          companyName: '',
+          cableTrayType: '',
+          enquiryType: '',
+          mobile: '',
+          email: '',
+          country: '',
+          product: '',
+          quantity: '',
+          message: '',
+        });
+      }
     } finally {
+      submissionInProgress.current = false;
       setIsSubmitting(false);
     }
   };

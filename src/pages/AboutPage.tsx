@@ -16,10 +16,11 @@ import certificateCeImage from '../assets/images/c1.jpg';
 import certificateQualityImage from '../assets/images/c2.jpg';
 import certificateEnvironmentImage from '../assets/images/c3.jpg';
 import certificateSafetyImage from '../assets/images/c4.jpg';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+
+const heroImage = UPLOADED_PRODUCT_IMAGES['56'];
+const companyOverviewImage = UPLOADED_PRODUCT_IMAGES['54'];
+const exportImage = UPLOADED_PRODUCT_IMAGES['60'];
 
 interface AboutPageProps {
   onOpenRFQ: () => void;
@@ -57,36 +58,36 @@ const CAPABILITIES = [
   {
     title: 'Cable Tray Manufacturing',
     description: 'Perforated cable trays, ladder cable trays, raceway systems, and cable tray ducts for electrical and industrial installations. Material, dimensions, thickness, finish, accessories, and quantities can be specified during quotation.',
-    image: cableTrayImage,
+    image: UPLOADED_PRODUCT_IMAGES['59'],
     alt: 'Perforated and ladder cable trays for electrical installations',
     Icon: Cable,
   },
   {
     title: 'In-House Hot-Dip Galvanizing',
     description: 'Corrosion-protection treatment for applicable steel products. Coating requirements and inspection criteria should be confirmed against product specifications and project standards.',
-    image: galvanizingImage,
-    alt: 'Steel components being processed at a hot-dip galvanizing facility',
+    image: UPLOADED_PRODUCT_IMAGES['63'],
+    alt: 'Hot-dip galvanized steel products',
     Icon: ShieldCheck,
   },
   {
     title: 'Industrial Steel Fabrication',
     description: 'Fabrication support for specified steel components and industrial products. Enquiries can include drawings, material grades, dimensional requirements, finishing details, and quantities.',
-    image: heroImage,
-    alt: 'Industrial manufacturing and steel fabrication facility',
+    image: UPLOADED_PRODUCT_IMAGES['61'],
+    alt: 'RK Engineering industrial steel product',
     Icon: Wrench,
   },
   {
     title: 'Earthing Materials',
     description: 'Earthing flats, electrodes, junction boxes, GI wire, and copper earthing strips for applicable electrical grounding and infrastructure installations.',
-    image: galvanizingImage,
-    alt: 'Galvanized steel products for electrical infrastructure',
+    image: UPLOADED_PRODUCT_IMAGES['62'],
+    alt: 'RK Engineering steel product for electrical infrastructure',
     Icon: TowerControl,
   },
   {
     title: 'Solar Mounting Structures',
     description: 'Products for specified rooftop and ground-mounted applications. Structural requirements, project drawings, installation conditions, and material specifications should be confirmed for each enquiry.',
-    image: heroImage,
-    alt: 'Steel fabrication suitable for specified solar infrastructure applications',
+    image: UPLOADED_PRODUCT_IMAGES['64'],
+    alt: 'RK Engineering product for solar mounting applications',
     Icon: SunMedium,
   },
 ];
@@ -245,7 +246,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           <div className="relative">
             <img
               src={heroImage}
-              alt="RK Engineering industrial steel manufacturing facility"
+              alt="RK Engineering industrial steel product"
               className="aspect-[4/3] w-full rounded-lg object-cover shadow-md"
             />
             <div className="absolute bottom-4 left-4 rounded-md border border-white/30 bg-blue-950/90 px-4 py-3 text-white shadow-md">
@@ -260,7 +261,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm lg:col-span-5">
             <img
-              src={cableTrayImage}
+              src={companyOverviewImage}
               alt="Cable tray products manufactured for industrial and infrastructure projects"
               className="aspect-[4/3] w-full object-cover"
             />
@@ -498,7 +499,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           <div className="overflow-hidden rounded-xl bg-blue-950 text-white shadow-xl">
             <div className="grid md:grid-cols-5">
               <div className="hidden md:col-span-2 md:block">
-                <img src={exportImage} alt="Industrial products packed for international shipment" className="h-full min-h-64 w-full object-cover" />
+                <img src={exportImage} alt="RK Engineering steel product for international enquiries" className="h-full min-h-64 w-full object-cover" />
               </div>
               <div className="p-6 sm:p-9 md:col-span-3 lg:p-11">
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-red-400">Project Enquiries</p>

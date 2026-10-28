@@ -14,10 +14,12 @@ import {
   SunMedium,
   TowerControl,
 } from 'lucide-react';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+
+const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
+const exportImage = UPLOADED_PRODUCT_IMAGES['63'];
+const galvanizingImage = UPLOADED_PRODUCT_IMAGES['63'];
+const heroImage = UPLOADED_PRODUCT_IMAGES['58'];
 
 interface ServicesPageProps {
   onOpenRFQ: () => void;
@@ -169,7 +171,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
     <section className="border-b border-slate-200 bg-white py-14 sm:py-18 lg:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
         <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-          <img src={galvanizingImage} alt="Steel components at an industrial hot-dip galvanizing facility" className="aspect-[4/3] w-full object-cover" />
+          <img src={galvanizingImage} alt="Hot-dip galvanized steel products" className="aspect-[4/3] w-full object-cover" />
         </div>
         <div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">About Our Hot-Dip Galvanizing Services</p>
@@ -319,7 +321,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
           </button>
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-          <img src={exportImage} alt="Industrial products packed for international shipment" className="aspect-[4/3] w-full object-cover" />
+          <img src={exportImage} alt="Steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
         </div>
       </div>
     </section>

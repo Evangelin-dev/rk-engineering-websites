@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowRight, Check, ClipboardList, Factory, Globe2, PackageCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import manufacturingImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+
+const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
+const manufacturingImage = UPLOADED_PRODUCT_IMAGES['58'];
 
 interface AfricanExportPageProps {
   onRequestQuote: (specs: string, cableTrayType?: string) => void;
@@ -70,21 +72,48 @@ export const LandingBreadcrumb: React.FC<{ path: string }> = ({ path }) => {
 };
 
 export const RelatedLandingPages: React.FC<{ currentPath: string }> = ({ currentPath }) => (
-  <section className="border-b border-slate-200 bg-slate-50 py-10">
+  <section className="border-y border-blue-900 bg-blue-950 py-12 text-white sm:py-16">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 className="text-lg font-bold text-slate-900">Related cable tray solutions</h2>
-      <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
-        {Object.entries(LANDING_PAGE_TITLES)
-          .filter(([path]) => path !== currentPath)
-          .map(([path, title]) => (
-            <Link key={path} to={path} className="text-sm font-semibold text-blue-900 transition-colors hover:text-red-600">
-              {title}
-            </Link>
-          ))}
-        <Link to="/contact" className="text-sm font-semibold text-blue-900 transition-colors hover:text-red-600">
-          Contact and enquiry form
+      <div className="flex flex-col gap-6 border-b border-white/15 pb-7 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-blue-200">
+            RK Engineering Knowledge Centre
+          </p>
+          <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+            Explore Related Cable Tray Solutions
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-blue-100 sm:text-base">
+            Find product, project and export guidance for other markets and applications.
+          </p>
+        </div>
+        <Link
+          to="/contact"
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start bg-white px-4 py-3 text-sm font-bold text-blue-950 transition-colors hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:self-auto"
+        >
+          Discuss Your Requirement
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
+      <nav aria-label="Related cable tray solutions" className="pt-6">
+        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {Object.entries(LANDING_PAGE_TITLES)
+            .filter(([path]) => path !== currentPath)
+            .map(([path, title]) => (
+              <li key={path}>
+                <Link
+                  to={path}
+                  className="group flex min-h-14 items-center justify-between gap-4 border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-blue-50 transition-colors hover:border-white/35 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  <span>{title}</span>
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-blue-200 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+                  />
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </nav>
     </div>
   </section>
 );

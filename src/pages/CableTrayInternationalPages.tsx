@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowRight, FileText, Globe2, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import manufacturingImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+
+const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
+const manufacturingImage = UPLOADED_PRODUCT_IMAGES['58'];
 import {
   ExportHero,
   FaqSection,

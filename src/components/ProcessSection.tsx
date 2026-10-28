@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import { PROCESS_STEPS } from '../data/company.ts';
 import { 
   CheckCircle, 
@@ -67,8 +67,8 @@ export const ProcessSection: React.FC = () => {
           {/* Visual Side: Galvanizing & Plant Photo */}
           <div className="lg:col-span-5 relative min-h-[280px] lg:min-h-full">
             <img
-              src={galvanizingImage}
-              alt="RK Engineering in-house hot-dip galvanizing bath facility in operation"
+              src={UPLOADED_PRODUCT_IMAGES['63']}
+              alt="RK Engineering hot-dip galvanized steel product"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />

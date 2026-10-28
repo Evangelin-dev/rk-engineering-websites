@@ -17,13 +17,7 @@ import {
   getProductNavigationCategory,
   PRODUCT_DETAILS,
 } from '../data/productDetails.ts';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-
-const PRODUCT_IMAGES = {
-  'cable-tray': cableTrayImage,
-  galvanizing: galvanizingImage,
-};
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
 const GROUP_ICONS: Record<string, LucideIcon> = {
   cable: Cable,
@@ -139,20 +133,11 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
             </div>
           </div>
           <div className="order-1 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-sm lg:order-2">
-            {product.image === 'placeholder' ? (
-              <div className="flex aspect-[4/3] flex-col items-center justify-center gap-4 bg-gradient-to-br from-blue-950 to-slate-800 px-8 text-center text-white">
-                <Icon aria-hidden="true" className="h-12 w-12 text-blue-200" />
-                <p className="max-w-sm text-sm font-semibold leading-relaxed text-blue-50">
-                  Product-specific imagery is not available in the provided materials.
-                </p>
-              </div>
-            ) : (
-              <img
-                src={PRODUCT_IMAGES[product.image]}
-                alt={product.imageAlt ?? product.name}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            )}
+            <img
+              src={UPLOADED_PRODUCT_IMAGES[product.image]}
+              alt={product.imageAlt ?? product.name}
+              className="aspect-[4/3] w-full object-cover"
+            />
           </div>
         </div>
       </section>

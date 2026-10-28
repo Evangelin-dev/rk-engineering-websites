@@ -1,15 +1,11 @@
 import React from 'react';
-import galvanizingImage from '../assets/images/galvanizing_facility_1792669705362.jpg';
-import exportImage from '../assets/images/global_export_shipping_1792669706316.jpg';
-import heroImage from '../assets/images/hero_cable_tray_plant_1792669704557.jpg';
-import cableTrayImage from '../assets/images/products_cable_trays_1792669705857.jpg';
+import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
-const GALLERY_ITEMS = [
-  { src: heroImage, alt: 'RK Engineering industrial cable tray manufacturing facility', title: 'Manufacturing Facility' },
-  { src: cableTrayImage, alt: 'Cable tray products for electrical infrastructure', title: 'Cable Management Products' },
-  { src: galvanizingImage, alt: 'Hot-dip galvanizing facility', title: 'Hot-Dip Galvanizing' },
-  { src: exportImage, alt: 'Industrial export shipping and product packing', title: 'Export & Shipping' },
-];
+const GALLERY_ITEMS = Object.entries(UPLOADED_PRODUCT_IMAGES).map(([id, src]) => ({
+  src,
+  alt: `RK Engineering industrial product and manufacturing photo ${id}`,
+  title: `Industrial Product · ${id}`,
+}));
 
 export const GalleryPage: React.FC = () => (
   <section className="border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
@@ -18,14 +14,14 @@ export const GalleryPage: React.FC = () => (
         <p className="mb-2 text-xs font-bold uppercase tracking-wider text-red-600">Plant & Products</p>
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Manufacturing Gallery</h1>
         <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-          A closer look at RK Engineering's manufacturing, galvanized products, and export operations.
+          Explore the uploaded product photos across cable management, earthing, solar mounting, and galvanized steel ranges.
         </p>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {GALLERY_ITEMS.map((item) => (
           <figure key={item.title} className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-            <img src={item.src} alt={item.alt} className="aspect-[16/10] w-full object-cover" />
-            <figcaption className="px-5 py-4 text-sm font-semibold text-slate-900">{item.title}</figcaption>
+            <img src={item.src} alt={item.alt} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="px-4 py-3 text-sm font-semibold text-slate-900">{item.title}</figcaption>
           </figure>
         ))}
       </div>
