@@ -141,6 +141,86 @@ const CABLE_TRAY_CTA_CARDS = [
     action: 'Explore Galvanized Solutions',
     path: '/hot-dip-galvanized-cable-tray-usa',
   },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Transmission Tower Manufacturer for African Power Infrastructure Projects',
+    description: 'Review tower structures, project requirements, documentation, and enquiry information for African power infrastructure.',
+    action: 'Explore Tower Solutions',
+    path: '/transmission-tower-manufacturer-africa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Transmission Tower Exporter from India to African Countries',
+    description: 'Prepare an African export enquiry with tower specifications, shipping information, and destination requirements.',
+    action: 'Explore Export Options',
+    path: '/transmission-tower-exporter-india-africa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Galvanized Transmission Tower Manufacturer for African Markets',
+    description: 'Review galvanized tower requirements, coating specifications, inspection, and project enquiry details.',
+    action: 'Explore Galvanized Towers',
+    path: '/galvanized-transmission-tower-manufacturer-africa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Transmission Tower Supplier for Power Transmission Projects in Africa',
+    description: 'Explore supplier selection, tower scope, engineering inputs, and procurement requirements for African projects.',
+    action: 'Explore Power Projects',
+    path: '/transmission-tower-supplier-africa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Transmission Tower Procurement Guide for African EPC Contractors',
+    description: 'Use a procurement checklist for tender documents, supplier evaluation, compliance, and project delivery planning.',
+    action: 'View Procurement Guide',
+    path: '/transmission-tower-procurement-africa-epc',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'Africa',
+    title: 'Transmission Tower Supplier for Power Projects in Kenya',
+    description: 'Submit Kenya project drawings, tower specifications, quantities, and delivery requirements for review.',
+    action: 'Explore Kenya Enquiries',
+    path: '/transmission-tower-supplier-kenya',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'United States',
+    title: 'Transmission Tower Exporter from India to the USA',
+    description: 'Review technical documents, import responsibilities, shipping, and export enquiry requirements for US buyers.',
+    action: 'Explore Export Options',
+    path: '/transmission-tower-exporter-india-usa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'United States',
+    title: 'Transmission Tower Supplier for US Power Infrastructure Projects',
+    description: 'Explore project scope, supplier evaluation, standards confirmation, and delivery planning for US enquiries.',
+    action: 'Explore US Tower Projects',
+    path: '/transmission-tower-supplier-usa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'United States',
+    title: 'Galvanized Transmission Tower Supplier for US Power Projects',
+    description: 'Review galvanizing requirements, inspection criteria, compliance, and destination information for US projects.',
+    action: 'Explore Galvanized Towers',
+    path: '/galvanized-transmission-tower-supplier-usa',
+  },
+  {
+    label: 'Transmission towers',
+    region: 'United States',
+    title: 'Transmission Tower Procurement Guide for US EPC Contractors',
+    description: 'Plan tender documents, standards confirmation, supplier evaluation, quality requirements, and logistics.',
+    action: 'View Procurement Guide',
+    path: '/transmission-tower-procurement-usa-epc',
+  },
 ] as const;
 
 const GUIDE_CATEGORY_ICONS = {
@@ -153,6 +233,7 @@ const GUIDE_CATEGORY_ICONS = {
   'Power & energy': Zap,
   Importers: Globe2,
   'Galvanized products': ShieldCheck,
+  'Transmission towers': Zap,
 } as const;
 
 const GUIDE_MARKETS = ['All', 'Africa', 'United States'] as const;
@@ -177,8 +258,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
   );
   const [activeProcessStep, setActiveProcessStep] = useState<number | null>(null);
   const [ctaRegionFilter, setCtaRegionFilter] = useState<CtaRegionFilter>('All');
-  const [canScrollGuidesBackward, setCanScrollGuidesBackward] = useState(false);
-  const [canScrollGuidesForward, setCanScrollGuidesForward] = useState(true);
+  const [ctaPage, setCtaPage] = useState(0);
   const [timelineLine, setTimelineLine] = useState<TimelineLine>({
     horizontal: false,
     left: 0,
@@ -187,7 +267,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
     progress: 0,
   });
   const processTimelineRef = useRef<HTMLDivElement>(null);
-  const guideCarouselRef = useRef<HTMLDivElement>(null);
   const processStepRefs = useRef<Array<HTMLLIElement | null>>([]);
   const processDotRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
@@ -306,45 +385,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
   const visibleGuides = CABLE_TRAY_CTA_CARDS.filter(
     (guide) => ctaRegionFilter === 'All' || guide.region === ctaRegionFilter,
   );
+  const guidePageCount = Math.ceil(visibleGuides.length / 3);
+  const currentGuides = visibleGuides.slice(ctaPage * 3, ctaPage * 3 + 3);
+  const firstGuideNumber = visibleGuides.length === 0 ? 0 : ctaPage * 3 + 1;
+  const lastGuideNumber = Math.min((ctaPage + 1) * 3, visibleGuides.length);
 
   const selectGuideMarket = (market: CtaRegionFilter) => {
     setCtaRegionFilter(market);
+    setCtaPage(0);
   };
-
-  const updateGuideCarouselControls = () => {
-    const carousel = guideCarouselRef.current;
-    if (!carousel) return;
-    setCanScrollGuidesBackward(carousel.scrollLeft > 2);
-    setCanScrollGuidesForward(
-      carousel.scrollLeft + carousel.clientWidth < carousel.scrollWidth - 2,
-    );
-  };
-
-  const scrollGuideCarousel = (direction: -1 | 1) => {
-    const carousel = guideCarouselRef.current;
-    if (!carousel) return;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    carousel.scrollBy({
-      left: direction * carousel.clientWidth * 0.85,
-      behavior: reducedMotion ? 'auto' : 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    const carousel = guideCarouselRef.current;
-    if (!carousel) return;
-    carousel.style.scrollBehavior = 'auto';
-    carousel.scrollLeft = 0;
-    const frame = window.requestAnimationFrame(() => {
-      carousel.style.removeProperty('scroll-behavior');
-      updateGuideCarouselControls();
-    });
-    window.addEventListener('resize', updateGuideCarouselControls);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener('resize', updateGuideCarouselControls);
-    };
-  }, [ctaRegionFilter]);
 
   return (
     <div ref={pageRef}>
@@ -492,23 +541,25 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                   );
                 })}
               </div>
-              <div className="mt-4 flex items-center gap-2 lg:justify-end">
+              <div className="mt-4 flex items-center justify-between gap-3 lg:justify-end">
                 <button
                   type="button"
-                  aria-label="Previous guides"
-                  onClick={() => scrollGuideCarousel(-1)}
-                  disabled={!canScrollGuidesBackward}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-slate-300 bg-white text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
+                  aria-label="Previous guide group"
+                  onClick={() => setCtaPage((page) => Math.max(0, page - 1))}
+                  disabled={ctaPage === 0}
+                  className="inline-flex min-h-10 items-center justify-center gap-2 border border-slate-300 bg-white px-3 text-sm font-semibold text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
                 >
                   <ChevronLeft aria-hidden="true" className="h-5 w-5" />
+                  <span>Previous</span>
                 </button>
                 <button
                   type="button"
-                  aria-label="Next guides"
-                  onClick={() => scrollGuideCarousel(1)}
-                  disabled={!canScrollGuidesForward}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-slate-300 bg-white text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
+                  aria-label="Next guide group"
+                  onClick={() => setCtaPage((page) => Math.min(guidePageCount - 1, page + 1))}
+                  disabled={ctaPage >= guidePageCount - 1}
+                  className="inline-flex min-h-10 items-center justify-center gap-2 border border-slate-300 bg-white px-3 text-sm font-semibold text-blue-950 transition-colors hover:border-blue-900 hover:bg-blue-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-300 motion-reduce:transition-none"
                 >
+                  <span>Next</span>
                   <ChevronRight aria-hidden="true" className="h-5 w-5" />
                 </button>
               </div>
@@ -517,25 +568,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
 
           <div className="mb-4 mt-6 flex items-center justify-between gap-4">
             <p className="text-sm font-semibold text-slate-700" aria-live="polite">
-              {visibleGuides.length} {visibleGuides.length === 1 ? 'guide' : 'guides'}
+              {firstGuideNumber}–{lastGuideNumber} of {visibleGuides.length}
               {ctaRegionFilter !== 'All' && (
                 <span className="font-normal text-slate-500"> for {ctaRegionFilter}</span>
               )}
             </p>
             <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-slate-400">
-              Product &amp; export library
+              Product, export &amp; transmission tower guides
             </span>
           </div>
 
           <div
-            ref={guideCarouselRef}
             role="region"
             aria-label="Industrial product and export guides"
-            aria-roledescription="carousel"
-            onScroll={updateGuideCarouselControls}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pb-3 scroll-smooth motion-reduce:scroll-auto md:gap-5"
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {visibleGuides.map((guide, index) => {
+            {currentGuides.map((guide, index) => {
               const CategoryIcon = GUIDE_CATEGORY_ICONS[guide.label];
               const treatment = index % 3;
               const isNavy = treatment === 2;
@@ -546,13 +594,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                   key={guide.path}
                   to={guide.path}
                   aria-label={`Explore guide: ${guide.title} — ${guide.label}, ${guide.region}`}
-                  className={`group relative flex min-h-[25rem] shrink-0 snap-start flex-col border p-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transition-none sm:min-h-[27rem] sm:p-6 md:basis-[calc((100%-1.25rem)/2)] xl:basis-[calc((100%-2.5rem)/3)] ${
+                  className={`group relative flex min-h-[25rem] flex-col border p-5 transition-[color,background-color,border-color,transform] duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900 motion-reduce:transform-none motion-reduce:transition-none sm:min-h-[27rem] sm:p-6 ${
                     isNavy
                       ? 'border-blue-950 bg-blue-950 text-white hover:bg-blue-900'
                       : isBlueGray
                         ? 'border-blue-100 bg-blue-50/80 text-slate-950 hover:bg-blue-100/80'
                         : 'border-slate-200 bg-white text-slate-950 hover:bg-slate-100'
-                  } w-full`}
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <span
@@ -568,7 +616,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                         isNavy ? 'text-blue-300' : 'text-slate-400'
                       }`}
                     >
-                      {String(baseIndex + 1).padStart(2, '0')} / 10
+                        {String(baseIndex + 1).padStart(2, '0')} / {CABLE_TRAY_CTA_CARDS.length}
                     </span>
                   </div>
                   <div className="mt-8 flex items-center gap-2">

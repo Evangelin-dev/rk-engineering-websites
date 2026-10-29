@@ -32,26 +32,21 @@ export const Footer: React.FC = () => {
             </span>
             <ul className="space-y-2">
               <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">HDG Perforated Cable Tray</Link>
+                <Link to="/products?category=cable-trays" className="hover:text-red-400 transition-colors">Cable Tray</Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">Ladder Type Cable Tray</Link>
+                <Link to="/products?category=earthing" className="hover:text-red-400 transition-colors">Earthing Materials</Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">Raceway Cable Tray</Link>
+                <Link to="/products?category=solar" className="hover:text-red-400 transition-colors">Solar Mounting Structure</Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">GI Earthing Strip & Rods</Link>
+                <Link to="/products?category=galvanized-steel" className="hover:text-red-400 transition-colors">Hot Dip Galvanizing</Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">Cable Tray Duct</Link>
+                <Link to="/products?category=towers" className="hover:text-red-400 transition-colors">Towers</Link>
               </li>
-              <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">Solar Mounting Structures</Link>
-              </li>
-              <li>
-                <Link to="/products" className="hover:text-red-400 transition-colors">Hot-Dip Galvanized Steel</Link>
-              </li>
+  
             </ul>
           </div>
 

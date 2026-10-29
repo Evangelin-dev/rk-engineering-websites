@@ -6,7 +6,7 @@ import { ContactPopup } from './components/ContactPopup.tsx';
 import { ProductModal } from './components/ProductModal.tsx';
 import { ProductSpec } from './data/products.ts';
 import { AboutPage } from './pages/AboutPage.tsx';
-import { BlogPage } from './pages/BlogPage.tsx';
+import { BlogArticlePage, BlogPage } from './pages/BlogPage.tsx';
 import {
   CableTrayExporterIndiaAfricaPage,
   CableTrayManufacturerAfricaPage,
@@ -30,6 +30,10 @@ import { ProcessQualityPage } from './pages/ProcessQualityPage.tsx';
 import { ProductsPage } from './pages/ProductsPage.tsx';
 import { ServicesPage } from './pages/ServicesPage.tsx';
 import { TechnicalCalculatorPage } from './pages/TechnicalCalculatorPage.tsx';
+import { TRANSMISSION_TOWER_PAGES } from './data/transmissionTowerPages.ts';
+import { TransmissionTowerPage } from './pages/TransmissionTowerPage.tsx';
+import { BLOG_ARTICLES } from './data/blogArticles.ts';
+import { getBlogImage } from './data/blogImages.ts';
 
 const ProductDetailPage = lazy(() =>
   import('./pages/ProductDetailPage.tsx').then((module) => ({ default: module.ProductDetailPage })),
@@ -57,12 +61,15 @@ const PAGE_TITLES: Record<string, string> = {
   '/cable-tray-manufacturer-usa': 'Cable Tray Manufacturer for Industrial Projects in the USA',
   '/cable-tray-exporter-india-usa': 'Cable Tray Exporter from India to the USA',
   '/hot-dip-galvanized-cable-tray-usa': 'Hot Dip Galvanized Cable Tray for US Industrial Applications',
+  ...Object.fromEntries(TRANSMISSION_TOWER_PAGES.map((page) => [page.path, page.title])),
+  ...Object.fromEntries(BLOG_ARTICLES.map((article) => [article.path, article.seoTitle])),
 };
 
 const PAGE_DESCRIPTIONS: Record<string, string> = {
   '/products': 'Explore RK Engineering’s cable trays, earthing materials, solar mounting structures, hot-dip galvanized steel products, and towers for industrial and infrastructure projects.',
   '/services': 'Explore RK Engineering’s industrial hot-dip galvanizing services for cable trays, structural steel, earthing products, and suitable OEM-fabricated components.',
   '/about': 'Learn about RK Engineering & Galvanizers Pvt. Ltd., its cable tray manufacturing, in-house hot-dip galvanizing, industrial capabilities, quality systems, and international project enquiries.',
+  '/blog': 'Read RK Engineering articles on cable management, galvanized steel, earthing, solar structures, and procurement for industrial and infrastructure projects.',
   '/cable-tray-manufacturer-africa': 'Explore RK Engineering’s cable tray types, hot-dip galvanizing, industrial applications, stated manufacturing capacity, and export enquiry process for African projects.',
   '/cable-tray-exporter-india-africa': 'African importers and distributors can review cable tray categories, minimum order quantities, quotation requirements, and destination-specific export arrangements from India.',
   '/hot-dip-galvanized-cable-tray-africa': 'Review hot-dip galvanizing considerations, cable tray selection, industrial applications, buyer requirements, listed quality certifications, and export enquiries for African projects.',
@@ -73,6 +80,8 @@ const PAGE_DESCRIPTIONS: Record<string, string> = {
   '/cable-tray-manufacturer-usa': 'US industrial buyers can review cable tray categories, manufacturing capacity, technical requirements, sourcing from India, and quotation information.',
   '/cable-tray-exporter-india-usa': 'Information for US buyers sourcing cable trays from India, including product types, import and export documentation, packaging, shipping terms, and quotation requirements.',
   '/hot-dip-galvanized-cable-tray-usa': 'Review galvanized cable tray benefits, product types, US industrial applications, technical specifications, and enquiry requirements from RK Engineering.',
+  ...Object.fromEntries(TRANSMISSION_TOWER_PAGES.map((page) => [page.path, page.description])),
+  ...Object.fromEntries(BLOG_ARTICLES.map((article) => [article.path, article.metaDescription])),
 };
 
 const DEFAULT_PAGE_DESCRIPTION =
@@ -89,11 +98,17 @@ const SEO_LANDING_PAGE_PATHS = [
   '/cable-tray-manufacturer-usa',
   '/cable-tray-exporter-india-usa',
   '/hot-dip-galvanized-cable-tray-usa',
+  ...TRANSMISSION_TOWER_PAGES.map((page) => page.path),
+  '/blog',
+  ...BLOG_ARTICLES.map((article) => article.path),
 ] as const;
 
 function RoutedWebsite() {
   const navigate = useNavigate();
   const location = useLocation();
+  const africaGalvanizedBlog = BLOG_ARTICLES.find(
+    (article) => article.path === '/hot-dip-galvanized-cable-tray-africa/',
+  );
   const [selectedProductForModal, setSelectedProductForModal] = useState<ProductSpec | null>(null);
   const [rfqPreFill, setRfqPreFill] = useState<{
     productName?: string;
@@ -115,6 +130,30 @@ function RoutedWebsite() {
         document.head.append(metaDescription);
       }
       metaDescription.content = description ?? DEFAULT_PAGE_DESCRIPTION;
+      const ensureMeta = (attribute: 'name' | 'property', value: string) => {
+        let meta = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${value}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute(attribute, value);
+          document.head.append(meta);
+        }
+        return meta;
+      };
+      ensureMeta('property', 'og:title').content = `${pageTitle} | RK Engineering & Galvanizers`;
+      ensureMeta('property', 'og:description').content = description ?? DEFAULT_PAGE_DESCRIPTION;
+      ensureMeta('property', 'og:type').content = BLOG_ARTICLES.some((article) => article.path === location.pathname)
+        ? 'article'
+        : 'website';
+      ensureMeta('property', 'og:url').content = `${PRODUCTION_ORIGIN}${location.pathname}`;
+      const currentBlogArticle = BLOG_ARTICLES.find((article) => article.path === location.pathname);
+      if (currentBlogArticle) {
+        const image = getBlogImage(currentBlogArticle);
+        ensureMeta('property', 'og:image').content = new URL(image.src, PRODUCTION_ORIGIN).href;
+        ensureMeta('property', 'og:image:alt').content = image.alt;
+      } else {
+        document.head.querySelector('meta[property="og:image"]')?.remove();
+        document.head.querySelector('meta[property="og:image:alt"]')?.remove();
+      }
       let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       if (SEO_LANDING_PAGE_PATHS.includes(location.pathname as (typeof SEO_LANDING_PAGE_PATHS)[number])) {
         if (!canonical) {
@@ -196,11 +235,15 @@ function RoutedWebsite() {
           <Route
             path="/hot-dip-galvanized-cable-tray-africa"
             element={
-              <GalvanizedCableTrayAfricaPage
-                onRequestQuote={(specs, cableTrayType) =>
-                  handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
-                }
-              />
+              location.pathname === africaGalvanizedBlog?.path && africaGalvanizedBlog
+                ? <BlogArticlePage article={africaGalvanizedBlog} />
+                : (
+                  <GalvanizedCableTrayAfricaPage
+                    onRequestQuote={(specs, cableTrayType) =>
+                      handleOpenRFQ('Cable Trays & Ducts', specs, cableTrayType)
+                    }
+                  />
+                )
             }
           />
           <Route
@@ -273,6 +316,13 @@ function RoutedWebsite() {
               />
             }
           />
+          {TRANSMISSION_TOWER_PAGES.map((page) => (
+            <Route
+              key={page.path}
+              path={page.path}
+              element={<TransmissionTowerPage page={page} />}
+            />
+          ))}
           <Route path="/services" element={<ServicesPage onOpenRFQ={() => handleOpenRFQ()} />} />
           <Route
             path="/products"
@@ -301,6 +351,13 @@ function RoutedWebsite() {
           <Route path="/associations" element={<AssociationsPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          {BLOG_ARTICLES.filter((article) => article.path !== '/hot-dip-galvanized-cable-tray-africa/').map((article) => (
+            <Route
+              key={article.path}
+              path={article.path}
+              element={<BlogArticlePage article={article} />}
+            />
+          ))}
           <Route
             path="/contact"
             element={
