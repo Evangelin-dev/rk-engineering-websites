@@ -32,6 +32,10 @@ export const Navbar: React.FC = () => {
   const productMenuRef = useRef<HTMLDivElement>(null);
   const productMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
+  const isProductNavActive = location.pathname.startsWith('/products')
+    || PRODUCT_NAVIGATION_CATEGORIES.some((category) =>
+      category.landingPages?.some((page) => page.path === location.pathname),
+    );
   const cancelProductMenuClose = () => {
     if (productMenuCloseTimer.current) {
       clearTimeout(productMenuCloseTimer.current);
@@ -125,7 +129,7 @@ export const Navbar: React.FC = () => {
                   if (event.key === 'Escape') setActiveDesktopMenu(null);
                 }}
                 className={`relative inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
-                  location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : 'text-slate-800'
+                  isProductNavActive ? 'font-bold text-blue-900' : 'text-slate-800'
                 } ${activeDesktopMenu === 'products' ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`}
               >
                 Products
@@ -191,6 +195,23 @@ export const Navbar: React.FC = () => {
                             </ul>
                           ))}
                         </div>
+                        {category.landingPages && (
+                          <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-blue-900">
+                            {category.landingPages.map((page) => (
+                              <li key={page.path} className="pl-0.5">
+                                <Link
+                                  to={page.path}
+                                  onClick={closeMenus}
+                                  className={`text-sm leading-snug transition-colors hover:text-blue-900 ${
+                                    location.pathname === page.path ? 'font-semibold text-blue-900' : 'text-slate-600'
+                                  }`}
+                                >
+                                  {page.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </section>
                     );
                   })}
@@ -299,7 +320,7 @@ export const Navbar: React.FC = () => {
               onClick={() => setMobileProductsOpen((open) => !open)}
               aria-expanded={mobileProductsOpen}
               aria-controls="mobile-products-menu"
-              className={`flex items-center justify-between py-3 text-left ${location.pathname.startsWith('/products') ? 'font-bold text-blue-900' : ''}`}
+              className={`flex items-center justify-between py-3 text-left ${isProductNavActive ? 'font-bold text-blue-900' : ''}`}
             >
               Products
               <ChevronDown className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${mobileProductsOpen ? 'rotate-180' : ''}`} />
@@ -333,6 +354,18 @@ export const Navbar: React.FC = () => {
                         }`}
                       >
                         {product.navigationLabel ?? product.name}
+                      </Link>
+                    ))}
+                    {category.landingPages?.map((page) => (
+                      <Link
+                        key={page.path}
+                        to={page.path}
+                        onClick={closeMenus}
+                        className={`block py-2 transition-colors hover:text-blue-800 ${
+                          location.pathname === page.path ? 'font-bold text-blue-900' : 'text-slate-600'
+                        }`}
+                      >
+                        {page.label}
                       </Link>
                     ))}
                   </div>

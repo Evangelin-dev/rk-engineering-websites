@@ -36,6 +36,7 @@ export interface ProductNavigationCategory {
   backLabel: string;
   group: string;
   productSlugs: string[];
+  landingPages?: { label: string; path: string }[];
 }
 
 export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
@@ -45,6 +46,7 @@ export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
     backLabel: 'Cable Tray & Duct Products',
     group: 'cable',
     productSlugs: ['perforated-cable-trays', 'ladder-cable-trays', 'raceway-cable-trays', 'cable-tray-ducts'],
+    landingPages: [{ label: 'Powder Coated Cable Tray', path: '/powder-coated-cable-tray/' }],
   },
   {
     id: 'earthing',
@@ -85,6 +87,7 @@ export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
       'galvanized-tor-rods',
       'galvanized-chequered-plates',
     ],
+    landingPages: [{ label: 'Pre-Galvanized Steel Products', path: '/pre-galvanized-steel-products/' }],
   },
   {
     id: 'towers',

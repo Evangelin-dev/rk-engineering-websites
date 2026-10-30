@@ -17,6 +17,12 @@ import { IndustriesSection } from '../components/IndustriesSection.tsx';
 import { FAQSection } from '../components/FAQSection.tsx';
 import { PRODUCTS } from '../data/products.ts';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import aboutImage1 from '../assets/images/d1.jpeg';
+import aboutImage2 from '../assets/images/d2.jpeg';
+import aboutImage3 from '../assets/images/d3.jpeg';
+import aboutImage4 from '../assets/images/d4.jpeg';
+import aboutImage5 from '../assets/images/d5.jpeg';
+import aboutImage6 from '../assets/images/d6.jpeg';
 
 interface HomePageProps {
   onOpenRFQ: () => void;
@@ -48,6 +54,15 @@ const PROCESS_STEPS = [
     title: 'Packing and Dispatch Coordination',
     detail: 'Packing, product identification, documentation, and shipping arrangements are coordinated according to the order and destination requirements.',
   },
+] as const;
+
+const ABOUT_GALLERY_IMAGES = [
+  { src: aboutImage1, alt: 'Product identification attached to a protective wooden package', label: 'Product Identification' },
+  { src: aboutImage2, alt: 'Perforated cable trays prepared together at the facility', label: 'Cable Tray Products' },
+  { src: aboutImage3, alt: 'Protective wooden packaging prepared for a product', label: 'Protective Packaging' },
+  { src: aboutImage4, alt: 'Packaged products secured for transportation', label: 'Dispatch Preparation' },
+  { src: aboutImage5, alt: 'Product details displayed on a wooden package', label: 'Package Details' },
+  { src: aboutImage6, alt: 'Wooden packaging prepared for product dispatch', label: 'Product Packing' },
 ] as const;
 
 const CABLE_TRAY_CTA_CARDS = [
@@ -452,6 +467,35 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                 Discuss a Project
               </button>
             </div>
+          </div>
+        </div>
+        <div className="mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:mt-16 lg:px-8">
+          <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.17em] text-red-600">Inside RK Engineering</p>
+            <h3 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+              Products, Packaging and Dispatch
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {ABOUT_GALLERY_IMAGES.map((image, index) => (
+              <figure
+                key={image.src}
+                className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg motion-reduce:transform-none motion-reduce:transition-none"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                  />
+                </div>
+                <figcaption className="flex items-center gap-3 px-4 py-3">
+                  <span className="font-mono text-xs font-bold text-red-600">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="text-sm font-semibold text-slate-800 transition-colors group-hover:text-blue-900">{image.label}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
