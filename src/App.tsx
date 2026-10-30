@@ -34,6 +34,8 @@ import { TRANSMISSION_TOWER_PAGES } from './data/transmissionTowerPages.ts';
 import { TransmissionTowerPage } from './pages/TransmissionTowerPage.tsx';
 import { BLOG_ARTICLES } from './data/blogArticles.ts';
 import { getBlogImage } from './data/blogImages.ts';
+import { PRODUCT_LANDING_PAGES } from './data/productLandingPages.ts';
+import { ProductLandingPage } from './pages/ProductLandingPage.tsx';
 
 const ProductDetailPage = lazy(() =>
   import('./pages/ProductDetailPage.tsx').then((module) => ({ default: module.ProductDetailPage })),
@@ -61,6 +63,8 @@ const PAGE_TITLES: Record<string, string> = {
   '/cable-tray-manufacturer-usa': 'Cable Tray Manufacturer for Industrial Projects in the USA',
   '/cable-tray-exporter-india-usa': 'Cable Tray Exporter from India to the USA',
   '/hot-dip-galvanized-cable-tray-usa': 'Hot Dip Galvanized Cable Tray for US Industrial Applications',
+  '/powder-coated-cable-tray/': 'Powder Coated Cable Tray Manufacturer in India',
+  '/pre-galvanized-steel-products/': 'Pre-Galvanized Steel Products Manufacturer in India',
   ...Object.fromEntries(TRANSMISSION_TOWER_PAGES.map((page) => [page.path, page.title])),
   ...Object.fromEntries(BLOG_ARTICLES.map((article) => [article.path, article.seoTitle])),
 };
@@ -80,6 +84,8 @@ const PAGE_DESCRIPTIONS: Record<string, string> = {
   '/cable-tray-manufacturer-usa': 'US industrial buyers can review cable tray categories, manufacturing capacity, technical requirements, sourcing from India, and quotation information.',
   '/cable-tray-exporter-india-usa': 'Information for US buyers sourcing cable trays from India, including product types, import and export documentation, packaging, shipping terms, and quotation requirements.',
   '/hot-dip-galvanized-cable-tray-usa': 'Review galvanized cable tray benefits, product types, US industrial applications, technical specifications, and enquiry requirements from RK Engineering.',
+  '/powder-coated-cable-tray/': 'Durable, Colour-Finished Cable Tray Systems for Industrial Projects. RK Engineering manufactures cable management solutions for industrial, commercial and infrastructure applications, including powder-coated cable trays.',
+  '/pre-galvanized-steel-products/': 'Reliable Pre-Galvanized Steel Solutions for Industrial and Electrical Infrastructure. RK Engineering provides industrial cable management, steel fabrication and galvanizing solutions for infrastructure and industrial applications.',
   ...Object.fromEntries(TRANSMISSION_TOWER_PAGES.map((page) => [page.path, page.description])),
   ...Object.fromEntries(BLOG_ARTICLES.map((article) => [article.path, article.metaDescription])),
 };
@@ -98,6 +104,8 @@ const SEO_LANDING_PAGE_PATHS = [
   '/cable-tray-manufacturer-usa',
   '/cable-tray-exporter-india-usa',
   '/hot-dip-galvanized-cable-tray-usa',
+  '/powder-coated-cable-tray/',
+  '/pre-galvanized-steel-products/',
   ...TRANSMISSION_TOWER_PAGES.map((page) => page.path),
   '/blog',
   ...BLOG_ARTICLES.map((article) => article.path),
@@ -316,6 +324,18 @@ function RoutedWebsite() {
               />
             }
           />
+          {PRODUCT_LANDING_PAGES.map((page) => (
+            <Route
+              key={page.path}
+              path={page.path}
+              element={
+                <ProductLandingPage
+                  page={page}
+                  onRequestQuote={(productName, enquiryMessage) => handleOpenRFQ(productName, enquiryMessage)}
+                />
+              }
+            />
+          ))}
           {TRANSMISSION_TOWER_PAGES.map((page) => (
             <Route
               key={page.path}
