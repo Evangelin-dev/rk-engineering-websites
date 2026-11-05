@@ -11,6 +11,32 @@ const DISMISSED_KEY = 'rk-contact-popup-dismissed';
 const fieldClasses =
   'mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-800 focus:ring-2 focus:ring-blue-800/15';
 
+const WHATSAPP_NUMBER = '918422044453';
+const WHATSAPP_MESSAGE = 'Hello, I would like to discuss a requirement with RK Engineering.';
+
+const WHATSAPP_ANIMATION_CSS = `
+  @keyframes rk-wa-bounce {
+    0%, 40%, 100% { transform: translateY(0); }
+    8%  { transform: translateY(-16px); }
+    16% { transform: translateY(0); }
+    24% { transform: translateY(-8px); }
+    32% { transform: translateY(0); }
+  }
+  @keyframes rk-wa-ring {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    100% { transform: scale(2.1); opacity: 0; }
+  }
+  .rk-wa-bounce { animation: rk-wa-bounce 3.6s ease-in-out infinite; }
+  .rk-wa-bounce:hover,
+  .rk-wa-bounce:focus-visible { animation-play-state: paused; }
+  .rk-wa-ring { animation: rk-wa-ring 2.4s ease-out infinite; }
+  .rk-wa-ring-delay { animation-delay: 1.2s; }
+  @media (prefers-reduced-motion: reduce) {
+    .rk-wa-bounce, .rk-wa-ring { animation: none; }
+    .rk-wa-ring { display: none; }
+  }
+`;
+
 const emptyForm: ContactFormData = {
   name: '',
   mobile: '',
@@ -97,26 +123,37 @@ export const ContactPopup: React.FC = () => {
 
   return (
     <>
+      <style>{WHATSAPP_ANIMATION_CSS}</style>
+
       <a
-        href={`https://wa.me/918422044453?text=${encodeURIComponent('Hello, I would like to discuss a requirement with RK Engineering.')}`}
+        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
         target="_blank"
         rel="noreferrer"
         aria-label="Chat with RK Engineering on WhatsApp"
         title="Chat with us on WhatsApp"
-        className="fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-white/70 transition duration-200 hover:scale-105 hover:bg-[#1DA851] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] active:scale-95 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
+        className="rk-wa-bounce group fixed bottom-5 right-5 z-40 flex flex-row-reverse items-center focus-visible:outline-none"
       >
-        <svg aria-hidden="true" viewBox="0 0 32 32" className="h-8 w-8" fill="none">
-          <path
-            d="M16 4.1a11.45 11.45 0 0 0-9.83 17.32L4.7 27.3l6.02-1.43A11.45 11.45 0 1 0 16 4.1Z"
-            stroke="currentColor"
-            strokeWidth="1.9"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12.03 10.45c-.28-.62-.58-.63-.85-.64h-.72c-.25 0-.66.09-1.01.47-.34.38-1.32 1.29-1.32 3.14s1.35 3.65 1.54 3.9c.19.25 2.6 4.17 6.42 5.68 3.17 1.25 3.82 1 4.51.94.69-.06 2.22-.91 2.53-1.79.31-.88.31-1.63.22-1.79-.09-.16-.34-.25-.72-.44-.38-.19-2.22-1.1-2.56-1.22-.34-.13-.59-.19-.84.19-.25.38-.97 1.22-1.19 1.47-.22.25-.44.28-.81.09-.38-.19-1.59-.59-3.03-1.88-1.12-1-1.88-2.24-2.1-2.62-.22-.38-.02-.58.17-.77.17-.17.38-.44.56-.66.19-.22.25-.38.38-.63.13-.25.06-.47-.03-.66-.1-.19-.84-2.06-1.15-2.79Z"
-            fill="currentColor"
-          />
-        </svg>
+        {/* Round button */}
+        <span className="relative inline-flex h-14 w-14 shrink-0 items-center justify-center">
+          {/* Pulse rings */}
+          <span aria-hidden="true" className="rk-wa-ring absolute inset-0 rounded-full bg-[#25D366]" />
+          <span aria-hidden="true" className="rk-wa-ring rk-wa-ring-delay absolute inset-0 rounded-full bg-[#25D366]" />
+
+          {/* Main circle */}
+          <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#2BE477] via-[#25D366] to-[#128C7E] text-white shadow-[0_8px_20px_rgba(18,140,126,0.45)] ring-2 ring-white transition-transform duration-200 group-hover:scale-110 group-active:scale-95 group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-[#128C7E] motion-reduce:transition-none motion-reduce:group-hover:scale-100">
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+          </span>
+        </span>
+
+        {/* Slide-out label */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none mr-3 max-w-0 translate-x-2 overflow-hidden whitespace-nowrap rounded-full bg-blue-950 py-0 pl-0 pr-0 text-sm font-semibold text-white opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[12rem] group-hover:translate-x-0 group-hover:px-4 group-hover:py-2 group-hover:opacity-100 group-focus-visible:max-w-[12rem] group-focus-visible:translate-x-0 group-focus-visible:px-4 group-focus-visible:py-2 group-focus-visible:opacity-100 motion-reduce:transition-none"
+        >
+          Chat on WhatsApp
+        </span>
         <span className="sr-only">WhatsApp</span>
       </a>
 

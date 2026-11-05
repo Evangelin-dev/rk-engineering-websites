@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import telecom from '../assets/images/telecom.png';
 
 interface FinalCTAProps {
   onOpenRFQ: () => void;
@@ -17,7 +18,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenRFQ, onExploreProducts
           <div className="grid md:grid-cols-5">
             <div className="min-h-56 md:col-span-2 md:min-h-64">
               <img
-                src={UPLOADED_PRODUCT_IMAGES['63']}
+                src={telecom}
                 alt="RK Engineering steel products for international supply"
                 className="h-full min-h-56 w-full object-cover md:min-h-64"
               />

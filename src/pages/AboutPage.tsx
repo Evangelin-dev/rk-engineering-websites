@@ -17,6 +17,7 @@ import certificateQualityImage from '../assets/images/c2.jpg';
 import certificateEnvironmentImage from '../assets/images/c3.jpg';
 import certificateSafetyImage from '../assets/images/c4.jpg';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import rk1 from '../assets/images/rk1.png';
 
 const heroImage = UPLOADED_PRODUCT_IMAGES['56'];
 const companyOverviewImage = UPLOADED_PRODUCT_IMAGES['54'];
@@ -245,7 +246,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           </div>
           <div className="relative">
             <img
-              src={heroImage}
+              src={rk1}
               alt="RK Engineering industrial steel product"
               className="aspect-[4/3] w-full rounded-lg object-cover shadow-md"
             />

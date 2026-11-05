@@ -1,8 +1,10 @@
+import ct1 from '../assets/images/ct1.jpg';
 export interface ProductSpec {
   id: string;
   name: string;
   category: 'cable-management' | 'earthing' | 'solar' | 'galvanized-steel';
   tagline: string;
+  
   description: string;
   fullDetails: string;
   standardStandards: string[];

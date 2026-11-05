@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
-
+import ct1 from '../assets/images/ct1.jpg';
+import hdg from '../assets/images/hdg.png';
+import hdg2 from '../assets/images/hpd1.jpg';
+import ct2 from '../assets/images/ct2.jpg'
+import ct3 from '../assets/images/ct3.jpg';
+import ct4 from '../assets/images/ct4.jpg';
 const CAPABILITIES = [
   {
     id: 'established',
@@ -9,7 +14,7 @@ const CAPABILITIES = [
     description:
       'Established in 2000, RK Engineering has more than 25 years of continuous manufacturing experience in heavy steel fabrication, cable management, and surface protection.',
     metric: '25+ Years',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: ct3,
     alt: 'RK Engineering steel product',
   },
   {
@@ -19,7 +24,7 @@ const CAPABILITIES = [
     description:
       'RK Engineering operates under certified quality, environmental, and safety management systems, supporting disciplined industrial production and supply control.',
     metric: 'ISO & CE',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: ct4,
     alt: 'RK Engineering steel product',
   },
   {
@@ -29,7 +34,7 @@ const CAPABILITIES = [
     description:
       'Our stated annual cable tray manufacturing capacity is 12,000 metric tonnes, supported by roll-forming, CNC perforation, and industrial fabrication operations.',
     metric: '12,000 MT',
-    image: UPLOADED_PRODUCT_IMAGES['58'],
+    image: ct1,
     alt: 'RK Engineering cable tray product',
   },
   {
@@ -39,7 +44,7 @@ const CAPABILITIES = [
     description:
       'RK Engineering supports a stated annual hot-dip galvanizing capacity of 24,000 metric tonnes for industrial and infrastructure steel products.',
     metric: '24,000 MT',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: hdg,
     alt: 'RK Engineering hot-dip galvanized steel product',
   },
   {
@@ -49,7 +54,7 @@ const CAPABILITIES = [
     description:
       'Integrated manufacturing minimizes third-party handling and supports consistent coating thickness, zinc adherence, and smoother project execution.',
     metric: '100% In-House',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: hdg2,
     alt: 'RK Engineering galvanized steel product',
   },
   {
@@ -69,7 +74,7 @@ const CAPABILITIES = [
     description:
       'We support global export enquiries with CFR, CIF, FOB quotations, port coordination, and seaworthy packing for international project procurement.',
     metric: 'Global Export',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: ct2,
     alt: 'RK Engineering steel product for international enquiries',
   },
   {
