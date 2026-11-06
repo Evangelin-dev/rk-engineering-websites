@@ -23,6 +23,7 @@ import aboutImage3 from '../assets/images/d3.jpeg';
 import aboutImage4 from '../assets/images/d4.jpeg';
 import aboutImage5 from '../assets/images/d5.jpeg';
 import aboutImage6 from '../assets/images/d6.jpeg';
+import solar1 from '../assets/images/solar.png';
 
 interface HomePageProps {
   onOpenRFQ: () => void;
@@ -418,7 +419,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
         <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div className="relative">
             <img
-              src={UPLOADED_PRODUCT_IMAGES['63']}
+              src={solar1}
               alt="RK Engineering industrial steel product"
               loading="lazy"
               className="aspect-[4/3] w-full rounded-xl object-cover shadow-lg"

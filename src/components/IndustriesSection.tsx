@@ -20,7 +20,15 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { INDUSTRIES } from '../data/company.ts';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
-
+import power from '../assets/images/power.jpg';
+import solar1 from '../assets/images/solar1.jpg';
+import oil from '../assets/images/oil.jpg';
+import ct4 from '../assets/images/ct4.jpg';
+import tele from '../assets/images/tele.jpg';
+import industrial from '../assets/images/industrial.jpg';
+import railway from '../assets/images/railway.jpg';
+import data from '../assets/images/data.jpg';
+import water from '../assets/images/water.jpg';
 const SECTOR_ICONS: Record<string, LucideIcon> = {
   'power-generation': Zap,
   'renewable-energy': SunMedium,
@@ -35,39 +43,39 @@ const SECTOR_ICONS: Record<string, LucideIcon> = {
 
 const SECTOR_IMAGES: Record<string, { src: string; alt: string }> = {
   'power-generation': {
-    src: UPLOADED_PRODUCT_IMAGES['54'],
+    src: power,
     alt: 'Galvanized cable tray and ladder products',
   },
   'renewable-energy': {
-    src: UPLOADED_PRODUCT_IMAGES['64'],
+    src: solar1,
     alt: 'Steel products for renewable energy infrastructure',
   },
   'oil-and-gas': {
-    src: UPLOADED_PRODUCT_IMAGES['63'],
+    src: oil,
     alt: 'Steel products for oil and gas infrastructure',
   },
   'petrochemical-manufacturing': {
-    src: UPLOADED_PRODUCT_IMAGES['63'],
+    src: ct4,
     alt: 'Steel products for industrial infrastructure',
   },
   telecommunications: {
-    src: UPLOADED_PRODUCT_IMAGES['55'],
+    src: tele,
     alt: 'Galvanized cable tray products',
   },
   'commercial-buildings': {
-    src: UPLOADED_PRODUCT_IMAGES['58'],
+    src: industrial,
     alt: 'Cable routing systems installed in an industrial facility',
   },
   'infrastructure-railways': {
-    src: UPLOADED_PRODUCT_IMAGES['66'],
+    src: railway,
     alt: 'Fabricated steel components at a galvanizing facility',
   },
   'data-centres': {
-    src: UPLOADED_PRODUCT_IMAGES['59'],
+    src: data,
     alt: 'Cable routing systems installed in an industrial facility',
   },
   'water-treatment': {
-    src: UPLOADED_PRODUCT_IMAGES['60'],
+    src: water,
     alt: 'Galvanized cable tray products',
   },
 };

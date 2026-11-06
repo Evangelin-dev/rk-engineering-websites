@@ -15,6 +15,9 @@ import {
   TowerControl,
 } from 'lucide-react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import ct1 from '../assets/images/ct1.jpg';
+import hdg2 from '../assets/images/hpd1.jpg';
+import ctr2 from '../assets/images/ct2.jpg'
 
 const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
 const exportImage = UPLOADED_PRODUCT_IMAGES['63'];
@@ -171,7 +174,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
     <section className="border-b border-slate-200 bg-white py-14 sm:py-18 lg:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
         <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-          <img src={galvanizingImage} alt="Hot-dip galvanized steel products" className="aspect-[4/3] w-full object-cover" />
+          <img src={ct1} alt="Hot-dip galvanized steel products" className="aspect-[4/3] w-full object-cover" />
         </div>
         <div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">About Our Hot-Dip Galvanizing Services</p>
@@ -321,7 +324,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
           </button>
         </div>
         <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-          <img src={exportImage} alt="Steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
+          <img src={hdg2} alt="Steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
         </div>
       </div>
     </section>
@@ -331,7 +334,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
         <div className="overflow-hidden rounded-xl bg-blue-950 text-white shadow-lg">
           <div className="grid md:grid-cols-5">
             <div className="hidden md:col-span-2 md:block">
-              <img src={cableTrayImage} alt="Cable tray components for industrial and infrastructure requirements" className="h-full min-h-64 w-full object-cover" />
+              <img src={ctr2} alt="Cable tray components for industrial and infrastructure requirements" className="h-full min-h-64 w-full object-cover" />
             </div>
             <div className="p-6 sm:p-9 md:col-span-3 lg:p-11">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-red-400">Discuss Your Project</p>

@@ -3,6 +3,11 @@ import { ArrowRight, Check, ChevronDown, Globe2 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../data/productDetails.ts';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import ct1 from '../assets/images/ct1.jpg';
+import copper from '../assets/images/copper.png';
+import solar1 from '../assets/images/solar1.jpg';
+import hdg from '../assets/images/hdg.png';
+import transmission from '../assets/images/transmission.png';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -28,7 +33,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Industrial Product Range',
     title: 'Industrial Steel Products for Project Requirements',
     description: 'RK Engineering manufactures and supplies industrial steel products for electrical infrastructure, renewable energy, construction, power transmission, and industrial applications.',
-    image: UPLOADED_PRODUCT_IMAGES['54'],
+    image: ct1,
     imageAlt: 'RK Engineering industrial steel products',
     products: [
       { name: 'Cable trays and ducts', slug: 'cable-trays' },
@@ -56,7 +61,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Electrical Grounding',
     title: 'Earthing Materials',
     description: 'Products for suitable electrical grounding, bonding, and infrastructure applications, subject to project specifications.',
-    image: UPLOADED_PRODUCT_IMAGES['57'],
+    image: copper,
     imageAlt: 'Earthing materials for electrical grounding applications',
     navigationCategoryId: 'earthing',
     considerations: ['Selection depends on the intended grounding application and project specifications.'],
@@ -67,7 +72,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Renewable Energy',
     title: 'Solar Mounting Structures',
     description: 'Structure solutions for ground-mounted and rooftop solar installations, trackers, car parking structures, and walkways.',
-    image: UPLOADED_PRODUCT_IMAGES['64'],
+    image: solar1,
     imageAlt: 'Steel products for solar mounting applications',
     navigationCategoryId: 'solar',
     considerations: ['Suitability depends on site conditions, structural loading, installation requirements, and project design.'],
@@ -78,7 +83,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Steel Products and Corrosion Protection',
     title: 'Hot-Dip Galvanized Steel Products',
     description: 'Hot-dip galvanizing applies a protective zinc coating to suitable steel components to help reduce corrosion. Specifications and coating requirements are assessed for the intended application and project standards.',
-    image: UPLOADED_PRODUCT_IMAGES['69'],
+    image: hdg,
     imageAlt: 'Hot-dip galvanized steel products',
     navigationCategoryId: 'galvanized-steel',
     considerations: ['Product specifications and coating requirements depend on the intended application and project standards.'],
@@ -89,7 +94,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Power Transmission and Infrastructure',
     title: 'Transmission Towers and Power Infrastructure',
     description: 'Transmission towers support overhead power lines and are an important part of electricity transmission and distribution infrastructure.',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: transmission,
     imageAlt: 'Steel products for power infrastructure projects',
     navigationCategoryId: 'towers',
     considerations: ['Project review includes voltage requirements, structural loading, tower configuration, material grades, corrosion protection, and engineering standards.', 'Specifications and approvals depend on the individual project.'],
@@ -183,7 +188,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
     <>
       <section className="relative isolate overflow-hidden bg-blue-950 text-white">
         <div className="absolute inset-0 -z-10">
-          <img src={UPLOADED_PRODUCT_IMAGES['54']} alt="" className="h-full w-full object-cover opacity-25" />
+          <img src={ct1} alt="" className="h-full w-full object-cover opacity-25" />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-950/90 to-blue-950/45" />
         </div>
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
