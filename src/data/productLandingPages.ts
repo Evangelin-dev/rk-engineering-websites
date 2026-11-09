@@ -34,6 +34,377 @@ export interface ProductLandingPageDefinition {
 
 export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
+    path: '/pre-galvanized-cable-tray/',
+    productName: 'Pre-Galvanized Cable Tray',
+    quoteProduct: 'Pre-Galvanized Cable Tray',
+    title: 'Pre-Galvanized Cable Tray Manufacturer for Industrial Cable Management',
+    description:
+      'RK Engineering offers pre-galvanized cable trays for organized electrical cable routing in industrial, commercial and infrastructure projects.',
+    categoryEyebrow: 'Pre-galvanized cable tray – Under Cable Tray',
+    categoryLabel: 'Cable Tray',
+    categoryPath: '/products?category=cable-trays',
+    subtitle: 'Pre-Galvanized Cable Tray Manufacturer for Industrial Cable Management',
+    introduction: [
+      'RK Engineering offers pre-galvanized cable trays for organized electrical cable routing in industrial, commercial and infrastructure projects. Our solutions are suitable for electrical contractors, EPC companies, panel manufacturers and industrial procurement teams.',
+    ],
+    enquiryMessage:
+      'Looking for Pre-Galvanized Cable Trays? Share the required tray type, width, height, thickness, quantity, material finish, project location and technical drawings.',
+    initialCta: 'Get a Quote for Pre-Galvanized Cable Trays',
+    sections: [
+      {
+        heading: 'What Is a Pre-Galvanized Cable Tray?',
+        blocks: [
+          {
+            type: 'paragraph',
+            text: 'A pre-galvanized cable tray is manufactured using steel sheets or strips that receive a zinc coating before the tray components are formed and fabricated. The zinc layer helps protect the steel surface against corrosion and provides a finished appearance.',
+          },
+          {
+            type: 'paragraph',
+            text: 'These cable trays are used to support and organize electrical power cables, control cables and instrumentation cables. They are suitable for selected indoor installations and electrical infrastructure applications where pre-galvanized finishing meets the project requirements.',
+          },
+        ],
+      },
+      {
+        heading: 'Why Industries Need Pre-Galvanized Cable Trays',
+        blocks: [
+          {
+            type: 'paragraph',
+            text: 'Industrial facilities require reliable cable support systems to maintain safe, organized and accessible electrical installations. Pre-galvanized cable trays offer several practical advantages:',
+          },
+          {
+            type: 'list',
+            items: [
+              'Corrosion Protection: Zinc coating helps protect steel surfaces from corrosion in suitable environments.',
+              'Organized Cable Routing: Provides a structured pathway for power, control and instrumentation cables.',
+              'Installation Convenience: Standardized tray sections and accessories can simplify cable routing and installation.',
+              'Reduced Maintenance: An appropriate finish can help reduce surface deterioration under suitable operating conditions.',
+              'Project Flexibility: Can be specified for manufacturing plants, warehouses, commercial buildings and electrical installations.',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Pre-Galvanized Cable Tray Solutions by RK Engineering',
+        blocks: [
+          {
+            type: 'paragraph',
+            text: 'RK Engineering provides pre-galvanized steel options for cable management systems, alongside hot dip galvanized and other cable tray finishes. Our cable tray solutions can be considered for different electrical installation requirements, subject to project specifications.',
+          },
+          { type: 'paragraph', text: 'Key solution considerations include:' },
+          {
+            type: 'list',
+            items: [
+              'Material Selection: Pre-galvanized steel selected according to the installation environment and project requirements.',
+              'Tray Configuration: Perforated, ladder or raceway-style cable routing, depending on the required cable support arrangement.',
+              'Dimensions and Fabrication: Tray width, side height, sheet thickness and section length based on approved drawings.',
+              'Cable Tray Accessories: Compatible bends, tees, reducers, coupler plates and support components where required.',
+              'Project Customization: Fabrication based on cable routing layouts, installation conditions and procurement specifications.',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Applications of Pre-Galvanized Cable Trays',
+        blocks: [
+          { type: 'paragraph', text: 'Pre-galvanized cable tray systems can support cable routing requirements across:' },
+          {
+            type: 'list',
+            items: [
+              'Manufacturing plants and industrial facilities',
+              'Commercial buildings and office complexes',
+              'Warehouses and logistics centres',
+              'Electrical control rooms and panel installations',
+              'Data centres and communication infrastructure',
+              'Solar power and renewable energy facilities',
+              'Power distribution and utility projects',
+              'Industrial automation and process facilities',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Industries We Serve',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering supports cable management requirements for:' },
+          {
+            type: 'list',
+            items: [
+              'Electrical EPC Contractors: Cable routing systems for electrical infrastructure projects.',
+              'Power and Utility Companies: Cable support for power distribution and utility installations.',
+              'Manufacturing Industries: Cable management for production lines and industrial equipment.',
+              'Oil and Gas Projects: Cable routing requirements for suitable plant environments.',
+              'Renewable Energy Companies: Cable support systems for solar and other energy projects.',
+              'Data Centre and Telecom Contractors: Organized routing for power, control and communication cables.',
+              'Infrastructure Developers: Cable management for commercial buildings, industrial parks and public infrastructure.',
+            ],
+          },
+          {
+            type: 'paragraph',
+            text: 'For international procurement teams, electrical consultants, MEP contractors, distributors and project engineering companies, product selection can be aligned with approved drawings, technical specifications, documentation and delivery requirements.',
+          },
+        ],
+      },
+      {
+        heading: 'Why Choose RK Engineering?',
+        blocks: [
+          {
+            type: 'paragraph',
+            text: 'RK Engineering provides cable management and galvanized steel solutions for industrial and infrastructure projects.',
+          },
+          {
+            type: 'list',
+            items: [
+              'Established manufacturing experience since 2000.',
+              'ISO 9001:2015 certified quality management system.',
+              'In-house hot dip galvanizing facility.',
+              'Custom fabrication based on project specifications.',
+              'Manufacturing and quality inspection capabilities.',
+              'Support for bulk orders and international project requirements.',
+              'Cable tray solutions for industrial and infrastructure applications.',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Pre-Galvanized Cable Tray Supply for Africa and USA',
+        blocks: [
+          {
+            type: 'paragraph',
+            text: "RK Engineering targets international industrial and infrastructure requirements, including projects in Africa and the United States. Pre-galvanized cable tray requirements can be evaluated according to the destination country's project specifications, environmental conditions and applicable standards.",
+          },
+          {
+            type: 'list',
+            items: [
+              'Africa: Kenya, South Africa, Nigeria, Ghana, Tanzania and other developing industrial markets.',
+              'USA: Industrial manufacturing facilities, warehouses, commercial buildings, electrical infrastructure and renewable energy projects.',
+            ],
+          },
+          {
+            type: 'paragraph',
+            text: 'We support enquiries from international EPC contractors, electrical contractors, MEP consultants, procurement managers, industrial distributors and engineering project companies. Export specifications, packaging, documentation and shipping arrangements can be discussed during quotation.',
+          },
+        ],
+      },
+      {
+        heading: 'Frequently Asked Questions',
+        blocks: [
+          { type: 'faq', question: 'What is a pre-galvanized cable tray?', answer: 'A pre-galvanized cable tray is manufactured using steel that has been zinc-coated before fabrication. It provides a protective finish for suitable cable management applications.' },
+          { type: 'faq', question: 'What is the difference between pre-galvanized and hot dip galvanized cable trays?', answer: 'Pre-galvanized steel receives its zinc coating before fabrication, whereas hot dip galvanizing after fabrication coats the completed steel component. Their suitability depends on the required corrosion protection and installation environment.' },
+          { type: 'faq', question: 'Where are pre-galvanized cable trays used?', answer: 'They are used in selected industrial plants, commercial buildings, warehouses, electrical installations and infrastructure projects for organized cable routing.' },
+          { type: 'faq', question: 'Can pre-galvanized cable trays be customized?', answer: 'Tray dimensions, configurations, thicknesses and accessories can be specified according to project requirements, subject to manufacturing capability and confirmation.' },
+          { type: 'faq', question: 'Are pre-galvanized cable trays suitable for outdoor applications?', answer: 'Suitability depends on the coating specification and environmental exposure. For coastal, highly corrosive or demanding outdoor environments, a more suitable corrosion protection system may be required.' },
+          { type: 'faq', question: 'Does RK Engineering support international cable tray enquiries?', answer: 'RK Engineering serves international markets and can discuss cable tray requirements for projects in Africa, the USA and other export destinations.' },
+          { type: 'faq', question: 'What information is required to request a cable tray quotation?', answer: 'Share the required tray type, width, height, thickness, quantity, material finish, project location and technical drawings to help prepare a suitable quotation.' },
+        ],
+      },
+    ],
+    finalCta: {
+      title: 'Get a Quote for Pre-Galvanized Cable Trays',
+      description: 'Looking for a reliable Pre-Galvanized Cable Tray Manufacturer and Supplier in India for your industrial or international project? Partner with RK Engineering for cable management solutions based on your technical requirements, project drawings and procurement specifications.',
+      actions: [
+        { label: 'Request a Quote', productName: 'Pre-Galvanized Cable Tray', enquiryMessage: 'Request a quote for Pre-Galvanized Cable Trays based on my technical requirements, project drawings and procurement specifications.' },
+        { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss a Pre-Galvanized Cable Tray project.' },
+      ],
+    },
+    relatedLinks: [
+      { label: 'Cable Tray & Duct Products', path: '/products/cable-trays' },
+      { label: 'Perforated Type Cable Tray', path: '/products/perforated-cable-trays' },
+      { label: 'Ladder Type Cable Tray', path: '/products/ladder-cable-trays' },
+    ],
+  },
+  {
+    path: '/mild-steel-perforated-cable-tray/',
+    productName: 'Mild Steel Perforated Cable Tray',
+    quoteProduct: 'Mild Steel Perforated Cable Tray',
+    title: 'Mild Steel Perforated Cable Tray for Industrial Cable Management',
+    description: 'RK Engineering offers mild steel perforated cable trays for organized cable routing in industrial, commercial and infrastructure projects.',
+    categoryEyebrow: 'Mild steel perforated cable tray – Under Cable Tray',
+    categoryLabel: 'Cable Tray',
+    categoryPath: '/products?category=cable-trays',
+    subtitle: 'Mild Steel Perforated Cable Tray for Industrial Cable Management',
+    introduction: [
+      'RK Engineering offers mild steel perforated cable trays for organized cable routing in industrial, commercial and infrastructure projects. Designed to support power, control and instrumentation cables, these trays can be specified according to project dimensions, cable loads and installation requirements.',
+    ],
+    enquiryMessage: 'Looking for Mild Steel Perforated Cable Trays? Share the tray width, side height, sheet thickness, length, material finish, quantity, cable load requirements, destination and technical drawings.',
+    initialCta: 'Get a Quote for Mild Steel Perforated Cable Trays',
+    sections: [
+      {
+        heading: 'What Is a Mild Steel Perforated Cable Tray?',
+        blocks: [
+          { type: 'paragraph', text: 'A mild steel perforated cable tray is a cable support system manufactured from mild steel sheets with regularly spaced openings along its base. These perforations help provide ventilation, assist heat dissipation around cables and allow drainage in suitable installation environments.' },
+          { type: 'paragraph', text: 'The tray supports and organizes electrical cables while providing access for inspection, maintenance and future cable additions. It is commonly considered for factories, commercial buildings, warehouses, power facilities and infrastructure projects.' },
+        ],
+      },
+      {
+        heading: 'Why Industries Need Mild Steel Perforated Cable Trays',
+        blocks: [
+          { type: 'paragraph', text: 'Industrial electrical installations require dependable cable support to keep wiring organized and accessible. Mild steel perforated cable trays offer several practical benefits:' },
+          { type: 'list', items: ['Structural Support: Provides a defined support pathway for electrical and control cables.', 'Ventilation: Perforations allow airflow around cables and can help reduce heat accumulation.', 'Cable Organization: Helps separate and route cables systematically across facilities.', 'Maintenance Access: Open construction makes cable inspection and additions more convenient.', 'Fabrication Flexibility: Mild steel can be fabricated to project-specific widths, side heights and lengths.', 'Installation Adaptability: Can be integrated with suitable bends, tees, reducers, couplers and support systems.'] },
+        ],
+      },
+      {
+        heading: 'Mild Steel Perforated Cable Tray Solutions by RK Engineering',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering provides industrial cable tray and fabrication solutions using mild steel and other suitable materials. Mild steel perforated cable trays can be specified according to project drawings, cable routing layouts and installation requirements.' },
+          { type: 'paragraph', text: 'Our solution considerations include:' },
+          { type: 'list', items: ['Perforated Tray Design: Slotted or punched openings to support ventilation and cable routing.', 'Material Selection: Mild steel sheet selected according to required strength and application.', 'Custom Fabrication: Tray width, side height, length and thickness based on approved drawings.', 'Surface Finishing: Options such as primer, powder coating or hot dip galvanizing, where specified and available.', 'Accessories: Horizontal bends, vertical bends, tees, reducers, coupler plates, covers and support brackets.', 'Project-Based Supply: Tray sections and accessories coordinated with electrical installation layouts.'] },
+        ],
+      },
+      {
+        heading: 'Applications of Mild Steel Perforated Cable Trays',
+        blocks: [
+          { type: 'paragraph', text: 'Mild steel perforated cable trays are used in different electrical and industrial installations, including:' },
+          { type: 'list', items: ['Manufacturing plants and production facilities', 'Power generation and distribution stations', 'Oil and gas processing facilities', 'Petrochemical and chemical industries', 'Commercial buildings and office complexes', 'Warehouses and logistics centres', 'Solar power plants and renewable energy projects', 'Data centres and telecommunication facilities', 'Water treatment and infrastructure projects', 'Industrial automation and control systems'] },
+        ],
+      },
+      {
+        heading: 'Industries We Serve',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering supports cable management requirements for different industrial and infrastructure sectors.' },
+          { type: 'list', items: ['Power and Energy Companies: Cable support systems for power generation and distribution facilities.', 'EPC Contractors: Cable tray supply based on electrical project drawings and technical specifications.', 'Electrical Contractors: Cable management products for industrial and commercial installations.', 'Oil and Gas Companies: Cable routing solutions for suitable processing and utility facilities.', 'Manufacturing Industries: Cable support for production equipment, machinery and automation systems.', 'Renewable Energy Developers: Cable routing requirements for solar power and energy infrastructure.', 'MEP Consultants and Contractors: Cable tray systems for building electrical services.', 'Industrial Distributors: Cable tray products for electrical and infrastructure supply networks.'] },
+          { type: 'paragraph', text: 'We also work towards the requirements of procurement managers, project engineers, electrical consultants, panel builders and infrastructure developers who need consistent product specifications, fabrication coordination and bulk supply support.' },
+        ],
+      },
+      {
+        heading: 'Why Choose RK Engineering?',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering is an industrial cable tray and hot dip galvanizing manufacturer established in 2000. The company highlights its ISO 9001:2015 certification, in-house galvanizing facility, manufacturing capacity and experience supporting domestic and international industrial projects.' },
+          { type: 'list', items: ['Established manufacturing experience since 2000.', 'ISO 9001:2015 certified quality management system.', 'In-house hot dip galvanizing facility.', 'Custom fabrication based on customer drawings.', 'Cable tray and galvanized steel product range.', 'Quality inspection and manufacturing capabilities.', 'Support for bulk industrial and infrastructure requirements.', 'Domestic and international supply experience.'] },
+        ],
+      },
+      {
+        heading: 'Mild Steel Perforated Cable Tray Supply for Africa and USA',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering targets international industrial and infrastructure projects, including cable management requirements in Africa and the United States.' },
+          { type: 'list', items: ['Africa: Mild steel perforated cable trays can be considered for manufacturing plants, power distribution projects, warehouses, commercial buildings and industrial infrastructure in markets such as Kenya, South Africa, Nigeria, Ghana and Tanzania.', 'USA: Cable tray requirements can be evaluated for manufacturing facilities, industrial buildings, warehouses, energy projects, data centres and electrical infrastructure, subject to applicable project specifications and standards.'] },
+          { type: 'paragraph', text: 'We welcome enquiries from international EPC contractors, electrical contractors, MEP companies, engineering consultants, industrial distributors and procurement teams looking for mild steel cable tray manufacturers and exporters from India. Product dimensions, material specifications, protective coating, technical documentation, packaging and export requirements can be discussed during quotation.' },
+        ],
+      },
+      {
+        heading: 'Frequently Asked Questions',
+        blocks: [
+          { type: 'faq', question: 'What is a mild steel perforated cable tray?', answer: 'A mild steel perforated cable tray is an electrical cable support system manufactured from mild steel sheets with punched or slotted openings. It helps organize and support electrical cables in industrial and commercial installations.' },
+          { type: 'faq', question: 'What are the advantages of perforated cable trays?', answer: 'Perforated cable trays provide structured cable support, ventilation, convenient cable access and flexibility for future cable additions.' },
+          { type: 'faq', question: 'What is the difference between MS and GI perforated cable trays?', answer: 'MS cable trays are manufactured from mild steel, while GI cable trays have a zinc-coated surface. GI or suitably galvanized trays generally provide better corrosion protection than untreated mild steel.' },
+          { type: 'faq', question: 'Can mild steel perforated cable trays be customized?', answer: 'Yes, tray width, side height, thickness, length, perforation pattern and accessories can be specified according to project requirements and manufacturing capabilities.' },
+          { type: 'faq', question: 'Are mild steel perforated cable trays suitable for outdoor installations?', answer: 'Untreated mild steel is generally vulnerable to corrosion in outdoor environments. A suitable protective coating should be specified based on moisture, humidity, coastal exposure and other environmental conditions.' },
+          { type: 'faq', question: 'Which industries use mild steel perforated cable trays?', answer: 'They are used in manufacturing, power generation, oil and gas, petrochemical, infrastructure, renewable energy, commercial buildings and industrial automation projects.' },
+          { type: 'faq', question: 'Does RK Engineering supply cable trays for export projects?', answer: 'RK Engineering supports international industrial and infrastructure enquiries, including requirements from Africa, the USA and other markets. Product specifications and export arrangements can be discussed with the sales team.' },
+          { type: 'faq', question: 'What details are required to request a quotation?', answer: 'Share the tray width, side height, sheet thickness, length, material finish, quantity, cable load requirements, destination and technical drawings to receive a project-specific quotation.' },
+        ],
+      },
+    ],
+    finalCta: {
+      title: 'Get a Quote for Mild Steel Perforated Cable Trays',
+      description: 'Looking for a reliable Mild Steel Perforated Cable Tray Manufacturer and Supplier in India for your industrial or international project? Connect with RK Engineering for customized cable tray solutions based on your technical specifications, project drawings and bulk procurement requirements.',
+      actions: [
+        { label: 'Request a Quote', productName: 'Mild Steel Perforated Cable Tray', enquiryMessage: 'Request a quote for Mild Steel Perforated Cable Trays based on my technical specifications, project drawings and bulk procurement requirements.' },
+        { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss a Mild Steel Perforated Cable Tray project.' },
+      ],
+    },
+    relatedLinks: [
+      { label: 'Cable Tray & Duct Products', path: '/products/cable-trays' },
+      { label: 'Perforated Type Cable Tray', path: '/products/perforated-cable-trays' },
+      { label: 'Raceway Cable Tray', path: '/products/raceway-cable-trays' },
+    ],
+  },
+  {
+    path: '/aluminium-perforated-cable-tray/',
+    productName: 'Aluminium Perforated Cable Tray',
+    quoteProduct: 'Aluminium Perforated Cable Tray',
+    title: 'Aluminium Perforated Cable Tray for Industrial Cable Management',
+    description: 'RK Engineering offers aluminium perforated cable tray solutions for organized electrical cable routing in industrial, commercial and infrastructure projects.',
+    categoryEyebrow: 'Aluminium perforated cable tray – Under Cable Tray',
+    categoryLabel: 'Cable Tray',
+    categoryPath: '/products?category=cable-trays',
+    subtitle: 'Aluminium Perforated Cable Tray for Industrial Cable Management',
+    introduction: [
+      'RK Engineering offers aluminium perforated cable tray solutions for organized electrical cable routing in industrial, commercial and infrastructure projects. Lightweight construction, corrosion resistance and convenient cable access make aluminium trays suitable for various electrical installations.',
+    ],
+    enquiryMessage: 'Looking for Aluminium Perforated Cable Trays? Share the aluminium grade, tray width, side height, thickness, length, quantity, finish, cable load requirements, destination and technical drawings.',
+    initialCta: 'Get a Quote for Aluminium Perforated Cable Trays',
+    sections: [
+      {
+        heading: 'What Is an Aluminium Perforated Cable Tray?',
+        blocks: [
+          { type: 'paragraph', text: 'An aluminium perforated cable tray is a cable support system manufactured from aluminium sheets with regularly spaced openings along its base. The perforations allow airflow around installed cables and provide access for cable fastening, inspection and maintenance.' },
+          { type: 'paragraph', text: 'Aluminium construction offers a lightweight alternative to steel cable trays while providing natural corrosion resistance. These trays are used for supporting power, control and instrumentation cables in suitable industrial and commercial environments.' },
+        ],
+      },
+      {
+        heading: 'Why Industries Need Aluminium Perforated Cable Trays',
+        blocks: [
+          { type: 'paragraph', text: 'Electrical contractors and industrial project teams require cable support systems that are easy to handle, durable and suitable for their installation environment.' },
+          { type: 'list', items: ['Lightweight Construction: Aluminium reduces tray handling weight compared with many steel alternatives.', 'Corrosion Resistance: Aluminium naturally forms a protective oxide layer that helps resist corrosion.', 'Cable Ventilation: Perforations support airflow around cables and can help dissipate heat.', 'Easy Installation: Lightweight sections can simplify transportation, handling and installation.', 'Cable Accessibility: Openings provide convenient access for cable ties and inspection.', "Low Maintenance: Aluminium's corrosion-resistant properties can reduce maintenance needs in suitable environments."] },
+        ],
+      },
+      {
+        heading: 'Aluminium Perforated Cable Tray Solutions by RK Engineering',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering provides industrial cable management and cable tray solutions for electrical and infrastructure projects. Aluminium perforated cable trays can be specified for projects requiring lightweight cable support and corrosion-resistant material selection, subject to product availability and manufacturing confirmation.' },
+          { type: 'paragraph', text: 'Key product considerations include:' },
+          { type: 'list', items: ['Perforated Tray Design: Regularly spaced openings for cable ventilation, fastening and inspection.', 'Aluminium Material: Selection of a suitable aluminium alloy and temper according to mechanical and environmental requirements.', 'Custom Dimensions: Tray width, side height, length and material thickness based on approved project drawings.', 'Surface Finish: Mill finish or specified surface treatment, depending on the application.', 'Cable Tray Accessories: Horizontal bends, vertical bends, tees, reducers, couplers, covers and support brackets.', 'Project-Specific Fabrication: Tray configurations planned around cable routing layouts and installation conditions.'] },
+        ],
+      },
+      {
+        heading: 'Applications of Aluminium Perforated Cable Trays',
+        blocks: [
+          { type: 'paragraph', text: 'Aluminium perforated cable trays can be considered for suitable applications across:' },
+          { type: 'list', items: ['Manufacturing plants and industrial facilities', 'Commercial buildings and office complexes', 'Data centres and IT infrastructure', 'Power generation and distribution facilities', 'Renewable energy and solar power projects', 'Water treatment and utility facilities', 'Warehouses and logistics centres', 'Telecommunication and networking installations', 'Coastal and marine-related facilities, subject to alloy and environmental suitability', 'Industrial automation and control systems'] },
+        ],
+      },
+      {
+        heading: 'Industries We Serve',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering targets cable management requirements across multiple industries and infrastructure sectors.' },
+          { type: 'list', items: ['Power and Energy Companies: Cable support systems for power generation and distribution facilities.', 'EPC Contractors: Cable tray supply based on project drawings and engineering specifications.', 'Electrical Contractors: Cable management products for industrial and commercial installations.', 'Oil and Gas Companies: Cable routing systems for suitable plant and utility environments.', 'Manufacturing Industries: Cable support for machinery, production lines and automation systems.', 'Renewable Energy Developers: Cable management for solar power and renewable energy installations.', 'Data Centre Developers: Cable routing solutions for power distribution and supporting infrastructure.', 'MEP Consultants and Contractors: Cable tray systems for building electrical services.', 'Industrial Distributors: Cable tray products for electrical and infrastructure supply networks.'] },
+          { type: 'paragraph', text: 'We also support enquiries from procurement managers, project engineers, electrical consultants, panel manufacturers, system integrators and infrastructure developers who require project-specific dimensions, technical documentation, bulk quantities and coordinated product supply.' },
+        ],
+      },
+      {
+        heading: 'Why Choose RK Engineering?',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering is an industrial cable tray and hot dip galvanizing manufacturer established in 2000. The company highlights its ISO 9001:2015 certification, manufacturing capabilities, in-house galvanizing facility and experience serving domestic and international industrial projects.' },
+          { type: 'list', items: ['Established manufacturing experience since 2000.', 'ISO 9001:2015 certified quality management system.', 'In-house hot dip galvanizing facility.', 'Custom fabrication based on customer drawings.', 'Industrial cable tray and galvanized steel product range.', 'Quality inspection and manufacturing capabilities.', 'Support for bulk industrial and infrastructure requirements.', 'Domestic and international project experience.'] },
+        ],
+      },
+      {
+        heading: 'Aluminium Perforated Cable Tray Supply for Africa and USA',
+        blocks: [
+          { type: 'paragraph', text: 'RK Engineering targets international industrial and infrastructure requirements, including cable management projects in Africa and the United States.' },
+          { type: 'list', items: ['Africa: Aluminium perforated cable trays can be considered for suitable manufacturing plants, commercial buildings, power facilities, warehouses, renewable energy projects and infrastructure developments in markets such as Kenya, South Africa, Nigeria, Ghana and Tanzania.', 'USA: Potential applications include industrial manufacturing facilities, commercial buildings, data centres, renewable energy projects, electrical infrastructure and utility installations. Product specifications must be evaluated against applicable US project requirements.'] },
+          { type: 'paragraph', text: 'We welcome enquiries from international EPC contractors, electrical contractors, MEP consultants, engineering companies, industrial distributors, project developers and procurement teams looking for aluminium cable tray manufacturers and suppliers from India. Material grade, tray dimensions, load ratings, accessories, technical documentation, export packaging and shipping arrangements can be discussed during quotation.' },
+        ],
+      },
+      {
+        heading: 'Frequently Asked Questions',
+        blocks: [
+          { type: 'faq', question: 'What is an aluminium perforated cable tray?', answer: 'An aluminium perforated cable tray is a cable support system manufactured from aluminium sheets with regularly spaced openings. It helps organize electrical cables while providing ventilation and convenient cable access.' },
+          { type: 'faq', question: 'What are the advantages of aluminium perforated cable trays?', answer: 'They offer lightweight construction, natural corrosion resistance, convenient handling, cable ventilation and accessibility for inspection and maintenance.' },
+          { type: 'faq', question: 'What is the difference between aluminium and mild steel perforated cable trays?', answer: 'Aluminium trays are generally lighter and naturally corrosion-resistant, while mild steel trays offer different structural and cost advantages. Selection depends on cable loads, environmental exposure and project requirements.' },
+          { type: 'faq', question: 'Are aluminium perforated cable trays suitable for outdoor applications?', answer: 'They can be suitable for selected outdoor environments, depending on the aluminium alloy, surface condition, atmospheric exposure and installation design. Coastal and chemically aggressive environments require particular material evaluation.' },
+          { type: 'faq', question: 'Can aluminium perforated cable trays be customized?', answer: 'Tray width, side height, thickness, length, perforation pattern and accessories can be specified according to project drawings and manufacturing capabilities.' },
+          { type: 'faq', question: 'Which industries use aluminium perforated cable trays?', answer: 'They are used in suitable manufacturing facilities, commercial buildings, data centres, power projects, renewable energy installations and infrastructure developments.' },
+          { type: 'faq', question: 'Does RK Engineering support international cable tray enquiries?', answer: 'RK Engineering serves international industrial and infrastructure markets and can discuss project requirements for Africa, the USA and other export destinations. Aluminium product availability should be confirmed with the sales team.' },
+          { type: 'faq', question: 'What information is required to request a quotation?', answer: 'Share the aluminium grade, tray width, side height, thickness, length, quantity, finish, cable load requirements, destination and technical drawings for a project-specific quotation.' },
+        ],
+      },
+    ],
+    finalCta: {
+      title: 'Get a Quote for Aluminium Perforated Cable Trays',
+      description: 'Looking for a reliable Aluminium Perforated Cable Tray Manufacturer and Supplier in India for your industrial or international project? Connect with RK Engineering to discuss your cable management requirements, technical specifications, project drawings and bulk procurement needs.',
+      actions: [
+        { label: 'Request a Quote', productName: 'Aluminium Perforated Cable Tray', enquiryMessage: 'Request a quote for Aluminium Perforated Cable Trays based on my cable management requirements, technical specifications and project drawings.' },
+        { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss an Aluminium Perforated Cable Tray project.' },
+      ],
+    },
+    relatedLinks: [
+      { label: 'Cable Tray & Duct Products', path: '/products/cable-trays' },
+      { label: 'Perforated Type Cable Tray', path: '/products/perforated-cable-trays' },
+      { label: 'Pre-Galvanized Cable Tray', path: '/pre-galvanized-cable-tray/' },
+    ],
+  },
+  {
     path: '/powder-coated-cable-tray/',
     productName: 'Powder Coated Cable Tray',
     quoteProduct: 'Cable Trays & Ducts',
