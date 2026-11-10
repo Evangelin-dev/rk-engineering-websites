@@ -1,3 +1,4 @@
+import hdg from "../assets/images/hdg.png";
 export type ProductLandingBlock =
   | { type: 'paragraph'; text: string }
   | { type: 'subheading'; text: string }
@@ -12,6 +13,7 @@ export interface ProductLandingSection {
 export interface ProductLandingPageDefinition {
   path: string;
   productName: string;
+  image?: string[];
   quoteProduct: string;
   title: string;
   description: string;
@@ -407,6 +409,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/powder-coated-cable-tray/',
     productName: 'Powder Coated Cable Tray',
+    image : [hdg],
     quoteProduct: 'Cable Trays & Ducts',
     title: 'Powder Coated Cable Tray Manufacturer in India',
     description:

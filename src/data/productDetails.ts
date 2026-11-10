@@ -423,7 +423,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Junction Boxes',
     navigationLabel: 'Junction Box',
     group: 'earthing',
-    image: '60',
+    image: 'Junction Box',
     description:
       'Enclosures for suitable electrical connections and terminations within specified grounding and electrical installations.',
     overview:
@@ -451,7 +451,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'GI Wire',
     navigationLabel: 'GI Wire',
     group: 'earthing',
-    image: 'gi',
+    image: 'Gi wire',
     description:
       'Galvanized iron wire for suitable electrical and grounding applications where its properties meet project requirements.',
     overview:
@@ -479,7 +479,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Copper Earthing Strips',
     navigationLabel: 'Copper Earthing Strips',
     group: 'earthing',
-    image: 'copper',
+    image: 'Copper Earthing',
     description:
       'Conductive copper components for grounding networks where copper conductivity and compatibility with the system design are required.',
     overview:
@@ -540,7 +540,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Ground-Mounted Solar Structures',
     navigationLabel: 'Ground Mounted Structure',
     group: 'solar',
-    image: '64',
+    image: 'solar1',
     description:
       'Support structures for photovoltaic modules installed on prepared ground or engineered foundations.',
     overview:
@@ -568,7 +568,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Rooftop Solar Mounting Structures',
     navigationLabel: 'Rooftop Structure',
     group: 'solar',
-    image: '65',
+    image: 'Rooftop',
     description:
       'Structures supporting PV modules on suitable industrial sheds, commercial buildings, warehouses, and other roofs.',
     overview:
@@ -596,7 +596,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Tracker Structures',
     navigationLabel: 'Solar Tracker',
     group: 'solar',
-    image: '66',
+    image: 'solar2',
     description:
       'Structures designed to move PV modules along a defined tracking path, subject to the selected tracker technology and engineering scope.',
     overview:
@@ -624,7 +624,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Car Parking Structures',
     navigationLabel: 'Car Parking Structure',
     group: 'solar',
-    image: '67',
+    image: 'car',
     description:
       'Solar carports combine vehicle parking areas with overhead photovoltaic modules in a structure designed for site and vehicle requirements.',
     overview:
@@ -652,7 +652,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Walkway Structures',
     navigationLabel: 'Walkway Structure',
     group: 'solar',
-    image: '68',
+    image: 'Walkway',
     description:
       'Structures that support PV modules above designated pedestrian routes or covered walkways.',
     overview:
@@ -896,7 +896,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized H-Beams',
     navigationLabel: 'H-Beams',
     group: 'galvanized',
-    image: '71',
+    image: 'beam',
     imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized H-beams for suitable industrial buildings, structural frameworks, warehouses, equipment supports, platforms, utility infrastructure, and fabricated steel assemblies.',
@@ -1203,7 +1203,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Fabricated Beams',
     navigationLabel: 'Fabricated Beams',
     group: 'galvanized',
-    image: 'beam',
+    image: 'Fabricated Beams',
     description:
       'Project-specific fabricated steel beams for industrial structures, equipment supports, utility projects, and customized assemblies, with hot dip galvanizing where specified and suitable.',
     overview:
@@ -1268,7 +1268,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized TOR Rods',
     navigationLabel: 'Tor Rod',
     group: 'galvanized',
-    image: '71',
+    image: 'Tor Rod',
     description:
       'TOR rods are listed for reinforced-concrete applications. Confirm the actual reinforcement type, grade, dimensions, availability, and any specifically approved galvanizing requirement against the project specification.',
     overview:
@@ -1332,7 +1332,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Chequered Plates',
     navigationLabel: 'Chequered Plate',
     group: 'galvanized',
-    image: '69',
+    image: 'Plates',
     description:
       'Hot dip galvanized steel chequered plates for suitable industrial platforms, walkways, equipment access areas, stairs, maintenance spaces, and fabrication projects.',
     overview:
@@ -1453,7 +1453,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Transmission Monopoles',
     navigationLabel: 'Transmission Monopoles',
     group: 'towers',
-    image: '54',
+    image: 'Transmission Monopoles',
     description:
       'Monopole structures for suitable electricity transmission and distribution infrastructure projects, subject to project-specific design requirements.',
     overview:
@@ -1481,7 +1481,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Power Distribution Poles',
     navigationLabel: 'Power Distribution Poles',
     group: 'towers',
-    image: '55',
+    image: 'Power Distribution Poles',
     description:
       'Pole structures for suitable electricity distribution infrastructure, with requirements established by project design and applicable approvals.',
     overview:
@@ -1509,7 +1509,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Substation Structures',
     navigationLabel: 'Substation Structures',
     group: 'towers',
-    image: '56',
+    image: 'Substation Structures',
     description:
       'Structures for suitable electrical substation infrastructure, with configuration and specifications defined by the project requirements.',
     overview:

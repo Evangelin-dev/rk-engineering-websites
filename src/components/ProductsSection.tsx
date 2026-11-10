@@ -7,7 +7,7 @@ import ct1 from '../assets/images/ct1.jpg';
 import copper from '../assets/images/copper.png';
 import solar1 from '../assets/images/solar1.jpg';
 import hdg from '../assets/images/hdg.png';
-import transmission from '../assets/images/transmission.png';
+import transmission2 from '../assets/images/transmission2.png';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -94,7 +94,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Power Transmission and Infrastructure',
     title: 'Transmission Towers and Power Infrastructure',
     description: 'Transmission towers support overhead power lines and are an important part of electricity transmission and distribution infrastructure.',
-    image: transmission,
+    image: transmission2,
     imageAlt: 'Steel products for power infrastructure projects',
     navigationCategoryId: 'towers',
     considerations: ['Project review includes voltage requirements, structural loading, tower configuration, material grades, corrosion protection, and engineering standards.', 'Specifications and approvals depend on the individual project.'],

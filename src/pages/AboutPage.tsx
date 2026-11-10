@@ -17,9 +17,9 @@ import certificateQualityImage from '../assets/images/c2.jpg';
 import certificateEnvironmentImage from '../assets/images/c3.jpg';
 import certificateSafetyImage from '../assets/images/c4.jpg';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
-import rk1 from '../assets/images/rk1.png';
+import rk1 from '../assets/images/rk2.png';
 
-const heroImage = UPLOADED_PRODUCT_IMAGES['56'];
+
 const companyOverviewImage = UPLOADED_PRODUCT_IMAGES['54'];
 const exportImage = UPLOADED_PRODUCT_IMAGES['60'];
 
