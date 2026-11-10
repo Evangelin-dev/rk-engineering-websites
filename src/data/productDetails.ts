@@ -47,7 +47,13 @@ export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
     backLabel: 'Cable Tray & Duct Products',
     group: 'cable',
     productSlugs: ['perforated-cable-trays', 'ladder-cable-trays', 'raceway-cable-trays', 'cable-tray-ducts'],
-    landingPages: [{ label: 'Powder Coated Cable Tray', path: '/powder-coated-cable-tray/' }],
+    landingPages: [
+      { label: 'Powder Coated Cable Tray', path: '/powder-coated-cable-tray/' },
+      { label: 'Pre-Galvanized Cable Tray', path: '/pre-galvanized-cable-tray/' },
+      { label: 'Mild Steel Perforated Cable Tray', path: '/mild-steel-perforated-cable-tray/' },
+      { label: 'Aluminium Perforated Cable Tray', path: '/aluminium-perforated-cable-tray/' },
+      { label: 'Pre-Galvanized Steel Products', path: '/pre-galvanized-steel-products/' },
+    ],
   },
   {
     id: 'earthing',
@@ -88,7 +94,6 @@ export const PRODUCT_NAVIGATION_CATEGORIES: ProductNavigationCategory[] = [
       'galvanized-tor-rods',
       'galvanized-chequered-plates',
     ],
-    landingPages: [{ label: 'Pre-Galvanized Steel Products', path: '/pre-galvanized-steel-products/' }],
   },
   {
     id: 'towers',
