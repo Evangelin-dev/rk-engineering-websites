@@ -3,9 +3,10 @@ import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import ct1 from '../assets/images/ct1.jpg';
 import hdg from '../assets/images/hdg.png';
 import hdg2 from '../assets/images/hpd1.jpg';
-import ct2 from '../assets/images/ct2.jpg'
+import ct2 from '../assets/images/mast.png'
 import ct3 from '../assets/images/ct3.jpg';
 import ct4 from '../assets/images/ct4.jpg';
+import pipes from '../assets/images/pipes.png';
 const CAPABILITIES = [
   {
     id: 'established',
@@ -81,10 +82,10 @@ const CAPABILITIES = [
     id: 'project-capabilities',
     title: 'Industrial Project Capabilities',
     leftLabel: 'Industrial Project Capabilities',
+    image: pipes,
     description:
       'Our manufacturing focus spans power utilities, solar parks, petrochemical facilities, data centres, and industrial infrastructure where reliable material supply is essential.',
     metric: '500+ Projects',
-    image: UPLOADED_PRODUCT_IMAGES['66'],
     alt: 'RK Engineering steel product for infrastructure projects',
   },
 ] as const;
