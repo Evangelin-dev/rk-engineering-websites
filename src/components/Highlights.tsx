@@ -67,7 +67,7 @@ const CAPABILITIES = [
     description:
       'Full engineering assessment supports custom widths, gauges, hole patterns, and fabrication requirements for product-specific industrial applications.',
     metric: 'Bespoke CAD',
-    image: UPLOADED_PRODUCT_IMAGES['55'],
+    image: Object.values(UPLOADED_PRODUCT_IMAGES)[0] ?? ct4,
     alt: 'RK Engineering industrial steel product',
   },
   {

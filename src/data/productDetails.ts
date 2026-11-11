@@ -188,7 +188,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'cable-trays',
     name: 'Industrial Cable Trays',
     group: 'cable',
-    image: '54',
+    image: 'cable tray',
     imageAlt: 'Industrial cable tray systems for electrical cable routing',
     description:
       'Industrial cable tray systems for routing power, control, instrumentation, and communication cables in industrial and infrastructure projects.',
@@ -506,7 +506,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'solar-mounting-structures',
     name: 'Solar Mounting Structures',
     group: 'solar',
-    image: '63',
+    image: 'solar3',
     description:
       'Project-specific frameworks that support photovoltaic modules and transfer loads to an approved roof, foundation, or support system.',
     overview:
@@ -540,7 +540,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Ground-Mounted Solar Structures',
     navigationLabel: 'Ground Mounted Structure',
     group: 'solar',
-    image: 'solar1',
+    image: 'Ground-Mounted Solar Structures',
     description:
       'Support structures for photovoltaic modules installed on prepared ground or engineered foundations.',
     overview:
@@ -624,7 +624,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Car Parking Structures',
     navigationLabel: 'Car Parking Structure',
     group: 'solar',
-    image: 'car',
+    image: 'Car Parking Structure',
     description:
       'Solar carports combine vehicle parking areas with overhead photovoltaic modules in a structure designed for site and vehicle requirements.',
     overview:
@@ -652,7 +652,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Walkway Structures',
     navigationLabel: 'Walkway Structure',
     group: 'solar',
-    image: 'Walkway',
+    image: 'Walkway Structure',
     description:
       'Structures that support PV modules above designated pedestrian routes or covered walkways.',
     overview:
@@ -679,7 +679,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'hot-dip-galvanized-steel-products',
     name: 'Hot-Dip Galvanized Steel Products',
     group: 'galvanized',
-    image: '69',
+    image: 'steel',
     imageAlt: 'Hot-dip galvanized steel products',
     description:
       'Galvanized steel products and suitable fabricated components for industrial, construction, and infrastructure applications.',
@@ -1537,7 +1537,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Towers and Power Infrastructure Structures',
     navigationLabel: 'Towers & Power Infrastructure',
     group: 'towers',
-    image: '57',
+    image: 'Transmission Monopoles',
     description:
       'Structures for suitable power transmission, electricity distribution, telecommunications, and electrical infrastructure projects.',
     overview:

@@ -73,8 +73,8 @@ export const UPLOADED_PRODUCT_IMAGES = {
   'Junction Box' : junbox,
   'Plates' : plates1,
   'solar2': solar2,
-  'Walkway': walk,
-  'car' : Car,
+  'Walkway Structure': walk,
+  'Car Parking Structure' : Car,
   'Transmission Monopoles': mona,
   'Substation Structures':sub,
   'Power Distribution Poles': power1,
@@ -83,11 +83,11 @@ export const UPLOADED_PRODUCT_IMAGES = {
   'cable-duct': cableduct,
   'earthflat': earthflat,
   'earthelectrode': earthelectrode,
-  'solar1' : solar1,
+  'Ground-Mounted Solar Structures' : solar1,
   'Rooftop' : roof,
   'Gi wire' : wire,
   'Copper Earthing' : copper1,
-  'copper': copper,
+
   'steel': steel,
   'channel': channel,
   'pipes': pipes,
@@ -117,24 +117,20 @@ export const UPLOADED_PRODUCT_IMAGES = {
   "Inside Ladder Cable Tray": cable16,
   "Inside Ladder": cable17,
    "Power Generation" : power,
-  '54': image54,
+  'cable tray': image54,
+ 
+  
+  'leading product': image61,
+  
+  'Hot dip mounting': image63,
+  'solar3': image64,
+ 
+  'Box': image71,
   '55': image55,
  
-  '57': image57,
+  
   '58': image58,
   '59': image59,
-  '60': image60,
-  '61': image61,
-  '62': image62,
-  '63': image63,
-  '64': image64,
-  '65': image65,
-  '66': image66,
-  '67': image67,
-  '68': image68,
-  '69': image69,
-  '70': image70,
-  '71': image71,
 } as const;
 
 export type ProductImage = keyof typeof UPLOADED_PRODUCT_IMAGES;

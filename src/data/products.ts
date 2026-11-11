@@ -1,10 +1,13 @@
-import ct1 from '../assets/images/ct1.jpg';
+import ct1 from '../assets/images/Perforatedcabletray.png';
+import ladder from '../assets/images/laddercabletray.png';
+import raceway from '../assets/images/racewaycabletray.png';
+
 export interface ProductSpec {
   id: string;
   name: string;
   category: 'cable-management' | 'earthing' | 'solar' | 'galvanized-steel';
   tagline: string;
-  
+  image?: string;
   description: string;
   fullDetails: string;
   standardStandards: string[];
@@ -28,6 +31,7 @@ export const PRODUCTS: ProductSpec[] = [
     name: 'HDG Perforated Cable Tray',
     category: 'cable-management',
     tagline: 'Precision-punched continuous cable support for industrial facilities',
+    image: ct1,
     description: 'Hot-dip galvanized perforated cable trays for organized electrical cable routing in industrial facilities, infrastructure projects, and power installations. Product dimensions, material specifications, and coating requirements can be assessed against project needs.',
     fullDetails: 'Manufactured from premium structural steel with uniform CNC perforations providing optimal cable ventilation, heat dissipation, and moisture runoff. Side flanges feature pre-punched connector slots for rapid bolt-and-nut coupler plate assembly on international site installations.',
     standardStandards: ['BS EN 61537', 'IS 2629 / IS 4759', 'ASTM A123 / A153', 'IEC 61537'],
@@ -52,6 +56,7 @@ export const PRODUCTS: ProductSpec[] = [
     id: 'ladder-type-cable-tray',
     name: 'Ladder Type Cable Tray',
     category: 'cable-management',
+     image: ladder,
     tagline: 'High-load bearing dual-rail cable ladder for heavy electrical cables',
     description: 'Steel ladder cable trays for cable support applications in industrial plants, electrical infrastructure, and power distribution projects. Specify the required width, side height, material, finish, and loading requirements when requesting a quotation.',
     fullDetails: 'Engineered for high-amperage, large-diameter power cables requiring maximum airflow and structural span strength. Built with heavy-gauge roll-formed side channels and welded or swaged rungs at standardized 250 mm or 300 mm centres.',
@@ -78,6 +83,7 @@ export const PRODUCTS: ProductSpec[] = [
     id: 'raceway-cable-tray',
     name: 'Raceway Cable Tray',
     category: 'cable-management',
+     image: raceway,
     tagline: 'Enclosed cable raceway systems for protected structured routing',
     description: 'Cable raceway systems for structured cable routing in commercial, industrial, and electrical installations. Share your required configuration and installation environment to help determine a suitable product specification.',
     fullDetails: 'Solid-bottom and slotted trunking raceway systems designed to provide enclosed physical protection and electromagnetic shielding for instrumentation, control, and telecommunication cabling. Available with snap-on or screw-fixed galvanized covers.',

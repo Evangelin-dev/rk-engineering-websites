@@ -19,9 +19,12 @@ import certificateSafetyImage from '../assets/images/c4.jpg';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import rk1 from '../assets/images/rk2.png';
 import grat from '../assets/images/grat.png';
+import copper from '../assets/images/copper.png';
+import ladder from '../assets/images/laddercabletray.png';
+import raceway from '../assets/images/racewaycabletray.png';
 
 
-const companyOverviewImage = UPLOADED_PRODUCT_IMAGES['54'];
+const companyOverviewImage = ladder;
 const exportImage = grat;
 
 interface AboutPageProps {
@@ -60,35 +63,35 @@ const CAPABILITIES = [
   {
     title: 'Cable Tray Manufacturing',
     description: 'Perforated cable trays, ladder cable trays, raceway systems, and cable tray ducts for electrical and industrial installations. Material, dimensions, thickness, finish, accessories, and quantities can be specified during quotation.',
-    image: UPLOADED_PRODUCT_IMAGES['59'],
+    image: raceway,
     alt: 'Perforated and ladder cable trays for electrical installations',
     Icon: Cable,
   },
   {
     title: 'In-House Hot-Dip Galvanizing',
     description: 'Corrosion-protection treatment for applicable steel products. Coating requirements and inspection criteria should be confirmed against product specifications and project standards.',
-    image: UPLOADED_PRODUCT_IMAGES['63'],
+    image: (UPLOADED_PRODUCT_IMAGES as Record<string, string>)['Hot dip mounting'],
     alt: 'Hot-dip galvanized steel products',
     Icon: ShieldCheck,
   },
   {
     title: 'Industrial Steel Fabrication',
     description: 'Fabrication support for specified steel components and industrial products. Enquiries can include drawings, material grades, dimensional requirements, finishing details, and quantities.',
-    image: UPLOADED_PRODUCT_IMAGES['61'],
+    image: (UPLOADED_PRODUCT_IMAGES as Record<string, string>)['leading product'],
     alt: 'RK Engineering industrial steel product',
     Icon: Wrench,
   },
   {
     title: 'Earthing Materials',
     description: 'Earthing flats, electrodes, junction boxes, GI wire, and copper earthing strips for applicable electrical grounding and infrastructure installations.',
-    image: UPLOADED_PRODUCT_IMAGES['62'],
+    image: copper,
     alt: 'RK Engineering steel product for electrical infrastructure',
     Icon: TowerControl,
   },
   {
     title: 'Solar Mounting Structures',
     description: 'Products for specified rooftop and ground-mounted applications. Structural requirements, project drawings, installation conditions, and material specifications should be confirmed for each enquiry.',
-    image: UPLOADED_PRODUCT_IMAGES['64'],
+    image: (UPLOADED_PRODUCT_IMAGES as Record<string, string>)['solar3'],
     alt: 'RK Engineering product for solar mounting applications',
     Icon: SunMedium,
   },

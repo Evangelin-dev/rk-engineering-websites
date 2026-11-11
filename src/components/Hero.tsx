@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import heroVideo from '../assets/images/rkv.mp4';
+import cabletray from '../assets/images/laddercabletray.png';
 
 interface HeroProps {
   onOpenRFQ: () => void;
@@ -40,7 +41,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRFQ, onExploreProducts }) => {
   return (
     <section className="hero-viewport relative isolate flex flex-col overflow-hidden bg-blue-950 text-white">
       <img
-        src={UPLOADED_PRODUCT_IMAGES['54']}
+        src={cabletray}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 z-0 h-full w-full object-cover"
