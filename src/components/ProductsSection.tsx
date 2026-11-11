@@ -5,9 +5,10 @@ import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import ct1 from '../assets/images/ct1.jpg';
 import copper from '../assets/images/copper.png';
-import solar1 from '../assets/images/solar1.jpg';
-import hdg from '../assets/images/hdg.png';
+import solar4 from '../assets/images/solar5.png';
+import hdg1 from '../assets/images/c8.png';
 import transmission2 from '../assets/images/transmission2.png';
+import earthflat from '../assets/images/earthflat.png';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -61,7 +62,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Electrical Grounding',
     title: 'Earthing Materials',
     description: 'Products for suitable electrical grounding, bonding, and infrastructure applications, subject to project specifications.',
-    image: copper,
+    image: earthflat,
     imageAlt: 'Earthing materials for electrical grounding applications',
     navigationCategoryId: 'earthing',
     considerations: ['Selection depends on the intended grounding application and project specifications.'],
@@ -72,7 +73,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Renewable Energy',
     title: 'Solar Mounting Structures',
     description: 'Structure solutions for ground-mounted and rooftop solar installations, trackers, car parking structures, and walkways.',
-    image: solar1,
+    image: solar4,
     imageAlt: 'Steel products for solar mounting applications',
     navigationCategoryId: 'solar',
     considerations: ['Suitability depends on site conditions, structural loading, installation requirements, and project design.'],
@@ -83,7 +84,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Steel Products and Corrosion Protection',
     title: 'Hot-Dip Galvanized Steel Products',
     description: 'Hot-dip galvanizing applies a protective zinc coating to suitable steel components to help reduce corrosion. Specifications and coating requirements are assessed for the intended application and project standards.',
-    image: hdg,
+    image: hdg1,
     imageAlt: 'Hot-dip galvanized steel products',
     navigationCategoryId: 'galvanized-steel',
     considerations: ['Product specifications and coating requirements depend on the intended application and project standards.'],
