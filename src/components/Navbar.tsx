@@ -73,7 +73,9 @@ export const Navbar: React.FC = () => {
   const [mobileShowcaseOpen, setMobileShowcaseOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const productMenuRef = useRef<HTMLDivElement>(null);
+  // FIX: one ref on the whole desktop <nav>, so clicks inside ANY dropdown
+  // (Products or Showcase) count as "inside" and don't close it prematurely.
+  const navRef = useRef<HTMLElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -82,7 +84,9 @@ export const Navbar: React.FC = () => {
     PRODUCT_NAVIGATION_CATEGORIES.some((category) =>
       category.landingPages?.some((page) => page.path === location.pathname),
     );
-  const isShowcaseActive = SHOWCASE_LINKS.some((link) => link.to === location.pathname);
+
+  // FIX: strip the #hash so '/about#certifications' can match the pathname
+  const isShowcaseActive = SHOWCASE_LINKS.some((link) => link.to.split('#')[0] === location.pathname);
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -117,7 +121,7 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     if (!activeMenu) return;
     const onPointerDown = (event: PointerEvent) => {
-      if (!productMenuRef.current?.contains(event.target as Node)) setActiveMenu(null);
+      if (!navRef.current?.contains(event.target as Node)) setActiveMenu(null);
     };
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setActiveMenu(null);
@@ -138,6 +142,15 @@ export const Navbar: React.FC = () => {
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, []);
+
+  // FIX: React Router doesn't scroll to #hash targets (e.g. /about#certifications)
+  useEffect(() => {
+    if (!location.hash) return;
+    const timer = setTimeout(() => {
+      document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100); // wait for the target page to render
+    return () => clearTimeout(timer);
+  }, [location.pathname, location.hash]);
 
   return (
     <header
@@ -168,6 +181,7 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop nav */}
           <nav
+            ref={navRef}
             aria-label="Main navigation"
             className="hidden h-full items-center gap-4 text-[13px] font-medium lg:flex xl:gap-8 xl:text-[15px]"
           >
@@ -185,7 +199,6 @@ export const Navbar: React.FC = () => {
 
             {/* Products mega menu (anchored to the header so it is centered on the page) */}
             <div
-              ref={productMenuRef}
               className="flex h-full items-center"
               onMouseEnter={() => openMenu('products')}
               onMouseLeave={() => scheduleClose('products')}

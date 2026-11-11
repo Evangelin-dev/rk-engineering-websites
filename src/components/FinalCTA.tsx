@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
-import telecom from '../assets/images/telecom.png';
+import telecom from '../assets/images/transmission1.png';
 
 interface FinalCTAProps {
   onOpenRFQ: () => void;

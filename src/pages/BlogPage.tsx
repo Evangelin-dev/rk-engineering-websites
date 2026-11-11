@@ -91,9 +91,16 @@ const extractFaqs = (blocks: BlogContentBlock[]) => {
   return faqs;
 };
 
-const renderArticleBlocks = (article: BlogArticle) =>
-  article.blocks.map((block, index) => {
+const listClassName = (ordered: boolean) =>
+  `${ordered ? 'list-decimal' : 'list-disc'} my-4 space-y-2 pl-6 text-base leading-7 text-slate-700 marker:font-semibold marker:text-red-600`;
+
+const renderArticleBlocks = (article: BlogArticle) => {
+  // Running counter so one-item ordered lists continue 1, 2, 3... instead of restarting at 1.
+  let orderedCount = 0;
+
+  return article.blocks.map((block, index) => {
     if (block.type === 'heading') {
+      if (block.level === 2) orderedCount = 0;
       const Heading = block.level === 2 ? 'h2' : 'h3';
       return (
         <Heading
@@ -141,20 +148,30 @@ const renderArticleBlocks = (article: BlogArticle) =>
         </div>
       );
     }
-    const List = block.type === 'ordered-list' ? 'ol' : 'ul';
+    if (block.type === 'ordered-list') {
+      const start = orderedCount + 1;
+      orderedCount += block.items.length;
+      return (
+        <ol key={`${index}-${block.items[0]}`} start={start} className={listClassName(true)}>
+          {block.items.map((item, itemIndex) => (
+            <li key={`${index}-${itemIndex}-${item}`}>
+              {renderLinkedText(item, block.links?.[itemIndex])}
+            </li>
+          ))}
+        </ol>
+      );
+    }
     return (
-      <List
-        key={`${index}-${block.items[0]}`}
-        className={`${block.type === 'ordered-list' ? 'list-decimal' : 'list-disc'} my-4 space-y-2 pl-6 text-base leading-7 text-slate-700 marker:font-semibold marker:text-red-600`}
-      >
+      <ul key={`${index}-${block.items[0]}`} className={listClassName(false)}>
         {block.items.map((item, itemIndex) => (
           <li key={`${index}-${itemIndex}-${item}`}>
             {renderLinkedText(item, block.links?.[itemIndex])}
           </li>
         ))}
-      </List>
+      </ul>
     );
   });
+};
 
 export const BlogPage: React.FC = () => (
   <>
@@ -175,22 +192,23 @@ export const BlogPage: React.FC = () => (
           <BookOpen aria-hidden="true" className="h-4 w-4 text-red-600" />
           {BLOG_ARTICLES.length} articles
         </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
           {BLOG_ARTICLES.map((article) => {
             const image = getBlogImage(article);
             return (
               <article key={article.id} className="flex h-full flex-col overflow-hidden border border-slate-200 bg-white shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none">
+                {/* Full image, no cropping, natural proportions */}
                 <Link
                   to={article.path}
                   aria-label={`Read ${article.title}`}
-                  className="block aspect-video overflow-hidden bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-900"
+                  className="block overflow-hidden bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-900"
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-contain object-center"
+                    className="block h-auto w-full"
                   />
                 </Link>
                 <div className="flex flex-1 flex-col p-6">
@@ -278,13 +296,16 @@ export const BlogArticlePage: React.FC<{ article: BlogArticle }> = ({ article })
           </div>
         </header>
 
+        {/* Hero image: same width and padding as the title and article text, full image, click to open original */}
         <figure className="mx-auto max-w-4xl px-4 pt-8 sm:px-6 lg:px-8">
-          <img
-            src={image.src}
-            alt={image.alt}
-            fetchPriority="high"
-            className="aspect-video w-full rounded-xl object-cover"
-          />
+          <a href={image.src} target="_blank" rel="noreferrer" className="block">
+            <img
+              src={image.src}
+              alt={image.alt}
+              fetchPriority="high"
+              className="block h-auto w-full max-w-full rounded-xl"
+            />
+          </a>
         </figure>
 
         <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
