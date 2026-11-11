@@ -43,7 +43,7 @@ import image59 from '../assets/images/racewaycabletray.png';
 import image60 from '../assets/images/60.png';
 import image61 from '../assets/images/mast.png';
 import image62 from '../assets/images/copper1.jpeg';
-import image63 from '../assets/images/hpd1.jpg';
+import image63 from '../assets/images/hdg1.jpeg';
 import image64 from '../assets/images/solar3.jpeg';
 import image65 from '../assets/images/65.png';
 import image66 from '../assets/images/66.png';
