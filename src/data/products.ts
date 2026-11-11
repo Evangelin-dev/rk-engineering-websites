@@ -2,6 +2,12 @@ import ct1 from '../assets/images/Perforatedcabletray.png';
 import ladder from '../assets/images/laddercabletray.png';
 import raceway from '../assets/images/racewaycabletray.png';
 
+// Optional: add images for the other products, then uncomment the matching `image:` line below.
+// import earthing from '../assets/images/earthingstrip.png';
+// import duct from '../assets/images/cabletrayduct.png';
+// import solar from '../assets/images/solarmounting.png';
+// import galvanized from '../assets/images/galvanizedsteel.png';
+
 export interface ProductSpec {
   id: string;
   name: string;
@@ -47,7 +53,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Engineered uniform perforation pattern ensures cable ventilation and heat dispersal',
       'Smooth edges prevent cable sheath abrasion during pulling and installation',
       'Heavy-duty hot-dip galvanizing exceeds ASTM A123 corrosion resistance thresholds',
-      'Compatible with full range of bends, reducers, tees, crosses, and riser elbows'
+      'Compatible with full range of bends, reducers, tees, crosses, and riser elbows',
     ],
     applications: ['Power Plants & Sub-stations', 'Petrochemical Refineries', 'Commercial High-Rises', 'Data Centres'],
     drawingType: 'perforated',
@@ -56,8 +62,8 @@ export const PRODUCTS: ProductSpec[] = [
     id: 'ladder-type-cable-tray',
     name: 'Ladder Type Cable Tray',
     category: 'cable-management',
-     image: ladder,
     tagline: 'High-load bearing dual-rail cable ladder for heavy electrical cables',
+    image: ladder,
     description: 'Steel ladder cable trays for cable support applications in industrial plants, electrical infrastructure, and power distribution projects. Specify the required width, side height, material, finish, and loading requirements when requesting a quotation.',
     fullDetails: 'Engineered for high-amperage, large-diameter power cables requiring maximum airflow and structural span strength. Built with heavy-gauge roll-formed side channels and welded or swaged rungs at standardized 250 mm or 300 mm centres.',
     standardStandards: ['NEMA VE-1', 'BS EN 61537', 'ASTM A123', 'IS 2062'],
@@ -74,7 +80,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Superior span-load capacity supporting multi-tier heavy power distribution',
       'Welded or riveted tubular/perforated rungs accommodate cable cleat clamping',
       'Maximum free air flow preventing cable derating in high ambient temperatures',
-      'Engineered for long-span bridge installations between support steelwork'
+      'Engineered for long-span bridge installations between support steelwork',
     ],
     applications: ['Heavy Manufacturing Plants', 'Mining & Smelting Corridors', 'Renewable Energy Substations', 'Oil & Gas Facilities'],
     drawingType: 'ladder',
@@ -83,8 +89,8 @@ export const PRODUCTS: ProductSpec[] = [
     id: 'raceway-cable-tray',
     name: 'Raceway Cable Tray',
     category: 'cable-management',
-     image: raceway,
     tagline: 'Enclosed cable raceway systems for protected structured routing',
+    image: raceway,
     description: 'Cable raceway systems for structured cable routing in commercial, industrial, and electrical installations. Share your required configuration and installation environment to help determine a suitable product specification.',
     fullDetails: 'Solid-bottom and slotted trunking raceway systems designed to provide enclosed physical protection and electromagnetic shielding for instrumentation, control, and telecommunication cabling. Available with snap-on or screw-fixed galvanized covers.',
     standardStandards: ['IS 513', 'IS 2629', 'BS 4678', 'IEC 61084'],
@@ -100,7 +106,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Enclosed bottom channel protects sensitive fiber and signal cables from dust and debris',
       'Available with divider separators to isolate power from instrumentation circuits',
       'Precision-engineered matching covers with quick-locking clamps',
-      'Corrosion resistant for indoor, plant room, and sheltered exterior use'
+      'Corrosion resistant for indoor, plant room, and sheltered exterior use',
     ],
     applications: ['Data Centres & Telecom Hubs', 'Airport Terminals', 'Commercial Complexes', 'Automation Control Rooms'],
     drawingType: 'raceway',
@@ -110,6 +116,7 @@ export const PRODUCTS: ProductSpec[] = [
     name: 'GI Earthing Strip and Earthing Materials',
     category: 'earthing',
     tagline: 'Heavy-duty galvanized iron grounding conductors and accessories',
+    // image: earthing,
     description: 'Galvanized iron earthing strips and related earthing materials for electrical grounding and infrastructure applications. Enquiries can include required dimensions, material specifications, quantities, and project requirements.',
     fullDetails: 'Essential safety grounding systems manufactured from hot-rolled mild steel strips with heavy zinc coatings to withstand harsh soil corrosivity. We also manufacture chemical earthing electrodes, copper bonded rods, grounding flats, and earthing clamps.',
     standardStandards: ['IS 3043 (Code of Practice for Earthing)', 'IS 2629 / IS 4759', 'BS 7430', 'IEEE 80'],
@@ -125,7 +132,7 @@ export const PRODUCTS: ProductSpec[] = [
       'High fault current dissipation capability across soil and bedrock environments',
       'Dense metallurgical zinc alloy layer prevents subsurface electrochemical corrosion',
       'Supplied in uncoiled straight bars or tightly wound compact export coils',
-      'Rigorous test certifications verifying zinc mass and adherence'
+      'Rigorous test certifications verifying zinc mass and adherence',
     ],
     applications: ['Transmission Towers & Substations', 'Solar Farms & Wind Parks', 'Railway Electrification', 'Industrial Sub-stations'],
     drawingType: 'earthing',
@@ -135,6 +142,7 @@ export const PRODUCTS: ProductSpec[] = [
     name: 'Cable Tray Duct',
     category: 'cable-management',
     tagline: 'Robust modular ducting for commercial and industrial cable runs',
+    // image: duct,
     description: 'Cable tray duct systems for organized cable routing in industrial facilities, commercial buildings, and electrical infrastructure projects. Product selection depends on cable arrangement, dimensions, installation conditions, and project specifications.',
     fullDetails: 'Full-depth channel ducts providing high mechanical protection and rigid alignment across suspended ceiling plenums, raised flooring voids, and vertical electrical risers in multi-story infrastructure.',
     standardStandards: ['IS 1079', 'IS 2629', 'BS EN 50085', 'IEC 61537'],
@@ -150,7 +158,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Heavy structural side stiffeners resist torsional buckling under asymmetrical load',
       'Smooth internal surface eliminates risk of cable abrasion during high-speed pulling',
       'Supplied complete with coupler plates, fasteners, and optional moisture drain ports',
-      'Seamless integration with electrical switchboards and control cabinets'
+      'Seamless integration with electrical switchboards and control cabinets',
     ],
     applications: ['Industrial Processing Units', 'Hospital Complexes', 'Transport Hubs & Metro Stations', 'Cleanroom Facilities'],
     drawingType: 'duct',
@@ -160,6 +168,7 @@ export const PRODUCTS: ProductSpec[] = [
     name: 'Solar Mounting Structures',
     category: 'solar',
     tagline: 'Engineered galvanized steel racking for utility-scale solar farms',
+    // image: solar,
     description: 'Steel solar mounting structures for rooftop and ground-mounted solar installations and other specified solar infrastructure applications. Share the project layout, structural requirements, installation environment, and quantity for technical review.',
     fullDetails: 'Engineered cold-formed galvanized steel profiles (C-channels, purlins, rafters, columns, and strut braces) designed to withstand regional wind loads up to 180 km/h and harsh UV/thermal weathering for 25+ year design lifespans.',
     standardStandards: ['IS 800 (Structural Steel Design)', 'IS 875 (Wind Loads)', 'ASTM A123', 'IS 2062 / S350GD'],
@@ -175,7 +184,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Optimized section geometry minimizes structural steel weight while maintaining rigidity',
       'Pre-punched CNC hole patterns allow rapid on-site bolt assembly without welding',
       'Extensive corrosion protection formulated for deserts, coastal farms, and agricultural sites',
-      'Engineered for fixed-tilt, seasonal adjustment, and rooftop ballast systems'
+      'Engineered for fixed-tilt, seasonal adjustment, and rooftop ballast systems',
     ],
     applications: ['Utility-Scale Ground Solar Parks', 'Industrial Rooftop PPA Installations', 'Solar Canal Tops & Floating Arrays', 'Agrivoltaic Projects'],
     drawingType: 'solar',
@@ -185,6 +194,7 @@ export const PRODUCTS: ProductSpec[] = [
     name: 'Hot-Dip Galvanized Steel Products',
     category: 'galvanized-steel',
     tagline: 'Custom fabricated and galvanized structural components for global infrastructure',
+    // image: galvanized,
     description: 'Galvanized steel products and fabricated components for infrastructure, industrial, and construction applications. Requirements can be assessed based on component dimensions, base material, coating specifications, drawings, and order quantities.',
     fullDetails: 'Leveraging our 24,000 MT annual hot-dip galvanizing plant with industrial zinc kettles. We fabricate and surface-treat foundation bolts, substation gantry structures, transmission hardware, pipe supports, brackets, and custom welded steel assemblies.',
     standardStandards: ['ASTM A123 / A153', 'BS EN ISO 1461', 'IS 2629 / IS 4759 / IS 2633', 'AASHTO M111'],
@@ -200,7 +210,7 @@ export const PRODUCTS: ProductSpec[] = [
       'Multi-stage chemical pre-treatment (degreasing, acid pickling, rinsing, fluxing)',
       'Metallurgical zinc-iron alloy bond providing self-healing barrier against scratches',
       'Preece test, knife adhesion test, and magnetic thickness testing on every production batch',
-      'Export palletizing with wooden separators to prevent transit wet storage stain'
+      'Export palletizing with wooden separators to prevent transit wet storage stain',
     ],
     applications: ['Electrical Substation Gantries', 'Highway Crash Barriers & Gantries', 'Marine & Port Structures', 'Structural Steel Frameworks'],
     drawingType: 'structural',

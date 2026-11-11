@@ -16,7 +16,6 @@ import { Hero } from '../components/Hero.tsx';
 import { IndustriesSection } from '../components/IndustriesSection.tsx';
 import { FAQSection } from '../components/FAQSection.tsx';
 import { PRODUCTS } from '../data/products.ts';
-import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import aboutImage1 from '../assets/images/d1.jpeg';
 import aboutImage2 from '../assets/images/d2.jpeg';
 import aboutImage3 from '../assets/images/d3.jpeg';
@@ -387,17 +386,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
     };
   }, [activeProcessStep]);
 
-  const productImages = [
-    UPLOADED_PRODUCT_IMAGES['55'],
-    UPLOADED_PRODUCT_IMAGES['58'],
-    UPLOADED_PRODUCT_IMAGES['59'],
-  ];
-  const productImageAlts = [
-    'Industrial cable tray products',
-    'Ladder cable tray product',
-    'Cable tray duct product',
-  ];
-
   const visibleGuides = CABLE_TRAY_CTA_CARDS.filter(
     (guide) => ctaRegionFilter === 'All' || guide.region === ctaRegionFilter,
   );
@@ -521,12 +509,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                 }`}
                 style={{ transitionDelay: productsVisible ? `${index * 100}ms` : '0ms' }}
               >
-                <div className="overflow-hidden">
+                <div className="overflow-hidden bg-white">
                   <img
-                    src={productImages[index]}
-                    alt={productImageAlts[index]}
+                    src={product.image}
+                    alt={product.name}
                     loading="lazy"
-                    className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                    className="aspect-[16/9] w-full origin-center scale-[1.45] object-contain transition-transform duration-500 group-hover:scale-[1.55] motion-reduce:transform-none motion-reduce:transition-none"
                   />
                 </div>
                 <div className="p-5">
@@ -661,7 +649,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
                         isNavy ? 'text-blue-300' : 'text-slate-400'
                       }`}
                     >
-                        {String(baseIndex + 1).padStart(2, '0')} / {CABLE_TRAY_CTA_CARDS.length}
+                      {String(baseIndex + 1).padStart(2, '0')} / {CABLE_TRAY_CTA_CARDS.length}
                     </span>
                   </div>
                   <div className="mt-8 flex items-center gap-2">

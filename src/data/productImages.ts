@@ -72,7 +72,7 @@ export const UPLOADED_PRODUCT_IMAGES = {
   'Fabricated Beams':beam2,
   'Junction Box' : junbox,
   'Plates' : plates1,
-  'solar2': solar2,
+  'Solar Tracker': solar2,
   'Walkway Structure': walk,
   'Car Parking Structure' : Car,
   'Transmission Monopoles': mona,
@@ -89,17 +89,17 @@ export const UPLOADED_PRODUCT_IMAGES = {
   'Copper Earthing' : copper1,
 
   'steel': steel,
-  'channel': channel,
+  'Construction channel': channel,
   'pipes': pipes,
-  'crash': crash,
-  'mast': mast,
+  'Crash Barriers': crash,
+  'Mast Poles': mast,
   'handrail': handrail,
   'solar': solar,
-  'grat': grat,
-  'beam': beam,
+  'Grating': grat,
+  'H-beam': beam,
   'Tor Rod': tor,
-  'transmission': transmission,
-  'telecom': telecom,
+  'Transmission': transmission,
+  'Telecom': telecom,
   'Inside perorated cable tray': Insideperoratedcabletray,
   'Inside Perorated cable tray': cabletray2,
   'Ladder type vertical bend': cabletray3,
@@ -123,14 +123,10 @@ export const UPLOADED_PRODUCT_IMAGES = {
   'leading product': image61,
   
   'Hot dip mounting': image63,
-  'solar3': image64,
+  'Solar Mounting': image64,
  
   'Box': image71,
-  '55': image55,
- 
   
-  '58': image58,
-  '59': image59,
 } as const;
 
 export type ProductImage = keyof typeof UPLOADED_PRODUCT_IMAGES;

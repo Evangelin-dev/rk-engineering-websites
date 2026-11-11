@@ -506,7 +506,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     slug: 'solar-mounting-structures',
     name: 'Solar Mounting Structures',
     group: 'solar',
-    image: 'solar3',
+    image: 'Solar Mounting',
     description:
       'Project-specific frameworks that support photovoltaic modules and transfer loads to an approved roof, foundation, or support system.',
     overview:
@@ -596,7 +596,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Solar Tracker Structures',
     navigationLabel: 'Solar Tracker',
     group: 'solar',
-    image: 'solar2',
+    image: 'Solar Tracker',
     description:
       'Structures designed to move PV modules along a defined tracking path, subject to the selected tracker technology and engineering scope.',
     overview:
@@ -760,7 +760,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Construction Channels',
     navigationLabel: 'Construction Channel',
     group: 'galvanized',
-    image: 'channel',
+    image: 'Construction channel',
     imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized construction channels for industrial frameworks, equipment supports, electrical and cable support systems, construction, and infrastructure projects.',
@@ -806,7 +806,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized High Mast Poles',
     navigationLabel: 'High Mast Pole',
     group: 'galvanized',
-    image: 'mast',
+    image: 'Mast Poles',
     imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized high mast poles are structural supports for lighting installations over highways, ports, airports, industrial facilities, logistics areas, and other large outdoor spaces.',
@@ -896,7 +896,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized H-Beams',
     navigationLabel: 'H-Beams',
     group: 'galvanized',
-    image: 'beam',
+    image: 'H-beam',
     imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized H-beams for suitable industrial buildings, structural frameworks, warehouses, equipment supports, platforms, utility infrastructure, and fabricated steel assemblies.',
@@ -942,7 +942,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Crash Barriers',
     navigationLabel: 'Crash Barrier',
     group: 'galvanized',
-    image: 'crash',
+    image: 'Crash Barriers',
     imageAlt: 'Hot-dip galvanized steel product',
     description:
       'Hot dip galvanized steel crash barrier components for road and transport projects, specified as part of an engineered and approved roadside safety system.',
@@ -1137,7 +1137,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Hot Dip Galvanized Steel Gratings',
     navigationLabel: 'Gratings',
     group: 'galvanized',
-    image: 'grat',
+    image: 'Grating',
     description:
       'Hot dip galvanized open-grid steel grating panels for industrial flooring, access walkways, maintenance platforms, drainage channels, cable trenches, and stairways.',
     overview:
@@ -1397,7 +1397,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Transmission Towers',
     navigationLabel: 'Transmission Towers',
     group: 'towers',
-    image: 'transmission',
+    image: 'Transmission',
     description:
       'Transmission structures that support overhead power lines as part of electricity transmission and distribution infrastructure.',
     overview:
@@ -1425,7 +1425,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
     name: 'Telecom Towers',
     navigationLabel: 'Telecom Towers',
     group: 'towers',
-    image: 'telecom',
+    image: 'Telecom',
     description:
       'Tower structures for telecommunications infrastructure, with configuration and project requirements subject to the applicable design and approvals.',
     overview:
