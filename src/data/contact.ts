@@ -9,6 +9,9 @@ export interface ContactFormData {
   product: string;
   quantity: string;
   message: string;
+  shippingTerms?: string;
+  sourcePage?: string;
+  sourceTitle?: string;
 }
 
 export const MAIN_PRODUCTS = [

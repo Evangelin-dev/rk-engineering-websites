@@ -42,7 +42,7 @@ const ProductDetailPage = lazy(() =>
 );
 
 const PAGE_TITLES: Record<string, string> = {
-  '/': 'Home',
+  '/': 'Cable Tray Manufacturer in India | RK Engineering',
   '/services': 'Services',
   '/products': 'Products',
   '/tech-calculator': 'Technical Calculator',
@@ -73,8 +73,15 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 const PAGE_DESCRIPTIONS: Record<string, string> = {
+  '/': 'RK Engineering & Galvanizers manufactures cable trays, galvanized steel structures, earthing materials, solar mounting structures, and towers in Ambernath, Maharashtra for Indian and international industrial projects.',
   '/products': 'Explore RK Engineering’s cable trays, earthing materials, solar mounting structures, hot-dip galvanized steel products, and towers for industrial and infrastructure projects.',
   '/services': 'Explore RK Engineering’s industrial hot-dip galvanizing services for cable trays, structural steel, earthing products, and suitable OEM-fabricated components.',
+  '/tech-calculator': 'Configure cable tray requirements with RK Engineering’s technical calculator before requesting a project quotation from India.',
+  '/export-solutions': 'Review RK Engineering’s export enquiry support for cable trays, earthing materials, solar mounting structures, galvanized steel products, and towers from India.',
+  '/process-quality': 'Review RK Engineering’s manufacturing, inspection, and hot-dip galvanizing process for industrial steel products from Ambernath, Maharashtra.',
+  '/associations': 'Learn about RK Engineering & Galvanizers and its stated industrial manufacturing and quality affiliations.',
+  '/gallery': 'View RK Engineering product, manufacturing, packaging, and project-support images.',
+  '/contact': 'Contact RK Engineering & Galvanizers in Ambernath, Maharashtra for cable trays, galvanized steel, earthing, solar structures, and tower enquiries.',
   '/about': 'Learn about RK Engineering & Galvanizers Pvt. Ltd., its cable tray manufacturing, in-house hot-dip galvanizing, industrial capabilities, quality systems, and international project enquiries.',
   '/blog': 'Read RK Engineering articles on cable management, galvanized steel, earthing, solar structures, and procurement for industrial and infrastructure projects.',
   '/cable-tray-manufacturer-africa': 'Explore RK Engineering’s cable tray types, hot-dip galvanizing, industrial applications, stated manufacturing capacity, and export enquiry process for African projects.',
@@ -99,26 +106,6 @@ const PAGE_DESCRIPTIONS: Record<string, string> = {
 const DEFAULT_PAGE_DESCRIPTION =
   'RK Engineering & Galvanizers Pvt. Ltd. manufactures cable trays, galvanized steel products, earthing materials, and solar mounting structures for industrial and infrastructure projects.';
 const PRODUCTION_ORIGIN = 'https://rkenggindia.com';
-const SEO_LANDING_PAGE_PATHS = [
-  '/cable-tray-manufacturer-africa',
-  '/cable-tray-exporter-india-africa',
-  '/hot-dip-galvanized-cable-tray-africa',
-  '/perforated-cable-tray-manufacturer-africa',
-  '/ladder-cable-tray-supplier-africa',
-  '/cable-tray-oil-gas-projects-africa',
-  '/cable-tray-power-energy-projects-africa',
-  '/cable-tray-manufacturer-usa',
-  '/cable-tray-exporter-india-usa',
-  '/hot-dip-galvanized-cable-tray-usa',
-  '/powder-coated-cable-tray/',
-  '/pre-galvanized-cable-tray/',
-  '/mild-steel-perforated-cable-tray/',
-  '/aluminium-perforated-cable-tray/',
-  '/pre-galvanized-steel-products/',
-  ...TRANSMISSION_TOWER_PAGES.map((page) => page.path),
-  '/blog',
-  ...BLOG_ARTICLES.map((article) => article.path),
-] as const;
 
 function RoutedWebsite() {
   const navigate = useNavigate();
@@ -172,16 +159,12 @@ function RoutedWebsite() {
         document.head.querySelector('meta[property="og:image:alt"]')?.remove();
       }
       let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-      if (SEO_LANDING_PAGE_PATHS.includes(location.pathname as (typeof SEO_LANDING_PAGE_PATHS)[number])) {
-        if (!canonical) {
-          canonical = document.createElement('link');
-          canonical.rel = 'canonical';
-          document.head.append(canonical);
-        }
-        canonical.href = `${PRODUCTION_ORIGIN}${location.pathname}`;
-      } else {
-        canonical?.remove();
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        document.head.append(canonical);
       }
+      canonical.href = `${PRODUCTION_ORIGIN}${location.pathname}`;
     }
     if (location.hash) {
       window.requestAnimationFrame(() => {

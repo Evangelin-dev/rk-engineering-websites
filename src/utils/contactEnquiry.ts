@@ -14,6 +14,9 @@ export interface EmailJSTemplateParams extends Record<string, string> {
   destination_country: string;
   product: string;
   enquiry_type: string;
+  shipping_terms: string;
+  source_page: string;
+  source_title: string;
   message: string;
 }
 
@@ -37,7 +40,7 @@ export function createEmailTemplateParams(
 ): EmailJSTemplateParams {
   const messageParts = [
     formData.cableTrayType && `Cable tray type: ${selectedValues.cableTrayType || formData.cableTrayType}`,
-    formData.quantity && `Quantity: ${formData.quantity} m`,
+    formData.quantity && `Quantity: ${formData.quantity}`,
     formData.message.trim() && `Message:\n${formData.message.trim()}`,
   ].filter((part): part is string => Boolean(part));
 
@@ -49,6 +52,9 @@ export function createEmailTemplateParams(
     destination_country: formData.country.trim() || 'Not specified',
     product: selectedValues.product || 'Not specified',
     enquiry_type: selectedValues.enquiryType || 'Not specified',
+    shipping_terms: formData.shippingTerms?.trim() || 'Not specified',
+    source_page: formData.sourcePage?.trim() || 'Not specified',
+    source_title: formData.sourceTitle?.trim() || 'Not specified',
     message: messageParts.join('\n\n') || 'No additional message provided.',
   };
 }
