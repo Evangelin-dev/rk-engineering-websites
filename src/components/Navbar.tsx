@@ -4,11 +4,17 @@ import { ChevronDown, Menu, Phone, X } from 'lucide-react';
 import rkLogo from '../assets/images/rk.png';
 import { getProductNavigationProducts, PRODUCT_NAVIGATION_CATEGORIES } from '../data/productDetails.ts';
 
-const NAV_LINKS = [
+type DesktopMenu = 'products' | 'showcase' | null;
+
+const PRIMARY_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'About Us', to: '/about' },
   { label: 'Services', to: '/services' },
+];
+
+const SECONDARY_LINKS = [
   { label: 'Our Association', to: '/associations' },
+  { label: 'Blog', to: '/blog' },
 ];
 
 const SHOWCASE_LINKS = [
@@ -16,135 +22,191 @@ const SHOWCASE_LINKS = [
   { label: 'Certifications', to: '/about#certifications' },
 ];
 
-const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `relative whitespace-nowrap transition-colors duration-200 hover:text-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
+/* ---------- shared styles ---------- */
+
+const UNDERLINE =
+  "relative whitespace-nowrap transition-colors duration-200 hover:text-blue-700 " +
+  "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left " +
+  "after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] " +
+  "motion-reduce:after:transition-none focus-visible:outline-2 focus-visible:outline-blue-700";
+
+const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `${UNDERLINE} ${
     isActive
       ? 'font-bold text-blue-900 after:scale-x-100'
       : 'text-slate-800 after:scale-x-0 hover:after:scale-x-100'
   }`;
 
+const triggerClass = (isActive: boolean, isOpen: boolean) =>
+  `${UNDERLINE} inline-flex items-center gap-1 ${
+    isActive ? 'font-bold text-blue-900' : 'text-slate-800'
+  } ${isOpen ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`;
+
+const panelClass = (isOpen: boolean) =>
+  `absolute top-full z-50 border border-slate-200 bg-white shadow-2xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${
+    isOpen
+      ? 'visible translate-y-0 opacity-100'
+      : 'invisible pointer-events-none translate-y-2 opacity-0'
+  }`;
+
+const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`;
+
+const subLinkClass = (active: boolean) =>
+  `text-sm leading-snug transition-colors hover:text-blue-900 ${
+    active ? 'font-semibold text-blue-900' : 'text-slate-600'
+  }`;
+
+const Chevron: React.FC<{ open: boolean }> = ({ open }) => (
+  <ChevronDown
+    aria-hidden="true"
+    className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${open ? 'rotate-180' : ''}`}
+  />
+);
+
+/* ---------- component ---------- */
+
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDesktopMenu, setActiveDesktopMenu] = useState<'products' | 'showcase' | null>(null);
+  const [activeMenu, setActiveMenu] = useState<DesktopMenu>(null);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileShowcaseOpen, setMobileShowcaseOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
   const productMenuRef = useRef<HTMLDivElement>(null);
-  const productMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
-  const isProductNavActive = location.pathname.startsWith('/products')
-    || PRODUCT_NAVIGATION_CATEGORIES.some((category) =>
+
+  const isProductNavActive =
+    location.pathname.startsWith('/products') ||
+    PRODUCT_NAVIGATION_CATEGORIES.some((category) =>
       category.landingPages?.some((page) => page.path === location.pathname),
     );
-  const cancelProductMenuClose = () => {
-    if (productMenuCloseTimer.current) {
-      clearTimeout(productMenuCloseTimer.current);
-      productMenuCloseTimer.current = null;
+  const isShowcaseActive = SHOWCASE_LINKS.some((link) => link.to === location.pathname);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
     }
   };
-  const scheduleProductMenuClose = () => {
-    cancelProductMenuClose();
-    productMenuCloseTimer.current = setTimeout(() => {
-      setActiveDesktopMenu((current) => current === 'products' ? null : current);
-    }, 160);
+  const scheduleClose = (menu: Exclude<DesktopMenu, null>) => {
+    cancelClose();
+    closeTimer.current = setTimeout(
+      () => setActiveMenu((current) => (current === menu ? null : current)),
+      160,
+    );
+  };
+  const openMenu = (menu: Exclude<DesktopMenu, null>) => {
+    cancelClose();
+    setActiveMenu(menu);
+  };
+  const toggleMenu = (menu: Exclude<DesktopMenu, null>) => {
+    cancelClose();
+    setActiveMenu((current) => (current === menu ? null : menu));
   };
   const closeMenus = () => {
-    cancelProductMenuClose();
+    cancelClose();
     setMobileMenuOpen(false);
-    setActiveDesktopMenu(null);
+    setActiveMenu(null);
     setMobileProductsOpen(false);
     setMobileShowcaseOpen(false);
   };
 
+  // Close products / showcase on outside click or Escape
   useEffect(() => {
-    if (activeDesktopMenu !== 'products') return;
-
-    const closeOnOutsidePointer = (event: PointerEvent) => {
-      if (!productMenuRef.current?.contains(event.target as Node)) {
-        setActiveDesktopMenu(null);
-      }
+    if (!activeMenu) return;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!productMenuRef.current?.contains(event.target as Node)) setActiveMenu(null);
     };
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setActiveDesktopMenu(null);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveMenu(null);
     };
-    document.addEventListener('pointerdown', closeOnOutsidePointer);
-    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
     return () => {
-      document.removeEventListener('pointerdown', closeOnOutsidePointer);
-      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
     };
-  }, [activeDesktopMenu]);
+  }, [activeMenu]);
 
-  useEffect(() => () => cancelProductMenuClose(), []);
+  useEffect(() => cancelClose, []);
 
   useEffect(() => {
-    const updateScrolledState = () => setIsScrolled(window.scrollY > 8);
-    updateScrolledState();
-    window.addEventListener('scroll', updateScrolledState, { passive: true });
-    return () => window.removeEventListener('scroll', updateScrolledState);
+    const update = () => setIsScrolled(window.scrollY > 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
   }, []);
 
   return (
-    <header className={`sticky top-0 z-40 w-full border-b transition-[background-color,border-color,box-shadow] duration-300 motion-reduce:transition-none ${
-      isScrolled
-        ? 'border-slate-200 bg-white/95 shadow-md backdrop-blur-sm'
-        : 'border-slate-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
-    }`}>
+    <header
+      className={`sticky top-0 z-40 w-full border-b border-slate-200 transition-[background-color,box-shadow] duration-300 motion-reduce:transition-none ${
+        isScrolled
+          ? 'bg-white/95 shadow-md backdrop-blur-sm'
+          : 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-4">
+        {/* 3-column grid: logo | centered nav | CTA (equal side columns = balanced) */}
+        <div className="flex h-20 items-center justify-between gap-4 lg:h-24 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+          {/* Logo */}
           <Link
             to="/"
             onClick={closeMenus}
-            className="flex h-14 w-14 shrink-0 items-center justify-center"
+            className="flex h-16 w-16 shrink-0 items-center justify-center lg:h-[76px] lg:w-[76px] lg:justify-self-start"
             aria-label="RK Engineering home"
           >
-            <img src={rkLogo} alt="RK Engineering & Galvanizers" width={56} height={56} className="h-14 w-14 object-contain" />
+            <img
+              src={rkLogo}
+              alt="RK Engineering & Galvanizers"
+              width={76}
+              height={76}
+              className="h-full w-full object-contain"
+            />
           </Link>
 
-          <nav aria-label="Main navigation" className="hidden h-full items-center gap-3 text-xs font-medium lg:flex xl:gap-5 xl:text-sm">
-            {NAV_LINKS.slice(0, 3).map((link) => (
-              <NavLink key={link.label} to={link.to} onClick={closeMenus} className={linkClass} end={link.to === '/'}>
+          {/* Desktop nav */}
+          <nav
+            aria-label="Main navigation"
+            className="hidden h-full items-center gap-4 text-[13px] font-medium lg:flex xl:gap-8 xl:text-[15px]"
+          >
+            {PRIMARY_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={closeMenus}
+                className={desktopLinkClass}
+              >
                 {link.label}
               </NavLink>
             ))}
 
+            {/* Products mega menu (anchored to the header so it is centered on the page) */}
             <div
               ref={productMenuRef}
               className="flex h-full items-center"
-              onMouseEnter={() => {
-                cancelProductMenuClose();
-                setActiveDesktopMenu('products');
-              }}
-              onMouseLeave={scheduleProductMenuClose}
+              onMouseEnter={() => openMenu('products')}
+              onMouseLeave={() => scheduleClose('products')}
             >
               <button
                 type="button"
-                aria-expanded={activeDesktopMenu === 'products'}
+                aria-expanded={activeMenu === 'products'}
                 aria-haspopup="true"
-                onClick={() => {
-                  cancelProductMenuClose();
-                  setActiveDesktopMenu(activeDesktopMenu === 'products' ? null : 'products');
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') setActiveDesktopMenu(null);
-                }}
-                className={`relative inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
-                  isProductNavActive ? 'font-bold text-blue-900' : 'text-slate-800'
-                } ${activeDesktopMenu === 'products' ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`}
+                onClick={() => toggleMenu('products')}
+                className={triggerClass(isProductNavActive, activeMenu === 'products')}
               >
                 Products
-                <ChevronDown className={`h-4 w-4 transition-transform motion-reduce:transition-none ${activeDesktopMenu === 'products' ? 'rotate-180' : ''}`} />
+                <Chevron open={activeMenu === 'products'} />
               </button>
+
               <div
-                aria-hidden={activeDesktopMenu !== 'products'}
-                inert={activeDesktopMenu !== 'products'}
-                className={`absolute left-1/2 top-full z-50 max-h-[75svh] w-[min(92vw,80rem)] -translate-x-1/2 overflow-y-auto rounded-b-xl border border-slate-200 bg-white p-4 shadow-2xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none sm:rounded-xl sm:p-5 ${
-                  activeDesktopMenu === 'products'
-                    ? 'visible translate-y-0 opacity-100'
-                    : 'invisible pointer-events-none translate-y-2 opacity-0'
-                }`}
-                onMouseEnter={cancelProductMenuClose}
-                onMouseLeave={scheduleProductMenuClose}
+                aria-hidden={activeMenu !== 'products'}
+                inert={activeMenu !== 'products'}
+                className={`${panelClass(activeMenu === 'products')} left-1/2 max-h-[75svh] w-[min(92vw,80rem)] -translate-x-1/2 overflow-y-auto rounded-b-xl p-5 sm:rounded-xl`}
+                onMouseEnter={cancelClose}
+                onMouseLeave={() => scheduleClose('products')}
               >
                 <div className="mb-4 flex justify-end">
                   <Link
@@ -152,41 +214,41 @@ export const Navbar: React.FC = () => {
                     onClick={closeMenus}
                     className="text-xs font-semibold text-blue-900 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
                   >
-                    View all products
+                    View all products →
                   </Link>
                 </div>
-                <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
+
+                <div className="grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
                   {PRODUCT_NAVIGATION_CATEGORIES.map((category) => {
                     const products = getProductNavigationProducts(category);
-                    const isGalvanizedCategory = category.id === 'galvanized-steel';
-                    const galvanizedMidpoint = Math.ceil(products.length / 2);
-                    const productColumns = isGalvanizedCategory
-                      ? [products.slice(0, galvanizedMidpoint), products.slice(galvanizedMidpoint)]
+                    const isGalvanized = category.id === 'galvanized-steel';
+                    const mid = Math.ceil(products.length / 2);
+                    const columns = isGalvanized
+                      ? [products.slice(0, mid), products.slice(mid)]
                       : [products];
 
                     return (
                       <section
                         key={category.id}
-                        className={`min-w-0 ${isGalvanizedCategory ? 'sm:col-span-2 lg:col-span-2' : ''}`}
+                        className={`min-w-0 ${isGalvanized ? 'sm:col-span-2 lg:col-span-2' : ''}`}
                       >
                         <Link
                           to={`/products?category=${category.id}`}
                           onClick={closeMenus}
-                          className="mb-3 block text-lg font-extrabold leading-snug text-blue-950 transition-colors hover:text-red-600"
+                          className="mb-3 block border-b border-slate-100 pb-2 text-base font-extrabold leading-snug text-blue-950 transition-colors hover:text-red-600"
                         >
                           {category.label}
                         </Link>
-                        <div className={`grid ${isGalvanizedCategory ? 'gap-x-8 sm:grid-cols-2' : ''}`}>
-                          {productColumns.map((column, columnIndex) => (
-                            <ul key={columnIndex} className="list-disc space-y-2 pl-5 marker:text-blue-900">
+
+                        <div className={`grid ${isGalvanized ? 'gap-x-8 sm:grid-cols-2' : ''}`}>
+                          {columns.map((column, i) => (
+                            <ul key={i} className="list-disc space-y-2 pl-5 marker:text-blue-900">
                               {column.map((product) => (
                                 <li key={product.slug} className="pl-0.5">
                                   <Link
                                     to={`/products/${product.slug}`}
                                     onClick={closeMenus}
-                                    className={`text-sm leading-snug transition-colors hover:text-blue-900 ${
-                                      location.pathname === `/products/${product.slug}` ? 'font-semibold text-blue-900' : 'text-slate-600'
-                                    }`}
+                                    className={subLinkClass(location.pathname === `/products/${product.slug}`)}
                                   >
                                     {product.navigationLabel ?? product.name}
                                   </Link>
@@ -195,6 +257,7 @@ export const Navbar: React.FC = () => {
                             </ul>
                           ))}
                         </div>
+
                         {category.landingPages && (
                           <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-blue-900">
                             {category.landingPages.map((page) => (
@@ -202,9 +265,7 @@ export const Navbar: React.FC = () => {
                                 <Link
                                   to={page.path}
                                   onClick={closeMenus}
-                                  className={`text-sm leading-snug transition-colors hover:text-blue-900 ${
-                                    location.pathname === page.path ? 'font-semibold text-blue-900' : 'text-slate-600'
-                                  }`}
+                                  className={subLinkClass(location.pathname === page.path)}
                                 >
                                   {page.label}
                                 </Link>
@@ -219,34 +280,28 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
+            {/* Showcase dropdown */}
             <div
               className="relative flex h-full items-center"
-              onMouseEnter={() => setActiveDesktopMenu('showcase')}
-              onMouseLeave={() => setActiveDesktopMenu(null)}
+              onMouseEnter={() => openMenu('showcase')}
+              onMouseLeave={() => scheduleClose('showcase')}
             >
               <button
                 type="button"
-                aria-expanded={activeDesktopMenu === 'showcase'}
+                aria-expanded={activeMenu === 'showcase'}
                 aria-haspopup="true"
-                onClick={() => setActiveDesktopMenu(activeDesktopMenu === 'showcase' ? null : 'showcase')}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') setActiveDesktopMenu(null);
-                }}
-                className={`relative inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-700 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:bg-red-600 after:transition-transform after:duration-300 after:content-[''] motion-reduce:after:transition-none ${
-                  SHOWCASE_LINKS.some((link) => link.to === location.pathname) ? 'font-bold text-blue-900' : 'text-slate-800'
-                } ${activeDesktopMenu === 'showcase' ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`}
+                onClick={() => toggleMenu('showcase')}
+                className={triggerClass(isShowcaseActive, activeMenu === 'showcase')}
               >
                 Showcase
-                <ChevronDown className={`h-4 w-4 transition-transform motion-reduce:transition-none ${activeDesktopMenu === 'showcase' ? 'rotate-180' : ''}`} />
+                <Chevron open={activeMenu === 'showcase'} />
               </button>
+
               <div
-                aria-hidden={activeDesktopMenu !== 'showcase'}
-                inert={activeDesktopMenu !== 'showcase'}
-                className={`absolute left-0 top-full z-50 w-64 rounded-b-xl border border-slate-100 bg-white p-3 shadow-2xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${
-                  activeDesktopMenu === 'showcase'
-                    ? 'visible translate-y-0 opacity-100'
-                    : 'invisible pointer-events-none translate-y-2 opacity-0'
-                }`}
+                aria-hidden={activeMenu !== 'showcase'}
+                inert={activeMenu !== 'showcase'}
+                className={`${panelClass(activeMenu === 'showcase')} left-1/2 w-56 -translate-x-1/2 rounded-b-xl p-2`}
+                onMouseEnter={cancelClose}
               >
                 {SHOWCASE_LINKS.map((link) => (
                   <Link
@@ -261,24 +316,20 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            <NavLink to="/associations" onClick={closeMenus} className={linkClass}>
-              Our Association
-            </NavLink>
-            <Link
-              to="/blog"
-              onClick={closeMenus}
-              className={`whitespace-nowrap transition-colors hover:text-blue-700 ${location.pathname === '/blog' ? 'font-bold text-blue-900' : 'text-slate-800'}`}
-            >
-              Blog
-            </Link>
+            {SECONDARY_LINKS.map((link) => (
+              <NavLink key={link.to} to={link.to} onClick={closeMenus} className={desktopLinkClass}>
+                {link.label}
+              </NavLink>
+            ))}
           </nav>
 
-          <div className="hidden shrink-0 items-center lg:flex">
+          {/* Desktop CTA */}
+          <div className="hidden items-center lg:flex lg:justify-self-end">
             <NavLink
               to="/contact"
               onClick={closeMenus}
               className={({ isActive }) =>
-                `inline-flex items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-white shadow-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950 ${
+                `inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-semibold text-white shadow-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950 ${
                   isActive ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-950 hover:bg-blue-900'
                 }`
               }
@@ -288,6 +339,7 @@ export const Navbar: React.FC = () => {
             </NavLink>
           </div>
 
+          {/* Mobile toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((open) => !open)}
@@ -300,114 +352,143 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="max-h-[calc(100svh-5rem)] overflow-y-auto border-t border-slate-100 bg-white px-5 py-4 shadow-lg lg:hidden">
-          <nav aria-label="Mobile navigation" className="flex flex-col text-sm font-medium text-slate-800">
-            {NAV_LINKS.slice(0, 3).map((link) => (
+          <nav
+            aria-label="Mobile navigation"
+            className="flex flex-col divide-y divide-slate-100 text-sm font-medium text-slate-800"
+          >
+            {PRIMARY_LINKS.map((link) => (
               <NavLink
-                key={link.label}
+                key={link.to}
                 to={link.to}
-                onClick={closeMenus}
-                className={({ isActive }) => `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`}
                 end={link.to === '/'}
+                onClick={closeMenus}
+                className={mobileLinkClass}
               >
                 {link.label}
               </NavLink>
             ))}
 
-            <button
-              type="button"
-              onClick={() => setMobileProductsOpen((open) => !open)}
-              aria-expanded={mobileProductsOpen}
-              aria-controls="mobile-products-menu"
-              className={`flex items-center justify-between py-3 text-left ${isProductNavActive ? 'font-bold text-blue-900' : ''}`}
-            >
-              Products
-              <ChevronDown className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${mobileProductsOpen ? 'rotate-180' : ''}`} />
-            </button>
-            <div
-              id="mobile-products-menu"
-              aria-hidden={!mobileProductsOpen}
-              inert={!mobileProductsOpen}
-              className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
-                mobileProductsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-              }`}
-            >
-              <div className="overflow-hidden pb-2 pl-3">
-                <Link to="/products" onClick={closeMenus} className="block py-2 font-bold text-red-600">All Products</Link>
-                {PRODUCT_NAVIGATION_CATEGORIES.map((category) => (
-                  <div key={category.id} className="border-t border-slate-100 py-2 first:border-t-0">
-                    <Link
-                      to={`/products?category=${category.id}`}
-                      onClick={closeMenus}
-                      className="block py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 transition-colors hover:text-red-600"
-                    >
-                      {category.label}
-                    </Link>
-                    {getProductNavigationProducts(category).map((product) => (
-                      <Link
-                        key={product.slug}
-                        to={`/products/${product.slug}`}
-                        onClick={closeMenus}
-                        className={`block py-2 transition-colors hover:text-blue-800 ${
-                          location.pathname === `/products/${product.slug}` ? 'font-bold text-blue-900' : 'text-slate-600'
-                        }`}
-                      >
-                        {product.navigationLabel ?? product.name}
-                      </Link>
-                    ))}
-                    {category.landingPages?.map((page) => (
-                      <Link
-                        key={page.path}
-                        to={page.path}
-                        onClick={closeMenus}
-                        className={`block py-2 transition-colors hover:text-blue-800 ${
-                          location.pathname === page.path ? 'font-bold text-blue-900' : 'text-slate-600'
-                        }`}
-                      >
-                        {page.label}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setMobileShowcaseOpen((open) => !open)}
-              aria-expanded={mobileShowcaseOpen}
-              aria-controls="mobile-showcase-menu"
-              className="flex items-center justify-between py-3 text-left"
-            >
-              Showcase
-              <ChevronDown className={`h-4 w-4 transition-transform duration-200 motion-reduce:transition-none ${mobileShowcaseOpen ? 'rotate-180' : ''}`} />
-            </button>
-            <div
-              id="mobile-showcase-menu"
-              aria-hidden={!mobileShowcaseOpen}
-              inert={!mobileShowcaseOpen}
-              className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
-                mobileShowcaseOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-              }`}
-            >
-              <div className="overflow-hidden pb-2 pl-3">
-                {SHOWCASE_LINKS.map((link) => (
-                  <Link key={link.to} to={link.to} onClick={closeMenus} className="block py-2 text-slate-600 transition-colors duration-200 hover:text-blue-800">
-                    {link.label}
+            {/* Products accordion */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setMobileProductsOpen((open) => !open)}
+                aria-expanded={mobileProductsOpen}
+                aria-controls="mobile-products-menu"
+                className={`flex w-full items-center justify-between py-3 text-left ${
+                  isProductNavActive ? 'font-bold text-blue-900' : ''
+                }`}
+              >
+                Products
+                <Chevron open={mobileProductsOpen} />
+              </button>
+              <div
+                id="mobile-products-menu"
+                aria-hidden={!mobileProductsOpen}
+                inert={!mobileProductsOpen}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                  mobileProductsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden pb-2 pl-3">
+                  <Link to="/products" onClick={closeMenus} className="block py-2 font-bold text-red-600">
+                    All Products
                   </Link>
-                ))}
+                  {PRODUCT_NAVIGATION_CATEGORIES.map((category) => (
+                    <div key={category.id} className="border-t border-slate-100 py-2">
+                      <Link
+                        to={`/products?category=${category.id}`}
+                        onClick={closeMenus}
+                        className="block py-1 text-[11px] font-bold uppercase tracking-wider text-slate-400 transition-colors hover:text-red-600"
+                      >
+                        {category.label}
+                      </Link>
+                      {getProductNavigationProducts(category).map((product) => (
+                        <Link
+                          key={product.slug}
+                          to={`/products/${product.slug}`}
+                          onClick={closeMenus}
+                          className={`block py-2 transition-colors hover:text-blue-800 ${
+                            location.pathname === `/products/${product.slug}`
+                              ? 'font-bold text-blue-900'
+                              : 'text-slate-600'
+                          }`}
+                        >
+                          {product.navigationLabel ?? product.name}
+                        </Link>
+                      ))}
+                      {category.landingPages?.map((page) => (
+                        <Link
+                          key={page.path}
+                          to={page.path}
+                          onClick={closeMenus}
+                          className={`block py-2 transition-colors hover:text-blue-800 ${
+                            location.pathname === page.path ? 'font-bold text-blue-900' : 'text-slate-600'
+                          }`}
+                        >
+                          {page.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <NavLink to="/associations" onClick={closeMenus} className={({ isActive }) => `py-3 ${isActive ? 'font-bold text-blue-900' : ''}`}>
-              Our Association
-            </NavLink>
-            <Link to="/blog" onClick={closeMenus} className={`py-3 ${location.pathname === '/blog' ? 'font-bold text-blue-900' : ''}`}>Blog</Link>
+            {/* Showcase accordion */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setMobileShowcaseOpen((open) => !open)}
+                aria-expanded={mobileShowcaseOpen}
+                aria-controls="mobile-showcase-menu"
+                className={`flex w-full items-center justify-between py-3 text-left ${
+                  isShowcaseActive ? 'font-bold text-blue-900' : ''
+                }`}
+              >
+                Showcase
+                <Chevron open={mobileShowcaseOpen} />
+              </button>
+              <div
+                id="mobile-showcase-menu"
+                aria-hidden={!mobileShowcaseOpen}
+                inert={!mobileShowcaseOpen}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                  mobileShowcaseOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden pb-2 pl-3">
+                  {SHOWCASE_LINKS.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={closeMenus}
+                      className="block py-2 text-slate-600 transition-colors duration-200 hover:text-blue-800"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {SECONDARY_LINKS.map((link) => (
+              <NavLink key={link.to} to={link.to} onClick={closeMenus} className={mobileLinkClass}>
+                {link.label}
+              </NavLink>
+            ))}
+
             <NavLink
               to="/contact"
               onClick={closeMenus}
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-blue-950 px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-blue-900"
+              className={({ isActive }) =>
+                `mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors ${
+                  isActive ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-950 hover:bg-blue-900'
+                }`
+              }
             >
               <Phone aria-hidden="true" className="h-4 w-4" />
               Contact Us

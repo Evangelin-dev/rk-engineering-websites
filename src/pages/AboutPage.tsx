@@ -18,10 +18,11 @@ import certificateEnvironmentImage from '../assets/images/c3.jpg';
 import certificateSafetyImage from '../assets/images/c4.jpg';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import rk1 from '../assets/images/rk2.png';
+import grat from '../assets/images/grat.png';
 
 
 const companyOverviewImage = UPLOADED_PRODUCT_IMAGES['54'];
-const exportImage = UPLOADED_PRODUCT_IMAGES['60'];
+const exportImage = grat;
 
 interface AboutPageProps {
   onOpenRFQ: () => void;
