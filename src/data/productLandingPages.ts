@@ -1,4 +1,9 @@
-import hdg from "../assets/images/hdg.png";
+import preGalvanizedCableTray from "../assets/images/c5.png";
+import msPerforatedCableTray from "../assets/images/steel1.avif";
+import aluminiumPerforatedCableTray from "../assets/images/a1.avif";
+import powderCoatedCableTray from "../assets/images/c6.png";
+import preGalvanizedSteel from "../assets/images/c7.png";
+
 export type ProductLandingBlock =
   | { type: 'paragraph'; text: string }
   | { type: 'subheading'; text: string }
@@ -38,6 +43,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/pre-galvanized-cable-tray/',
     productName: 'Pre-Galvanized Cable Tray',
+    image: [preGalvanizedCableTray],
     quoteProduct: 'Pre-Galvanized Cable Tray',
     title: 'Pre-Galvanized Cable Tray Manufacturer for Industrial Cable Management',
     description:
@@ -217,6 +223,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/mild-steel-perforated-cable-tray/',
     productName: 'Mild Steel Perforated Cable Tray',
+    image: [msPerforatedCableTray],
     quoteProduct: 'Mild Steel Perforated Cable Tray',
     title: 'Mild Steel Perforated Cable Tray for Industrial Cable Management',
     description: 'RK Engineering offers mild steel perforated cable trays for organized cable routing in industrial, commercial and infrastructure projects.',
@@ -313,6 +320,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/aluminium-perforated-cable-tray/',
     productName: 'Aluminium Perforated Cable Tray',
+    image: [aluminiumPerforatedCableTray],
     quoteProduct: 'Aluminium Perforated Cable Tray',
     title: 'Aluminium Perforated Cable Tray for Industrial Cable Management',
     description: 'RK Engineering offers aluminium perforated cable tray solutions for organized electrical cable routing in industrial, commercial and infrastructure projects.',
@@ -409,7 +417,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/powder-coated-cable-tray/',
     productName: 'Powder Coated Cable Tray',
-    image : [hdg],
+    image: [powderCoatedCableTray],
     quoteProduct: 'Cable Trays & Ducts',
     title: 'Powder Coated Cable Tray Manufacturer in India',
     description:
@@ -689,6 +697,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
   {
     path: '/pre-galvanized-steel-products/',
     productName: 'Pre-Galvanized Steel Products',
+    image: [preGalvanizedSteel],
     quoteProduct: 'Hot-Dip Galvanized Products',
     title: 'Pre-Galvanized Steel Products Manufacturer in India',
     description:

@@ -7,6 +7,8 @@ import ct2 from '../assets/images/mast.png'
 import ct3 from '../assets/images/ct3.jpg';
 import ct4 from '../assets/images/ct4.jpg';
 import pipes from '../assets/images/pipes.png';
+import earthing from '../assets/images/earthflat.png';
+import cart from '../assets/images/grat.png';
 const CAPABILITIES = [
   {
     id: 'established',
@@ -15,7 +17,7 @@ const CAPABILITIES = [
     description:
       'Established in 2000, RK Engineering has more than 25 years of continuous manufacturing experience in heavy steel fabrication, cable management, and surface protection.',
     metric: '25+ Years',
-    image: ct3,
+    image: cart,
     alt: 'RK Engineering steel product',
   },
   {
@@ -25,7 +27,7 @@ const CAPABILITIES = [
     description:
       'RK Engineering operates under certified quality, environmental, and safety management systems, supporting disciplined industrial production and supply control.',
     metric: 'ISO & CE',
-    image: ct4,
+    image: earthing,
     alt: 'RK Engineering steel product',
   },
   {

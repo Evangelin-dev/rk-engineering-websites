@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import d3 from '../assets/images/d3.jpeg';
 import { 
   Globe2, 
   Container, 
@@ -40,7 +41,7 @@ export const ExportSection: React.FC<ExportSectionProps> = ({ onOpenRFQ }) => {
         <div className="mb-14 rounded-lg overflow-hidden border border-slate-200 bg-slate-50 grid grid-cols-1 lg:grid-cols-12 items-stretch shadow-sm">
           <div className="lg:col-span-6 relative min-h-[280px] lg:min-h-full">
             <img
-              src={UPLOADED_PRODUCT_IMAGES['63']}
+              src={d3}
               alt="RK Engineering cable tray products available for export enquiries"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
@@ -57,14 +58,11 @@ export const ExportSection: React.FC<ExportSectionProps> = ({ onOpenRFQ }) => {
                 Seaworthy Packaging & Container Optimization from India
               </h3>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                We coordinate ocean freight dispatch through premier container terminals (Nhava Sheva JNPT and Mundra Port). Orders are packaged with ISPM-15 heat-treated timber battens, heavy steel banding, plastic corner edge guards, and industrial moisture-barrier wrapping to prevent salt-fog and wet storage staining during transoceanic transit.
+                We coordinate ocean freight dispatch through premier container terminals. Orders are packaged with ISPM-15 heat-treated timber battens, heavy steel banding, plastic corner edge guards, and industrial moisture-barrier wrapping to prevent salt-fog and wet storage staining during transoceanic transit.
               </p>
 
               <div className="mt-6 grid grid-cols-2 gap-3 text-xs font-mono">
-                <div className="p-3 rounded bg-white border border-slate-200 shadow-sm">
-                  <span className="text-slate-500 block text-[10px]">EXPORT PORTS</span>
-                  <span className="text-blue-900 font-bold">JNPT (Nhava Sheva) / Mundra</span>
-                </div>
+               
                 <div className="p-3 rounded bg-white border border-slate-200 shadow-sm">
                   <span className="text-slate-500 block text-[10px]">PACKAGING STANDARD</span>
                   <span className="text-red-600 font-bold">ISPM-15 Fumigated Wooden Crates</span>

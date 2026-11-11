@@ -48,6 +48,9 @@ export const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ page, on
     },
   };
 
+  // Use this page's own image; fall back to the shared default if none is set.
+  const heroImage = page.image?.[0] ?? UPLOADED_PRODUCT_IMAGES['54'];
+
   return (
     <>
       <script type="application/ld+json">{JSON.stringify(webPageData)}</script>
@@ -102,8 +105,9 @@ export const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ page, on
           </div>
           <div className="overflow-hidden rounded-xl border border-white/15 bg-white/10 shadow-xl">
             <img
-              src={UPLOADED_PRODUCT_IMAGES['54']}
-              alt="Cable tray systems for industrial electrical cable management"
+              key={heroImage}
+              src={heroImage}
+              alt={`${page.productName} by RK Engineering & Galvanizers`}
               className="aspect-[4/3] w-full object-cover"
             />
           </div>
