@@ -9,6 +9,7 @@ import solar4 from '../assets/images/solar5.png';
 import hdg1 from '../assets/images/c8.png';
 import transmission2 from '../assets/images/transmission2.png';
 import earthflat from '../assets/images/earthflat.png';
+import cabletray1 from '../assets/images/Perforatedcabletray.png';
 
 interface ProductsSectionProps {
   onRequestQuote: (productName: string) => void;
@@ -51,7 +52,7 @@ const CATEGORIES: ProductCategory[] = [
     eyebrow: 'Cable Management',
     title: 'Cable Trays and Ducts',
     description: 'Cable tray solutions organise and support electrical cables in factories, commercial buildings, power plants, and infrastructure projects.',
-    image: UPLOADED_PRODUCT_IMAGES['55'],
+    image: cabletray1,
     imageAlt: 'Perforated and ladder cable trays for electrical cable management',
     navigationCategoryId: 'cable-trays',
     considerations: ['Select according to cable loads, installation conditions, and project specifications.'],
@@ -332,7 +333,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
             </button>
           </div>
           <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-            <img src={UPLOADED_PRODUCT_IMAGES['71']} alt="Industrial steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
+            <img src={UPLOADED_PRODUCT_IMAGES['Box']} alt="Industrial steel products available for export enquiries" className="aspect-[4/3] w-full object-cover" />
           </div>
         </div>
       </section>

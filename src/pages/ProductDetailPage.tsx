@@ -27,6 +27,88 @@ const GROUP_ICONS: Record<string, LucideIcon> = {
   towers: TowerControl,
 };
 
+interface SupportingSeoContent {
+  eyebrow: string;
+  heading: string;
+  paragraphs: string[];
+  links: { label: string; path: string }[];
+}
+
+const SUPPORTING_SEO_CONTENT: Record<string, SupportingSeoContent> = {
+  'cable-trays': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'Cable Tray Manufacturer in Ambernath, Thane, Mumbai and India',
+    paragraphs: [
+      'RK Engineering manufactures cable tray systems from its Ambernath manufacturing location for suitable industrial, infrastructure, and electrical projects in Thane, Mumbai, Maharashtra, and across India.',
+      'Buyers looking for cable tray supply can share the tray type, dimensions, cable loading, support spans, material, finish, and delivery destination so the appropriate product scope can be reviewed.',
+    ],
+    links: [
+      { label: 'Explore cable tray variants', path: '/products?category=cable-trays' },
+      { label: 'Review export solutions', path: '/export-solutions' },
+    ],
+  },
+  'hot-dip-galvanized-steel-products': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'Hot Dip Galvanizing Plant in Ambernath MIDC, Maharashtra',
+    paragraphs: [
+      'RK Engineering provides hot-dip galvanizing for suitable steel products from its Ambernath MIDC operation in Maharashtra. Enquiries from Thane, Kalyan, Navi Mumbai, and nearby industrial areas can be reviewed against the component, dimensions, quantity, and required coating specification.',
+      'Galvanizing suitability, inspection requirements, packing, and delivery arrangements are confirmed for each order and project specification.',
+    ],
+    links: [
+      { label: 'Review hot-dip galvanizing services', path: '/services' },
+      { label: 'See process and quality information', path: '/process-quality' },
+    ],
+  },
+  'towers-power-infrastructure': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'Transmission Tower Manufacturer in India for Export Enquiries',
+    paragraphs: [
+      'RK Engineering lists transmission towers and related power infrastructure products for project enquiries in India. Technical scope is assessed from approved drawings, voltage level, structural loading, material grades, corrosion protection, and applicable engineering standards.',
+      'International enquiries for suitable transmission tower and power infrastructure projects in Mumbai, the USA, the Middle East, and Africa can be submitted with the project destination, quantity, specifications, and required documentation for review.',
+    ],
+    links: [
+      { label: 'View transmission tower enquiries for Africa', path: '/transmission-tower-manufacturer-africa' },
+      { label: 'Explore tower products', path: '/products?category=towers' },
+    ],
+  },
+  'solar-mounting-structures': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'Solar Mounting Structure Manufacturer in India',
+    paragraphs: [
+      'RK Engineering manufactures project-specific solar mounting structures in India, including ground-mounted, rooftop, tracker, car parking, and walkway configurations listed on this website.',
+      'Solar mounting structure enquiries from the USA, UAE, and Africa can be reviewed when the buyer provides panel dimensions, site conditions, structural loads, foundation or roof information, quantities, and destination requirements.',
+    ],
+    links: [
+      { label: 'Review ground-mounted solar structures', path: '/products/ground-mounted-solar-structures' },
+      { label: 'Send an export enquiry', path: '/export-solutions' },
+    ],
+  },
+  'earthing-materials': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'GI Earthing Strip Manufacturing and Supply',
+    paragraphs: [
+      'RK Engineering lists earthing flats, copper earthing strips, earthing electrodes, GI wire, and related earthing materials for suitable electrical and infrastructure applications.',
+      'For GI earthing strip manufacturing and supply enquiries, share the required material, dimensions, finish, quantity, applicable project standards, and destination so the product scope can be confirmed.',
+    ],
+    links: [
+      { label: 'View earthing flat details', path: '/products/earthing-flats' },
+      { label: 'Review all earthing materials', path: '/products?category=earthing' },
+    ],
+  },
+  'substation-structures': {
+    eyebrow: 'Supporting SEO information',
+    heading: 'Substation Steel Structure Supplier for India and African Projects',
+    paragraphs: [
+      'RK Engineering lists substation structures for suitable electrical substation and utility infrastructure projects in India. Requirements are assessed from approved drawings, structure configuration, loading, material, corrosion protection, and inspection criteria.',
+      'African project enquiries can be submitted with the project location, quantity, technical documentation, delivery destination, and required approvals. Availability and export scope must be confirmed for each project.',
+    ],
+    links: [
+      { label: 'View towers and power infrastructure', path: '/products?category=towers' },
+      { label: 'Review export solutions', path: '/export-solutions' },
+    ],
+  },
+};
+
 export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string) => void }> = ({ onRequestQuote }) => {
   const { slug } = useParams();
   const product = getProductDetail(slug);
@@ -49,7 +131,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
       canonical.rel = 'canonical';
       document.head.append(canonical);
     }
-    canonical.href = `${window.location.origin}/products/${product.slug}`;
+    canonical.href = `https://rkenggindia.com/products/${product.slug}`;
   }, [product]);
 
   if (!product) return <Navigate to="/products" replace />;
@@ -71,6 +153,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
   const relatedProducts = product.related
     .map((relatedSlug) => getProductDetail(relatedSlug))
     .filter((relatedProduct) => relatedProduct !== undefined);
+  const supportingSeoContent = SUPPORTING_SEO_CONTENT[product.slug];
 
   const breadcrumbData = {
     '@context': 'https://schema.org',
@@ -87,9 +170,23 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
       { '@type': 'ListItem', position: 4, name: product.name, item: `${window.location.origin}/products/${product.slug}` },
     ],
   };
+  const productData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    image: new URL(UPLOADED_PRODUCT_IMAGES[product.image], window.location.origin).href,
+    url: `https://rkenggindia.com/products/${product.slug}`,
+    category: category?.label ?? categoryLabel,
+    brand: {
+      '@type': 'Brand',
+      name: 'RK Engineering & Galvanizers',
+    },
+  };
   return (
     <>
       <script type="application/ld+json">{JSON.stringify(breadcrumbData)}</script>
+      <script type="application/ld+json">{JSON.stringify(productData)}</script>
 
       <section className="border-b border-slate-200 bg-white py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -170,6 +267,38 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
           </aside>
         </div>
       </section>
+
+      {supportingSeoContent && (
+        <section className="border-b border-slate-200 bg-white py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-red-600">
+                {supportingSeoContent.eyebrow}
+              </p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                {supportingSeoContent.heading}
+              </h2>
+              {supportingSeoContent.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+                  {paragraph}
+                </p>
+              ))}
+              <div className="mt-6 flex flex-wrap gap-3">
+                {supportingSeoContent.links.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="inline-flex min-h-10 items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-blue-900 transition-colors hover:border-blue-900 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                  >
+                    {link.label}
+                    <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {product.technicalSpecifications && (
         <section className="border-b border-slate-200 bg-white py-12 sm:py-16">

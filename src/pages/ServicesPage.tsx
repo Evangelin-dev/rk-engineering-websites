@@ -19,9 +19,8 @@ import ct1 from '../assets/images/ct1.jpg';
 import hdg2 from '../assets/images/hpd1.jpg';
 import ctr2 from '../assets/images/ct2.jpg'
 
-const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
-const exportImage = UPLOADED_PRODUCT_IMAGES['63'];
-const galvanizingImage = UPLOADED_PRODUCT_IMAGES['63'];
+const cableTrayImage = UPLOADED_PRODUCT_IMAGES['perforated-cable-tray'];
+const exportImage = UPLOADED_PRODUCT_IMAGES['59'];
 const heroImage = UPLOADED_PRODUCT_IMAGES['58'];
 
 interface ServicesPageProps {

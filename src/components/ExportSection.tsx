@@ -267,6 +267,47 @@ export const ExportSection: React.FC<ExportSectionProps> = ({ onOpenRFQ }) => {
           </div>
         )}
 
+        <section className="mt-14 border-t border-slate-200 pt-12">
+          <div className="max-w-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">
+              Supporting SEO information
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              International Product Supply and Export Enquiries from India
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+              RK Engineering welcomes international enquiries for suitable cable trays, earthing materials, solar mounting structures, galvanized steel products, and power infrastructure products. Buyers should provide the product category, technical requirements, quantity, destination country, applicable standards, and delivery expectations so the supply scope can be reviewed.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+              Product suitability, documentation, packaging, commercial terms, and delivery feasibility are confirmed for each order. This page supports enquiries from the USA, UAE, Saudi Arabia, other Middle East markets, and Africa without implying a local branch or guaranteed availability in any destination.
+            </p>
+          </div>
+        </section>
+
+        <section className="mt-12 rounded-lg border border-blue-100 bg-blue-50/60 p-6 sm:p-8">
+          <div className="max-w-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">
+              Nhava Sheva (JNPT) export information
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              Export Enquiries for Products Considered for Nhava Sheva Port
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700 sm:text-base">
+              Buyers searching for cable tray systems, galvanized steel structures, transmission towers, solar mounting structures, or substation structures from Nhava Sheva (JNPT) can include the required product, destination port, preferred Incoterm, packing requirements, and shipping timeline in their enquiry.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700 sm:text-base">
+              FOB, CFR, CIF, DAP, port routing, container planning, and seaworthy export packing remain subject to the product, order, destination, and confirmed commercial terms. Nhava Sheva/JNPT routing should be confirmed for each shipment rather than assumed from a search keyword.
+            </p>
+            <button
+              type="button"
+              onClick={onOpenRFQ}
+              className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-md bg-blue-950 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-950"
+            >
+              Submit a JNPT Export Enquiry
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </section>
       </div>
     </section>
   );
