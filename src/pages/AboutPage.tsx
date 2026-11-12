@@ -324,7 +324,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {CAPABILITIES.map(({ title, description, image, alt, Icon }) => (
               <article key={title} className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-                <img src={image} alt={alt} className="aspect-[16/9] w-full object-cover" />
+                <img src={image} alt={alt} className="aspect-[16/9] w-full bg-white object-contain" />
                 <div className="p-5 sm:p-6">
                   <div className="mb-3 flex items-center gap-3">
                     <span className="rounded-md border border-blue-100 bg-blue-50 p-2 text-blue-800">
