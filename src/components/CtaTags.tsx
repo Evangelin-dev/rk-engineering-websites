@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import type { EnquiryTagPrefill } from './EnquiryTagsCarousel.tsx';
 
 export interface CtaTag extends EnquiryTagPrefill {
@@ -10,6 +11,22 @@ interface CtaTagsProps {
   productName?: string;
 }
 
+interface CtaTagButtonProps {
+  label: string;
+  onClick: () => void;
+}
+
+export const CtaTagButton: React.FC<CtaTagButtonProps> = ({ label, onClick }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700 active:bg-red-800"
+  >
+    <span>{label}</span>
+    <ArrowRight aria-hidden="true" className="h-4 w-4" />
+  </button>
+);
+
 export const openLeadPopup = (prefill: EnquiryTagPrefill & { productName?: string }) => {
   window.dispatchEvent(new CustomEvent('rk:open-lead-popup', { detail: prefill }));
 };
@@ -17,14 +34,11 @@ export const openLeadPopup = (prefill: EnquiryTagPrefill & { productName?: strin
 export const CtaTags: React.FC<CtaTagsProps> = ({ tags, productName }) => (
   <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-2.5 px-4 sm:px-6 lg:px-8">
     {tags.map(({ label, ...prefill }) => (
-      <button
+      <CtaTagButton
         key={label}
-        type="button"
         onClick={() => openLeadPopup({ ...prefill, productName })}
-        className="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 active:translate-y-0"
-      >
-        {label}
-      </button>
+        label={label}
+      />
     ))}
   </div>
 );
