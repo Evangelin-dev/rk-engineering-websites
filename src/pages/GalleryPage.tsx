@@ -1,11 +1,26 @@
 import React from 'react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 
-const GALLERY_ITEMS = Object.entries(UPLOADED_PRODUCT_IMAGES).map(([id, src]) => ({
+const formatGalleryTitle = (value: string): string =>
+  value
+    .replace(/[-_]+/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => {
+      const normalized = word.toLowerCase();
+      if (normalized === 'gi') return 'GI';
+      if (normalized === 'hdg') return 'HDG';
+      return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    })
+    .join(' ');
+
+const GALLERY_ITEMS = Object.entries(UPLOADED_PRODUCT_IMAGES)
+  .filter(([id]) => id !== 'Box')
+  .map(([id, src]) => ({
   src,
   alt: `RK Engineering industrial product and manufacturing photo ${id}`,
-  title: `Industrial Product · ${id}`,
-}));
+  title: formatGalleryTitle(id),
+  }));
 
 export const GalleryPage: React.FC = () => (
   <section className="border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
