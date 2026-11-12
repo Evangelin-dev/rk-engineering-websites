@@ -18,6 +18,7 @@ import {
   PRODUCT_DETAILS,
 } from '../data/productDetails.ts';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import { CtaTags, EXPORT_CTA_TAGS, PROJECT_CTA_TAGS } from '../components/CtaTags.tsx';
 
 const GROUP_ICONS: Record<string, LucideIcon> = {
   cable: Cable,
@@ -219,7 +220,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
                 onClick={() => onRequestQuote(product.name)}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
               >
-                Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                Request an Export Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </button>
               <Link
                 to="#product-overview"
@@ -267,6 +268,9 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
           </aside>
         </div>
       </section>
+      <div className="border-b border-slate-200 bg-white py-5">
+        <CtaTags tags={PROJECT_CTA_TAGS.slice(1, 3)} productName={product.name} />
+      </div>
 
       {supportingSeoContent && (
         <section className="border-b border-slate-200 bg-white py-12 sm:py-16">
@@ -416,6 +420,9 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
           </div>
         </div>
       </section>
+      <div className="border-b border-slate-200 bg-white py-5">
+        <CtaTags tags={EXPORT_CTA_TAGS.slice(0, 3)} productName={product.name} />
+      </div>
 
       <section className="border-b border-slate-200 bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -446,7 +453,7 @@ export const ProductDetailPage: React.FC<{ onRequestQuote: (productName: string)
               <p className="mt-2 text-sm leading-relaxed text-blue-100">Share your drawings, specifications, quantity, and destination for a project-specific review.</p>
             </div>
             <button type="button" onClick={() => onRequestQuote(product.name)} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-              Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              Request an Export Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </button>
           </div>
         </div>

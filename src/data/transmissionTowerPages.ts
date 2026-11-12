@@ -296,7 +296,7 @@ export const TRANSMISSION_TOWER_PAGES: TransmissionTowerPageData[] = [
           'The listed product range includes transmission towers, telecom towers, substation structures, transmission monopoles, and power distribution poles. Confirm specific requirements with the company.',
       },
     ],
-    ctaHeading: 'Request a Quote for Galvanized Transmission Towers',
+    ctaHeading: 'Request an Export Quote for Galvanized Transmission Towers',
     ctaText:
       'Send your project location, tower drawings, technical and galvanizing specifications, estimated quantities, inspection requirements, and delivery schedule.',
     ctaLabel: 'Request Your Project Quotation',

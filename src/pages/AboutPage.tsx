@@ -22,6 +22,7 @@ import grat from '../assets/images/grat.png';
 import copper from '../assets/images/copper.png';
 import ladder from '../assets/images/laddercabletray.png';
 import raceway from '../assets/images/racewaycabletray.png';
+import { CtaTags, EXPORT_CTA_TAGS, PROJECT_CTA_TAGS } from '../components/CtaTags.tsx';
 
 
 const companyOverviewImage = ladder;
@@ -91,7 +92,7 @@ const CAPABILITIES = [
   {
     title: 'Solar Mounting Structures',
     description: 'Products for specified rooftop and ground-mounted applications. Structural requirements, project drawings, installation conditions, and material specifications should be confirmed for each enquiry.',
-    image: (UPLOADED_PRODUCT_IMAGES as Record<string, string>)['solar3'],
+    image: UPLOADED_PRODUCT_IMAGES['Solar Mounting'],
     alt: 'RK Engineering product for solar mounting applications',
     Icon: SunMedium,
   },
@@ -363,6 +364,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           </p>
         </div>
       </section>
+      <div className="border-b border-slate-200 bg-white py-5">
+        <CtaTags tags={PROJECT_CTA_TAGS.slice(1, 4)} />
+      </div>
 
       <section id="certifications" className="scroll-mt-24 border-b border-slate-200 bg-white py-14 sm:py-18 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -411,6 +415,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
           </p>
         </div>
       </section>
+      <div className="border-b border-slate-200 bg-slate-50 py-5">
+        <CtaTags tags={EXPORT_CTA_TAGS.slice(2, 4)} />
+      </div>
 
       <section className="border-b border-slate-200 bg-white py-14 sm:py-18 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -520,7 +527,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenRFQ }) => {
                     onClick={onOpenRFQ}
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                    Request an Export Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
                   </button>
                   <Link
                     to="/products"

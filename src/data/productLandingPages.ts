@@ -210,7 +210,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
       title: 'Get a Quote for Pre-Galvanized Cable Trays',
       description: 'Looking for a reliable Pre-Galvanized Cable Tray Manufacturer and Supplier in India for your industrial or international project? Partner with RK Engineering for cable management solutions based on your technical requirements, project drawings and procurement specifications.',
       actions: [
-        { label: 'Request a Quote', productName: 'Pre-Galvanized Cable Tray', enquiryMessage: 'Request a quote for Pre-Galvanized Cable Trays based on my technical requirements, project drawings and procurement specifications.' },
+        { label: 'Request an Export Quote', productName: 'Pre-Galvanized Cable Tray', enquiryMessage: 'Request an export quote for Pre-Galvanized Cable Trays based on my technical requirements, project drawings and procurement specifications.' },
         { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss a Pre-Galvanized Cable Tray project.' },
       ],
     },
@@ -307,7 +307,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
       title: 'Get a Quote for Mild Steel Perforated Cable Trays',
       description: 'Looking for a reliable Mild Steel Perforated Cable Tray Manufacturer and Supplier in India for your industrial or international project? Connect with RK Engineering for customized cable tray solutions based on your technical specifications, project drawings and bulk procurement requirements.',
       actions: [
-        { label: 'Request a Quote', productName: 'Mild Steel Perforated Cable Tray', enquiryMessage: 'Request a quote for Mild Steel Perforated Cable Trays based on my technical specifications, project drawings and bulk procurement requirements.' },
+        { label: 'Request an Export Quote', productName: 'Mild Steel Perforated Cable Tray', enquiryMessage: 'Request an export quote for Mild Steel Perforated Cable Trays based on my technical specifications, project drawings and bulk procurement requirements.' },
         { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss a Mild Steel Perforated Cable Tray project.' },
       ],
     },
@@ -404,7 +404,7 @@ export const PRODUCT_LANDING_PAGES: ProductLandingPageDefinition[] = [
       title: 'Get a Quote for Aluminium Perforated Cable Trays',
       description: 'Looking for a reliable Aluminium Perforated Cable Tray Manufacturer and Supplier in India for your industrial or international project? Connect with RK Engineering to discuss your cable management requirements, technical specifications, project drawings and bulk procurement needs.',
       actions: [
-        { label: 'Request a Quote', productName: 'Aluminium Perforated Cable Tray', enquiryMessage: 'Request a quote for Aluminium Perforated Cable Trays based on my cable management requirements, technical specifications and project drawings.' },
+        { label: 'Request an Export Quote', productName: 'Aluminium Perforated Cable Tray', enquiryMessage: 'Request an export quote for Aluminium Perforated Cable Trays based on my cable management requirements, technical specifications and project drawings.' },
         { label: 'Discuss Your Project', enquiryMessage: 'I would like to discuss an Aluminium Perforated Cable Tray project.' },
       ],
     },

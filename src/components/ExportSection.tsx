@@ -12,6 +12,7 @@ import {
   Compass,
   MapPin
 } from 'lucide-react';
+import { CtaTags, EXPORT_CTA_TAGS } from './CtaTags.tsx';
 
 interface ExportSectionProps {
   onOpenRFQ: () => void;
@@ -82,6 +83,9 @@ export const ExportSection: React.FC<ExportSectionProps> = ({ onOpenRFQ }) => {
               <span className="text-xs text-slate-500">Third-Party Inspection: SGS, TUV, Bureau Veritas welcomed.</span>
             </div>
           </div>
+        </div>
+        <div className="mb-10">
+          <CtaTags tags={EXPORT_CTA_TAGS} />
         </div>
 
         {/* Region Switcher Tabs */}

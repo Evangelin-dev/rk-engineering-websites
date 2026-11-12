@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Check, ClipboardList, Factory, Globe2, PackageCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
+import { CtaTags, EXPORT_CTA_TAGS } from '../components/CtaTags.tsx';
 
 const cableTrayImage = UPLOADED_PRODUCT_IMAGES['54'];
 const manufacturingImage = UPLOADED_PRODUCT_IMAGES['58'];
@@ -835,6 +836,9 @@ export const FocusedFinalCta: React.FC<{ title: string; description: string; onR
       </div>
       <QuoteButton onClick={onRequestQuote}>Request a Project Quote</QuoteButton>
     </div>
+    <div className="mt-7">
+      <CtaTags tags={EXPORT_CTA_TAGS.slice(0, 3)} />
+    </div>
   </section>
 );
 
@@ -1136,7 +1140,7 @@ export const PerforatedCableTrayAfricaPage: React.FC<AfricanExportPageProps> = (
       <RelatedLandingPages currentPath={LANDING_PAGE_PATHS.perforated} />
       <FaqSection items={PERFORATED_FAQS} title="Perforated Cable Tray Questions" />
       <FocusedFinalCta
-        title="Request a Quote for Perforated Cable Trays"
+        title="Request an Export Quote for Perforated Cable Trays"
         description="Planning an industrial electrical installation in Africa? Contact RK Engineering to discuss your perforated cable tray requirements. Product availability and shipping arrangements are confirmed for each destination."
         onRequestQuote={requestQuote}
       />
