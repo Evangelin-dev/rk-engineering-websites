@@ -262,7 +262,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onRequestQuote
 
           <div id="featured-product" role="tabpanel" aria-labelledby={`product-tab-${activeCategory.id}`} className="grid overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-sm transition-colors duration-200 lg:grid-cols-2">
             <Link to={`/products/${activeProducts[0].slug}`} aria-label={`View ${activeProducts[0].name} details`} className="group relative block min-h-[260px] overflow-hidden focus-visible:outline-4 focus-visible:outline-blue-700 sm:min-h-[360px] lg:min-h-[480px]">
-              <img key={activeCategory.id} src={activeCategory.image} alt={activeCategory.imageAlt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+              <img key={activeCategory.id} src={activeCategory.image} alt={activeCategory.imageAlt} className="absolute inset-0 h-full w-full bg-white object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
               <span className="absolute bottom-4 right-4 rounded-md bg-blue-950/90 px-3 py-2 text-xs font-bold text-white shadow transition-colors group-hover:bg-red-600">
                 View product details
               </span>
