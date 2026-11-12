@@ -144,7 +144,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
               onClick={onOpenRFQ}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              Request an Export Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </button>
             <a
               href="#service-applications"
@@ -343,7 +343,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <button type="button" onClick={onOpenRFQ} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                  Request a Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  Request an Export Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </button>
                 <Link to="/products" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-bold text-blue-950 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                   Explore Products

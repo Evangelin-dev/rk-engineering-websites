@@ -36,6 +36,7 @@ import { BLOG_ARTICLES } from './data/blogArticles.ts';
 import { getBlogImage } from './data/blogImages.ts';
 import { PRODUCT_LANDING_PAGES } from './data/productLandingPages.ts';
 import { ProductLandingPage } from './pages/ProductLandingPage.tsx';
+import type { EnquiryTagPrefill } from './components/EnquiryTagsCarousel.tsx';
 
 const ProductDetailPage = lazy(() =>
   import('./pages/ProductDetailPage.tsx').then((module) => ({ default: module.ProductDetailPage })),
@@ -120,6 +121,7 @@ function RoutedWebsite() {
     cableTrayType?: string;
     enquiryType?: string;
   }>({});
+  const [leadPopupRequest, setLeadPopupRequest] = useState<(EnquiryTagPrefill & { id: number }) | undefined>();
 
   useEffect(() => {
     const isProductDetail = location.pathname.startsWith('/products/');
@@ -208,6 +210,7 @@ function RoutedWebsite() {
             element={
               <HomePage
                 onOpenRFQ={() => handleOpenRFQ()}
+                onOpenLeadPopup={(prefill) => setLeadPopupRequest({ ...prefill, id: Date.now() })}
                 onExploreProducts={() => navigate('/products')}
               />
             }
@@ -387,7 +390,7 @@ function RoutedWebsite() {
 
       <Footer />
 
-      <ContactPopup />
+      <ContactPopup request={leadPopupRequest} />
 
       <ProductModal
         product={selectedProductForModal}

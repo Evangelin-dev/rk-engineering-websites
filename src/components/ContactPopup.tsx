@@ -8,6 +8,7 @@ import {
   submitContactEnquiry,
   type ContactEnquiryStatus,
 } from '../utils/contactEnquiry.ts';
+import type { EnquiryTagPrefill } from './EnquiryTagsCarousel.tsx';
 
 const SESSION_KEY = 'rk-global-lead-popup-submitted';
 const POPUP_INTERVAL_MS = 20_000;
@@ -66,7 +67,11 @@ const markSubmittedThisSession = () => {
   }
 };
 
-export const ContactPopup: React.FC = () => {
+interface ContactPopupProps {
+  request?: EnquiryTagPrefill & { id: number };
+}
+
+export const ContactPopup: React.FC<ContactPopupProps> = ({ request }) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>(emptyForm);
@@ -98,6 +103,48 @@ export const ContactPopup: React.FC = () => {
   useEffect(() => {
     setFormData((current) => ({ ...current, product: current.product || product }));
   }, [product]);
+
+  useEffect(() => {
+    if (!request) return;
+    setFormData((current) => ({
+      ...current,
+      enquiryType: request.enquiryType ?? '',
+      shippingTerms: request.shippingTerms ?? '',
+      message: request.message ?? '',
+    }));
+    setStatus(null);
+    setIsOpen(true);
+    if (popupTimerRef.current !== null) {
+      window.clearTimeout(popupTimerRef.current);
+      popupTimerRef.current = null;
+    }
+    if (request.focusMessage) {
+      window.requestAnimationFrame(() => document.getElementById('popup-message')?.focus());
+    }
+  }, [request]);
+
+  useEffect(() => {
+    const handleLeadPopupRequest = (event: Event) => {
+      const detail = (event as CustomEvent<EnquiryTagPrefill & { productName?: string }>).detail;
+      setFormData((current) => ({
+        ...current,
+        enquiryType: detail.enquiryType ?? '',
+        shippingTerms: detail.shippingTerms ?? '',
+        message: detail.message ?? (detail.productName ? `Product of interest: ${detail.productName}` : ''),
+      }));
+      setStatus(null);
+      setIsOpen(true);
+      if (popupTimerRef.current !== null) {
+        window.clearTimeout(popupTimerRef.current);
+        popupTimerRef.current = null;
+      }
+      if (detail.focusMessage) {
+        window.requestAnimationFrame(() => document.getElementById('popup-message')?.focus());
+      }
+    };
+    window.addEventListener('rk:open-lead-popup', handleLeadPopupRequest);
+    return () => window.removeEventListener('rk:open-lead-popup', handleLeadPopupRequest);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -295,6 +342,18 @@ export const ContactPopup: React.FC = () => {
                     <option value="US Export / Import Enquiry">US Export / Import</option>
                     <option value="US Galvanized Cable Tray Enquiry">US Galvanized Cable Tray</option>
                     <option value="African Export Enquiry">African Export</option>
+                    <option value="Export Enquiry">Export</option>
+                    <option value="Project Enquiry">Project Enquiry</option>
+                    <option value="Bulk Order Enquiry">Bulk Order</option>
+                    <option value="Product Pricing Enquiry">Product Pricing</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="popup-shipping-terms" className="text-sm font-bold text-slate-800">Shipping Preference</label>
+                  <select id="popup-shipping-terms" name="shippingTerms" value={formData.shippingTerms ?? ''} onChange={updateField} className={`${fieldClasses} cursor-pointer`}>
+                    <option value="">--- Select Shipping Preference ---</option>
+                    <option value="CIF">CIF Nhava Sheva</option>
+                    <option value="FOB">FOB Nhava Sheva</option>
                   </select>
                 </div>
                 {formData.product && (

@@ -1126,7 +1126,7 @@ export const PRODUCT_DETAILS: ProductDetail[] = [
         'International enquiries can be submitted for review. Provide the destination, drawings, channel specifications, quantities, coating requirements, and any required compliance documentation.',
       ),
       faq(
-        'What information is needed to request a quote?',
+        'What information is needed to request an export quote?',
         'Share the channel profile, dimensions, material grade, hole pattern, length, quantity, finish, project location, approved drawings, structural requirements, and delivery details.',
       ),
     ],

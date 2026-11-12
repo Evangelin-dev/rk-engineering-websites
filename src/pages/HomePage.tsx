@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom';
 import { FinalCTA } from '../components/FinalCTA.tsx';
 import { Highlights } from '../components/Highlights.tsx';
 import { Hero } from '../components/Hero.tsx';
+import { EnquiryTagsCarousel, type EnquiryTagPrefill } from '../components/EnquiryTagsCarousel.tsx';
+import { CtaTags, EXPORT_CTA_TAGS, PROJECT_CTA_TAGS } from '../components/CtaTags.tsx';
 import { IndustriesSection } from '../components/IndustriesSection.tsx';
 import { FAQSection } from '../components/FAQSection.tsx';
 import { PRODUCTS } from '../data/products.ts';
@@ -26,6 +28,7 @@ import solar1 from '../assets/images/solar.png';
 
 interface HomePageProps {
   onOpenRFQ: () => void;
+  onOpenLeadPopup: (prefill: EnquiryTagPrefill) => void;
   onExploreProducts: () => void;
 }
 
@@ -263,7 +266,7 @@ interface TimelineLine {
   progress: number;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts }) => {
+export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onOpenLeadPopup, onExploreProducts }) => {
   const pageRef = useRef<HTMLDivElement>(null);
   const productsSectionRef = useRef<HTMLElement>(null);
   const [productsVisible, setProductsVisible] = useState(
@@ -402,6 +405,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
   return (
     <div ref={pageRef}>
       <Hero onOpenRFQ={onOpenRFQ} onExploreProducts={onExploreProducts} />
+      <EnquiryTagsCarousel onSelect={onOpenLeadPopup} />
       <Highlights />
       <section className="overflow-hidden border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
@@ -529,6 +533,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
           </div>
         </div>
       </section>
+      <div className="border-b border-slate-200 bg-slate-50 py-5">
+        <CtaTags tags={PROJECT_CTA_TAGS.slice(1, 4)} />
+      </div>
       <section className="overflow-hidden border-y border-slate-200 bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 border-b border-slate-200 pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.65fr)] lg:items-end lg:gap-12">
@@ -808,6 +815,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onExploreProducts
         </div>
       </section>
       <FAQSection />
+      <div className="border-b border-slate-200 bg-white py-5">
+        <CtaTags tags={EXPORT_CTA_TAGS.slice(0, 2)} />
+      </div>
       <FinalCTA onOpenRFQ={onOpenRFQ} onExploreProducts={onExploreProducts} />
     </div>
   );
