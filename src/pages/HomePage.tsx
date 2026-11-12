@@ -518,7 +518,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRFQ, onOpenLeadPopup, 
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="aspect-[16/9] w-full origin-center scale-[1.45] object-contain transition-transform duration-500 group-hover:scale-[1.55] motion-reduce:transform-none motion-reduce:transition-none"
+                    className="aspect-[16/9] w-full bg-white object-contain transition-transform duration-500 motion-reduce:transform-none motion-reduce:transition-none"
                   />
                 </div>
                 <div className="p-5">
