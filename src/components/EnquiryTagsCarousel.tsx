@@ -79,7 +79,7 @@ export const EnquiryTagsCarousel: React.FC<EnquiryTagsCarouselProps> = ({ onSele
               key={`${tag.label}-${index}`}
               type="button"
               onClick={() => onSelect(tag.prefill)}
-              className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-bold tracking-wide text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 active:scale-[0.98] sm:px-5 sm:text-sm"
+              className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-bold tracking-wide text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 active:scale-[0.98] motion-reduce:transform-none sm:px-5 sm:text-sm"
             >
               {tag.label}
             </button>
