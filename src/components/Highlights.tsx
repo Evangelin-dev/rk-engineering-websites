@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import ct1 from '../assets/images/ct1.jpg';
 import hdg from '../assets/images/hdg.png';
 import hdg2 from '../assets/images/hpd1.jpg';
 import ct2 from '../assets/images/mast.png'
 import ct3 from '../assets/images/ct3.jpg';
-import ct4 from '../assets/images/ct4.jpg';
 import pipes from '../assets/images/pipes.png';
 import earthing from '../assets/images/earthflat.png';
 import cart from '../assets/images/grat.png';
+import galvanizedSteel from '../assets/images/hdg1.jpeg';
+import fabricatedBeam from '../assets/images/beam1.jpeg';
 const CAPABILITIES = [
   {
     id: 'established',
@@ -27,7 +27,7 @@ const CAPABILITIES = [
     description:
       'RK Engineering operates under certified quality, environmental, and safety management systems, supporting disciplined industrial production and supply control.',
     metric: 'ISO & CE',
-    image: earthing,
+    image: galvanizedSteel,
     alt: 'RK Engineering steel product',
   },
   {
@@ -67,7 +67,7 @@ const CAPABILITIES = [
     description:
       'Full engineering assessment supports custom widths, gauges, hole patterns, and fabrication requirements for product-specific industrial applications.',
     metric: 'Bespoke CAD',
-    image: Object.values(UPLOADED_PRODUCT_IMAGES)[0] ?? ct4,
+    image: fabricatedBeam,
     alt: 'RK Engineering industrial steel product',
   },
   {
@@ -114,7 +114,6 @@ export const Highlights: React.FC = () => {
     setActiveId(id);
     contentFrameRef.current = window.requestAnimationFrame(() => setContentVisible(true));
   };
-
   return (
     <section className="border-b border-slate-200 bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

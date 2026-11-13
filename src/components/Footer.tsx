@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Mail, MapPin, PhoneCall } from 'lucide-react';
+import { ArrowUpRight, Facebook, Instagram, Linkedin, Mail, MapPin, PhoneCall } from 'lucide-react';
 import rkLogo from '../assets/images/rk.png';
 
 export const Footer: React.FC = () => {
@@ -18,6 +18,35 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               Industrial Cable Tray Manufacturer & Exporter from India. Specialising in hot-dip galvanized cable trays, raceways, earthing materials, and solar mounting structures for global infrastructure.
             </p>
+            <div className="flex items-center gap-2 pt-1" aria-label="Social media links">
+              <a
+                href="https://www.linkedin.com/company/r-k-engineering-and-galvanizing-pvt-ltd/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="RK Engineering on LinkedIn"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 text-slate-300 transition-colors hover:border-red-400 hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <Linkedin aria-hidden="true" className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/rk_engineering_galvanizers/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="RK Engineering on Instagram"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 text-slate-300 transition-colors hover:border-red-400 hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <Instagram aria-hidden="true" className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61596171892320"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="RK Engineering on Facebook"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 text-slate-300 transition-colors hover:border-red-400 hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <Facebook aria-hidden="true" className="h-4 w-4" />
+              </a>
+            </div>
             <div className="text-[11px] text-slate-400 space-y-1 font-mono">
               <div>Established: 2000 (25+ Years Experience)</div>
               <div>Annual Capacities: 12,000 MT Trays | 24,000 MT HDG</div>
