@@ -3,16 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   ArrowDown,
   ArrowRight,
-  Box,
-  Cable,
   Check,
   ClipboardCheck,
-  Factory,
   Globe2,
-  Layers3,
   ShieldCheck,
-  SunMedium,
-  TowerControl,
 } from 'lucide-react';
 import { UPLOADED_PRODUCT_IMAGES } from '../data/productImages.ts';
 import ct1 from '../assets/images/ct1.jpg';
@@ -20,8 +14,7 @@ import hdg2 from '../assets/images/hpd1.jpg';
 import ctr2 from '../assets/images/ct2.jpg'
 
 const cableTrayImage = UPLOADED_PRODUCT_IMAGES['perforated-cable-tray'];
-const exportImage = UPLOADED_PRODUCT_IMAGES['59'];
-const heroImage = UPLOADED_PRODUCT_IMAGES['58'];
+const heroImage = UPLOADED_PRODUCT_IMAGES['ladder-cable-tray'];
 
 interface ServicesPageProps {
   onOpenRFQ: () => void;
@@ -31,32 +24,38 @@ const APPLICATIONS = [
   {
     title: 'Hot-Dip Galvanized Cable Trays',
     description: 'Corrosion-protected cable management for suitable electrical installations, industrial facilities, and infrastructure projects.',
-    Icon: Cable,
+    image: cableTrayImage,
+    imageAlt: 'Hot-dip galvanized perforated cable tray',
   },
   {
     title: 'Ladder Cable Trays',
     description: 'Cable routing for suitable heavy-duty industrial and outdoor applications. Selection depends on cable loads, installation conditions, and project specifications.',
-    Icon: Layers3,
+    image: UPLOADED_PRODUCT_IMAGES['ladder-cable-tray'],
+    imageAlt: 'Ladder cable tray',
   },
   {
     title: 'GI Earthing Strips and Products',
     description: 'Galvanized earthing strips and related products for specified electrical earthing applications.',
-    Icon: TowerControl,
+    image: UPLOADED_PRODUCT_IMAGES.earthflat,
+    imageAlt: 'GI earthing strip',
   },
   {
     title: 'Structural Steel Components',
     description: 'Suitable fabricated steel components galvanized for industrial, construction, and infrastructure applications.',
-    Icon: Factory,
+    image: UPLOADED_PRODUCT_IMAGES.steel,
+    imageAlt: 'Structural steel component',
   },
   {
     title: 'Solar Mounting Components',
     description: 'Galvanized steel components for solar mounting applications where coating requirements and environmental conditions are suitable.',
-    Icon: SunMedium,
+    image: UPLOADED_PRODUCT_IMAGES.solar,
+    imageAlt: 'Solar mounting component',
   },
   {
     title: 'OEM Hot-Dip Galvanizing',
     description: 'Enquiries for suitable OEM steel parts and fabricated components, assessed by material, dimensions, design, quantity, and processing requirements.',
-    Icon: Box,
+    image: hdg2,
+    imageAlt: 'Hot-dip galvanized steel components',
   },
 ];
 
@@ -207,20 +206,18 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onOpenRFQ }) => (
             Discuss Your Requirement <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </button>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {APPLICATIONS.map(({ title, description, Icon }, index) => (
-            <article key={title} className="group flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-md sm:p-6">
-              <div className="mb-5 flex items-center justify-between">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-blue-50 text-blue-900">
-                  <Icon aria-hidden="true" className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-slate-400">0{index + 1}</span>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {APPLICATIONS.map(({ title, description, image, imageAlt }) => (
+            <article key={title} className="group relative flex min-h-[300px] h-full flex-col overflow-hidden rounded-xl border border-slate-300 bg-blue-950 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+              <img src={image} alt={imageAlt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-blue-950 via-blue-950/80 to-transparent" />
+              <div className="relative mt-auto p-5 sm:p-6">
+                <h3 className="max-w-sm text-xl font-extrabold leading-tight tracking-tight text-white">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/95">{description}</p>
+                <button type="button" onClick={onOpenRFQ} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                  Enquire about this service <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
               </div>
-              <h3 className="text-lg font-bold text-slate-900">{title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{description}</p>
-              <button type="button" onClick={onOpenRFQ} className="mt-5 inline-flex items-center gap-2 self-start text-sm font-bold text-blue-900 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-900">
-                Enquire about this service <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
             </article>
           ))}
         </div>
